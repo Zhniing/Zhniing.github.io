@@ -6,7 +6,7 @@ body {
 }
 
 .wrapper {
-  max-width: 100ch; // ch：一个'0'字符的宽度，CSS3新增
+  max-width: 125ch; // ch：一个'0'字符的宽度，CSS3新增
   margin: 4rem auto; // rem：html
   padding: 0 1rem;
 }
@@ -57,11 +57,11 @@ blockquote {
   zoom: 1;
 }
 
-nav {
+nav.navbar {
   margin: 0 0 4rem 0;
 }
 
-nav a {
+nav.navbar a {
   float: right;
   padding: 0 1rem;
 }
@@ -101,6 +101,10 @@ h1 {
   // position: relative;
   // right: 0;  // 必须要绝对定位 否则不起作用
   float: right; // 还有其他方法吗？右靠齐
+}
+
+.post_content {
+  margin-left: 25ch;
 }
 
 .post_content a {
