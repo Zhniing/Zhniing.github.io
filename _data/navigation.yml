@@ -1,6 +1,6 @@
 - name: About
   link: /about.html
-# - name: Blog
-#   link: /blog.html
+- name: Game
+  link: /games/hiker
 - name: Home
   link: /
