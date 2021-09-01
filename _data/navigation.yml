@@ -1,6 +1,12 @@
+- name: Github
+  link: https://github.com/Zhniing
+  target: "_blank"
 - name: About
   link: /about.html
+  target: "_self"
 - name: Game
   link: /games/hiker
+  target: "_self"
 - name: Home
   link: /
+  target: "_self"

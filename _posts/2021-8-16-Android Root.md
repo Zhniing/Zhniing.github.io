@@ -309,7 +309,11 @@ Android 6.0开始对`DATA`分区进行了加密，不解密就无法进行读写
 
 `su`获取root权限
 
-`pm list packages`列出安装的所有应用（包）
+`pm list packages`等价于`pm -l`：列出安装的所有应用（包）
+
+`adb -t [ID] [command]` ：根据`transport id`选择设备
+
+`pm path [package]`查看给定包的`.apk`所在路径；也可以在`/data/app`目录下搜索包名（位于乱码目录的*子目录*）
 
 ## fastboot 命令
 
@@ -334,6 +338,12 @@ Android 6.0开始对`DATA`分区进行了加密，不解密就无法进行读写
 `fastboot oem reboot-recovery`重启到Recovery
 
 `fastboot boot xxx.img`**本次**（临时）以`xxx.img`这个boot启动系统（有些机型不支持），以Magisk修补镜像启动可以获得Root权限
+
+## 手机运行ADB
+
+1. Magisk ADB模块：[ADB & Fastboot for Android NDK](https://github.com/Magisk-Modules-Repo/adb-ndk)
+2. 被调试的设备应打开【USB调试】，调试本机就打开本机的【USB调试】
+3. 任意终端模拟器，输入`su`获取root权限，即可使用adb命令
 
 # 社区
 
