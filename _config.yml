@@ -13,9 +13,14 @@ defaults:
       author: "Zhniing"
       layout: "post"
 
+
 # 配置代码高亮
 highlighter: rouge
 markdown: kramdown
 kramdown:
   input: GFM
   syntax_highlighter: rouge
+
+
+plugins:
+  - jemoji # GitHub-flavored Emoji plugin for Jekyll

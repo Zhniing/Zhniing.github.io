@@ -112,12 +112,16 @@ h1 {
 }
 
 // 图片样式
-p > img {
+p > img :not(emoji) {
   margin: 0 auto;
   display: block;
   max-width: 90%;
   margin: 5px 2em;
   border-radius: 5px;
+}
+
+img.emoji {
+  vertical-align: middle;
 }
 
 // 表格样式
