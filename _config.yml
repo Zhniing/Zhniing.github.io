@@ -23,4 +23,4 @@ kramdown:
 
 
 plugins:
-  - jemoji # GitHub-flavored Emoji plugin for Jekyll
+  - jekyll-spaceship
