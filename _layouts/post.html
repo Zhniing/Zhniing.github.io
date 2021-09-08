@@ -5,7 +5,8 @@ layout: default
 <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
 
 <h1>{{ page.title }}</h1>
-<p>{{ page.date | date_to_string }} by {{ page.author }}</p>
+<!-- <p>Posted on {{ page.date | date_to_string }}, Last updated: {{ page.last-modified-date | date_to_string }}</p> -->
+<p>发表于 {{ page.date | date: "%Y 年 %m 月 %d 日" }} | 更新于 {{ page.last-modified-date | date: "%Y 年 %m 月 %d 日" }}</p>
 
 <div class="post_content">
     {{ content }}

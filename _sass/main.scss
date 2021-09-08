@@ -121,7 +121,13 @@ p > img :not(emoji) {
 }
 
 img.emoji {
-  font-size: 1.3em;
+  font-size: 1.2em;
+  font-family: "Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-style: normal !important;
+  font-weight: 400;
+  line-height: 1;
+  vertical-align: -0.075em;
+  margin: 0 1px;
 }
 
 // 表格样式
