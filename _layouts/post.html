@@ -6,7 +6,8 @@ layout: default
 
 <h1>{{ page.title }}</h1>
 <!-- <p>Posted on {{ page.date | date_to_string }}, Last updated: {{ page.last-modified-date | date_to_string }}</p> -->
-<p>发表于 {{ page.date | date: "%Y 年 %m 月 %d 日" }} | 更新于 {{ page.last-modified-date | date: "%Y 年 %m 月 %d 日" }}</p>
+<!-- <p>发表于 {{ page.date | date: "%Y 年 %m 月 %d 日" }} | 更新于 {{ page.last-modified-date | date: "%Y 年 %m 月 %d 日" }}</p> -->
+<p>发表于 {{ page.date | date: "%Y 年 %m 月 %d 日" }} | 更新于 {{page.last-updated-date | date: "%Y 年 %m 月 %d 日"}}</p>
 
 <div class="post_content">
     {{ content }}

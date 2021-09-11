@@ -1,5 +1,7 @@
 ---
-categories: [Android]
+categories:
+- Android
+last-updated-date: 2021-09-01 20:27:53 +0800
 ---
 
 # 名词解释
@@ -360,4 +362,3 @@ Android 6.0开始对`DATA`分区进行了加密，不解密就无法进行读写
 ## 刷写镜像
 
 【玄学事件】命令就是`fastboot flash boot xxx.img`没错，默认刷到当前槽位，但由于**未知的神秘原因**刷入失败，重启设备再尝试，成功刷入。开始以为是USB3.0的问题，后面再测试发现3.0也能正常刷入:confounded:。也测试了指定槽位`fastboot flash boot_b xxx.img`，一切正常
-
