@@ -65,7 +65,12 @@ if __name__ == "__main__":
             post = frontmatter.load(file)
             post['last-updated-date'] = last_committed_date
 
-            with open(file, 'wb') as fd_file:
-                frontmatter.dump(post, fd_file)
+            option = input(f'是否修改{file}的mtime？[Y/n]')
+            if option in ['Y', 'y', '']:
+                with open(file, 'wb') as fd_file:
+                    frontmatter.dump(post, fd_file)
+                print(f'已更改{file}')
+            else:
+                print(f'没有改动{file}')
 
         # post.metadata.pop('title')
