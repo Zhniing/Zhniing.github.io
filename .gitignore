@@ -11,6 +11,9 @@ _site/
 *.gem
 Gemfile.lock
 
+# Python
+__pycache__/
+
 # VSCode
 .vscode
 

@@ -1,7 +1,7 @@
 ---
 categories:
 - Android
-last-updated-date: 2021-09-01 20:27:53 +0800
+last-updated-date: '2021-09-11 20:39:51+08:00'
 ---
 
 # 名词解释
@@ -303,6 +303,10 @@ Android 6.0开始对`DATA`分区进行了加密，不解密就无法进行读写
 
 `adb reboot [bootloader|recovery|edl]`重启到*fastboot*，*recovery*，*edl*模式；不指定模式就重启设备
 
+`adb -t [ID] [command]` ：根据`transport id`选择设备
+
+`adb root`：以root权限*启动*adb
+
 ### adb shell
 
 `adb shell`进入交互式shell环境
@@ -312,8 +316,6 @@ Android 6.0开始对`DATA`分区进行了加密，不解密就无法进行读写
 `su`获取root权限
 
 `pm list packages`等价于`pm -l`：列出安装的所有应用（包）
-
-`adb -t [ID] [command]` ：根据`transport id`选择设备
 
 `pm path [package]`查看给定包的`.apk`所在路径；也可以在`/data/app`目录下搜索包名（位于乱码目录的*子目录*）
 
