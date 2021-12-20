@@ -72,22 +72,35 @@ def update_mtime_from_yfm(dir='_posts'):
 
 
 if __name__ == "__main__":
-    # 读取当前修改了（还未add到暂存区）的post的"mtime"，并写入（覆盖）YFM
-    with os.popen(cmd='git ls-files -m') as fd_cmd:
-        for file in fd_cmd.read().splitlines():  # splitlines() 去掉'\n'
+    """
+    读取当前修改了（还未add到暂存区）的post的"mtime"，并写入（覆盖）YFM
+    注意: `git ls-files -m`只显示工作区(working tree)的修改文件，不会显示暂存区(index)的修改文件
+    """
+
+    num_git_modified = 0  # git working tree里面的已修改文件
+    num_ne_yfm_mtime = 0  # (ne: Not Equal) YFM和mtime不一致的md文件数量
+    num_changed = 0  # 更改了的md文件数量
+
+    with os.popen(cmd='git ls-files -m') as fd_cmd:  # 将命令的输出当作一个文件
+        file_list = fd_cmd.read().splitlines()  # 获取文件名list
+        for file in file_list:  # splitlines() 去掉'\n'
             if not os.path.isfile(file): continue  # 跳过已删除的文件
-            if not file.endswith('.md'): continue
-            mtime = os.path.getmtime(file)
+            if not file.endswith('.md'): continue  # 只处理md文件
+            if not file.startswith('_posts/'): continue  # 只处理_posts文件夹中的文件
+            num_git_modified += 1
+            mtime = os.path.getmtime(file)  # 获取文件的修改时间
             # mtime_iso = timestamp_to_iso(mtime)
             mtime_dt = datetime.datetime.fromtimestamp(mtime, tz)
-            post = frontmatter.load(file)
+            post = frontmatter.load(file)  # 获取md文件的YFM
 
             if 'last-updated-date' in post.keys():
-                yfm_lud = post['last-updated-date']
+                yfm_lud = post['last-updated-date']  # 获取YFM中的更新日期 (lud: last-updated-date)
                 if type(yfm_lud) != datetime.datetime and type(yfm_lud) == str:
-                    yfm_lud = datetime.datetime.fromisoformat(yfm_lud)
+                    yfm_lud = datetime.datetime.fromisoformat(yfm_lud)  # 格式转换：字符串 -> datetime对象
 
-                if mtime_dt == yfm_lud: continue  # yfm与mtime一致就跳过
+                if mtime_dt == yfm_lud: continue  # yfm与mtime一致就不做处理
+            
+            num_ne_yfm_mtime += 1
 
             post['last-updated-date'] = mtime_dt  # dt.__str__()返回iso格式的str
 
@@ -95,12 +108,20 @@ if __name__ == "__main__":
             if option in ['Y', 'y', '']:
                 with open(file, 'wb') as fd:
                     frontmatter.dump(post, fd)
-                print(f'已更改')
+                print(f'YFM changed')
 
-                # TODO 设置文件的mtime，使其与YFM一致
-                os.utime(file, (mtime, mtime))
+                os.utime(file, (mtime, mtime))  # 设置文件的mtime，使其与YFM一致
+                num_changed += 1
             else:
-                print(f'未更改')
+                print(f'YFM unchanged')
                 # if yfm_lud:
                     # yfm_lud = iso_to_timestamp(yfm_lud)
                     # os.utime(file, (yfm_lud, yfm_lud))
+
+        # Summary
+        print(f'[git worktree]已修改的md文件数: {num_git_modified}')
+        if num_git_modified > 0:
+            print(f'YFM和mtime不一致的md文件数: {num_ne_yfm_mtime}')
+        if num_ne_yfm_mtime > 0:
+            print(f'修改了YFM的md文件数: {num_changed}')
+            print(f'未修改YFM的md文件数: {num_ne_yfm_mtime - num_changed}')
