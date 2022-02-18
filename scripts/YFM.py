@@ -99,7 +99,7 @@ if __name__ == "__main__":
                     yfm_lud = datetime.datetime.fromisoformat(yfm_lud)  # 格式转换：字符串 -> datetime对象
 
                 if mtime_dt == yfm_lud: continue  # yfm与mtime一致就不做处理
-            
+
             num_ne_yfm_mtime += 1
 
             post['last-updated-date'] = mtime_dt  # dt.__str__()返回iso格式的str
@@ -119,9 +119,7 @@ if __name__ == "__main__":
                     # os.utime(file, (yfm_lud, yfm_lud))
 
         # Summary
-        print(f'[git worktree]已修改的md文件数: {num_git_modified}')
+        print(f'[git worktree] {num_git_modified}个md文件的内容有变动，其中：')
         if num_git_modified > 0:
-            print(f'YFM和mtime不一致的md文件数: {num_ne_yfm_mtime}')
-        if num_ne_yfm_mtime > 0:
-            print(f'修改了YFM的md文件数: {num_changed}')
-            print(f'未修改YFM的md文件数: {num_ne_yfm_mtime - num_changed}')
+            print(f'YFM与mtime不一致：{num_ne_yfm_mtime}个')
+            print(f'本次调整了{num_changed}个')

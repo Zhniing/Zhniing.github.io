@@ -1,7 +1,7 @@
 ---
 categories:
 - Android
-last-updated-date: '2021-09-11 20:39:51+08:00'
+last-updated-date: 2022-02-06 00:43:57.860000+08:00
 ---
 
 # 名词解释
@@ -297,7 +297,7 @@ Android 6.0开始对`DATA`分区进行了加密，不解密就无法进行读写
 
 `adb --help`查看帮助，有很多手册上没写的命令
 
-`adb devices -l`查看已连接的设备
+`adb devices -l`查看已连接的设备，如果找不到设备可以重启一下adb服务（`adb kill-server`）
 
 `adb disconnect [HOST[:PORT]]`不指定`HOST`就断开所有连接，`PORT`默认`5555`
 

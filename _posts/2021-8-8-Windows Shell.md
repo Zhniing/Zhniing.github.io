@@ -1,5 +1,5 @@
 ---
-last-updated-date: 2021-08-17 21:44:02+08:00
+last-updated-date: 2022-01-11 09:41:18.110000+08:00
 ---
 
 # DOS & CMD
@@ -66,6 +66,8 @@ copy /b a.mpg + b.jpg c.mpg
 ```
 
 `tree`：以树状结构打印目录，`-f`显示子目录中的内容
+
+`call <.cmd|.bat>`：类似于`source .bashrc`，刷新配置（如：环境变量）
 
 ## 脚本
 
