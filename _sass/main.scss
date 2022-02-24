@@ -112,7 +112,7 @@ h1 {
 }
 
 // 图片样式
-p > img :not(emoji) {
+p > img:not(.emoji) {
   margin: 0 auto;
   display: block;
   max-width: 90%;
