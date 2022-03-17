@@ -99,20 +99,22 @@ def update_yfm_in_dirs(dirs: Tuple[str, ...] = ['_posts']) -> None:
     """
 
     num_git_modified = 0  # git working tree里面的已修改文件
-    num_neq_yfm_mtime = 0  # (ne: Not Equal) YFM和mtime不一致的md文件数量
+    num_eq_yfm_mtime = 0  # YFM和mtime一致的md文件数量 (eq: Equal)
     num_changed = 0  # 更改了的md文件数量
 
     for file in modified_md_files(dirs):
         mtime = os.path.getmtime(file)  # 获取文件的修改时间
         num_git_modified += 1
-        num_neq_yfm_mtime += are_equal_yfm_mtime(file, mtime)
+        if are_equal_yfm_mtime(file, mtime):
+            num_eq_yfm_mtime += 1
+            continue
         num_changed += update_yfm(file, mtime)
 
     # Summary
     print(f'[git worktree] {num_git_modified}个md文件的内容有变动', end='')
     if num_git_modified > 0:
         print('，其中：')
-        print(f'YFM与mtime不一致：{num_neq_yfm_mtime}个')
+        print(f'YFM与mtime不一致：{num_git_modified - num_eq_yfm_mtime}个')
         print(f'本次调整了{num_changed}个')
     else:
         print()
