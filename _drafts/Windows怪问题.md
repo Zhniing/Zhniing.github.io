@@ -7,7 +7,7 @@
 
 可以在注册表中修改**AwayModeEnabled**，位于*HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\Power*
 
-:expressionless: 安装UU加速器会自动开启**Away Mode**，在加速器设置里叫做*手动休眠不断网*
+:expressionless: 安装*UU加速器*会自动开启**Away Mode**，在加速器设置里叫做*手动休眠不断网*
 
 > -- [笔记本关上盖子无法睡眠怎么解决?](https://www.zhihu.com/question/418166535/answer/2100383127)
 >
