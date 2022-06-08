@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Android root</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Android root</h1>
+<!-- <p>Posted on 16 Aug 2021, Last updated: </p> -->
+<!-- <p>发表于 2021 年 08 月 16 日 | 更新于 </p> -->
+<p>发布于 2021 年 08 月 16 日  | 更新于 2022 年 02 月 06 日 </p>
+
+<div class="post_content">
+    <h1 id="名词解释">名词解释</h1>
+
+<h2 id="rom">ROM</h2>
+
+<blockquote>
+  <p>Custom ROM is the name what we call a <strong>Custom OS</strong> made by the Android Development Community. These ROMs Include some special feature that <strong>Stock ROMs</strong> Doesn’t. For example, Enhanced Audio Drivers, Improved Battery, Overclocking options and many additional customizing options. There several popular Custom OSes in the world. Linage OS, CARBON, Resurrection Remix, Cyanogen (Abandoned) are a few examples.</p>
+
+  <p>– <a href="https://odindownload.com/root-android/">How to Root Android - Samsung Galaxy/Note</a></p>
+</blockquote>
+
+<h2 id="root">Root</h2>
+
+<blockquote>
+  <p>Root is actually a <strong>user account</strong> with extremely higher administrative power over the phone. Android is based on Linux so it’s the same root user you might familiar with LINUX Systems. Rooting is the process of <strong>acquiring the root user privileges</strong>. The safest way for root privileges is to install necessary files via a custom recovery.</p>
+
+  <p>– <a href="https://odindownload.com/root-android/">How to Root Android - Samsung Galaxy/Note</a></p>
+</blockquote>
+
+<h2 id="systemless-root">Systemless Root</h2>
+
+<p>没有<code class="language-plaintext highlighter-rouge">/system</code>访问权限的Root</p>
+
+<p>原理：</p>
+
+<blockquote>
+  <p>大致是通过<strong>修改boot分区</strong>，使得手机在启动时，<strong>systemless中的文件先作为系统文件加载，然后才加载真正的系统</strong>，达到了不修改system分区而实现修改的效果，比如修改机型或是字体，只需要安装并启用相应的模块，模块存放在systemless里面，就会在手机启动时生效，又因为system本身并没有被修改，只需要禁用模块就可以还原，无需备份原有的配置；而root，也当然就是把root相关的一些文件放在systemless里，取代掉手机系统原本的su文件（SuperSU就是直接修改system里的su文件，而magisk是把su放在systemless中，手机启动时取代系统原有su）。</p>
+
+  <p><a href="https://www.zhihu.com/question/278585502">什么是systemless？它是以什么形式存在于Android系统中？</a></p>
+</blockquote>
+
+<p>优点：</p>
+
+<ol>
+  <li>
+    <p>如果更改了<code class="language-plaintext highlighter-rouge">/system</code>，<strong>OTA更新</strong>时，验证系统完整性就无法通过，可能出现以下情况：</p>
+
+    <ol>
+      <li>更新<strong>完整</strong>的系统，顶替掉修改过的<code class="language-plaintext highlighter-rouge">/system</code>分区，之前的Root就会消失</li>
+      <li>无法进行OTA更新</li>
+      <li>变砖<img class="emoji" title=":fearful:" alt=":fearful:" raw="😨" src="https://github.githubassets.com/images/icons/emoji/unicode/1f628.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">
+</li>
+    </ol>
+
+    <p>因此Systemless Root保证用户在Root后，还能正常进行OTA更新</p>
+  </li>
+  <li>
+    <p>安全要求较高的APP（如：手机银行），会检查有无Root，已Root的手机被认为不安全，无法运行APP或在使用中限制功能。Systemless Root<em>可以实现</em>对特定的APP<strong>隐藏Root</strong>，使用户能够正常使用这些APP</p>
+  </li>
+</ol>
+
+<p>缺点：</p>
+
+<p>由于修改了Boot分区（在哪？）：</p>
+
+<ul>
+  <li>可能卡在开机Logo画面（小米手机：<strong>卡米</strong>MI），因为无法通过<strong>AVB</strong>？（解锁后效验失败也会继续启动？）</li>
+  <li>启动设备时，可能无法通过<strong>供应商(vendor)驱动校验</strong>，可能提示：<em>您的设备内部出现了问题</em>
+</li>
+</ul>
+
+<p><a href="https://www.kocpc.com.tw/archives/145014">教你搞懂目前Root的三種APP</a></p>
+
+<h2 id="avb">AVB</h2>
+
+<p><strong>Android Verified Boot</strong>，<a href="https://source.android.com/security/verifiedboot">Verified Boot</a>的一种<em>实现</em></p>
+
+<p>AVB 是 Android 8.0 增加的一种启动(Boot)方式/流程：先验证一些<em>重要分区</em>(system.img, recovery.img, vendor.img, boot.img)的完整性，再启动系统</p>
+
+<p><del>刷了第三方Rec<em>好像</em>无法通过AVB验证？修补boot<em>好像</em>可以通过AVB验证？</del></p>
+
+<p>AVB2.0增加了一个<strong>vbmeta分区</strong>，其工作原理为：</p>
+
+<ol>
+  <li>
+<strong>vbmeta.img</strong>的内容是<em>待验证分区的Hash值</em>，并且用私钥（<em>key0</em>）进行加密签名，私钥<em>key0</em>对应的公钥<em>key0_pub</em>被编译进BootLoader里</li>
+  <li>启动时，BootLoader用<em>key0_pub</em>验证签名，确保<em>vbmeta</em>是可信的</li>
+  <li>再用<em>vbmeta</em>去验证其他分区的完整性</li>
+</ol>
+
+<p><strong>dm-verity</strong>(device-mapper-verity) 是 Android 4.4 增加的一个内核功能，AVB 通过调用 dm-verity 实现分区完整性验证（？）</p>
+
+<p><a href="https://blog.csdn.net/rikeyone/article/details/80606147">Android Verified Boot 2.0 – CSDN</a></p>
+
+<p><a href="https://android.googlesource.com/platform/external/avb/+/master/README.md">Android Verified Boot 2.0 – Official Doc</a></p>
+
+<p><a href="https://www.twblogs.net/a/5c4b53ddbd9eee6e7e06d4fb">Android Verified Boot 2.0 – 台译</a></p>
+
+<p><a href="https://source.android.com/security/verifiedboot/dm-verity">Implementing dm-verity</a></p>
+
+<h2 id="fastbootbootloader">FastBoot/Bootloader</h2>
+
+<p>关机后，同时按住<strong>开机键</strong>和<strong>音量下键</strong>，进入Bootloader模式</p>
+
+<h3 id="bl-锁">BL 锁</h3>
+
+<p><strong>BootLoader</strong>锁，解锁BL锁是ROOT的必要条件</p>
+
+<p>bootloader/fastboot相当于手机上的BIOS，锁住的情况下进入bootloader就会一直卡在<em>FASTBOOT界面</em>（？）</p>
+
+<p>小米查看BL锁状态：开发者模式-&gt;设备解锁状态</p>
+
+<p>手机进入fastboot模式，连接电脑，运行<code class="language-plaintext highlighter-rouge">fastboot oem device-info</code>查看解锁状态</p>
+
+<h2 id="recovery">Recovery</h2>
+
+<blockquote>
+  <p>Every android phone contains a small OS-like System called <strong>RECOVERY</strong>. Its job is to reset Phone when you can’t boot normally. But the Android developer community has made some special recovery programs that are capable of doing many things that a normal <strong>stock recovery</strong> Can’t do. Such as installing custom Operating System and install files into the system. Most popular custom recovery is “Team Win Recovery Project” also known as <a href="https://twrp.me/">TWRP</a>. We recommend using this as your recovery rather than using an unpopular buggy one.</p>
+
+  <p>– <a href="https://odindownload.com/root-android/">How to Root Android - Samsung Galaxy/Note</a></p>
+</blockquote>
+
+<p>进入Recovery模式：关机后，同时按住<strong>开机键</strong>和<strong>音量上键</strong></p>
+
+<h3 id="rec">Rec</h3>
+
+<p>一般指代第三方Recovery，用来替换<em>原来自带的recovery</em>，功能更多</p>
+
+<p>可以理解成一个手机上的<strong>刷机工具</strong>，把手机内部存储里的文件刷入系统底层</p>
+
+<p>刷第三方Rec不需要root，只需要BL解锁</p>
+
+<p><em>出厂时的recovery</em>，英文术语叫：<strong>stock recovery</strong></p>
+
+<h3 id="twrp">TWRP</h3>
+
+<p>TeamWin Recovery Project，使用最广的第三方Rec，一个可触摸操作的图形界面recovery，</p>
+
+<blockquote>
+  <p>Now, Why TWRP over default recovery of Andorid?
+The manufactures of the android devices do not expect from you to install new software images other than their own. So they give very limited features which are mostly used by their service centers. Recovery softwares like TWRP can be used to by any advanced android user so that he/she can do whatever his/her phone since he bought it. :D</p>
+
+  <p>– <a href="https://www.quora.com/What-is-TWRP-Why-is-it-used/answer/Pratik-Rathod-19?ch=10&share=e412aff0">Quora Answer</a></p>
+</blockquote>
+
+<p><a href="http://www.romleyuan.com/lec/read?id=470">安卓手机如何刷入TWRP_Recovery刷机工具-2021年xda精编版</a></p>
+
+<p>双清：一般指<strong>两个Cache</strong>（<code class="language-plaintext highlighter-rouge">Dalvik / ART Cache</code>和<code class="language-plaintext highlighter-rouge">Cache</code>）</p>
+
+<p>可以刷入<strong>zip</strong>或<strong>img</strong>文件</p>
+
+<h2 id="android-ramdisk">Android “Ramdisk”</h2>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">initramfs</code>: a section in Android’s boot image that the Linux kernel will use as <code class="language-plaintext highlighter-rouge">rootfs</code>. People also use the term <strong>ramdisk</strong> interchangeably</p>
+
+  <p>– <a href="https://topjohnwu.github.io/Magisk/boot.html#terminologies">Android Booting Shenanigans (#Terminologies)</a></p>
+</blockquote>
+
+<p>（？）如上所述，虽然叫做<a href="http://junyelee.blogspot.com/2020/03/ramfs-rootfs-and-initramfs.html">Ramdisk</a>（一种古老的启动方式），实际指的是Linux中的<code class="language-plaintext highlighter-rouge">rootfs</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">ramdisk</code>，<code class="language-plaintext highlighter-rouge">initramfs</code>，<code class="language-plaintext highlighter-rouge">rootfs</code>在Android这好像是同义词？</p>
+
+<h3 id="rootfs">rootfs</h3>
+
+<blockquote>
+  <p>在 Linux 中将一个文件系统与一个存储设备关联起来的过程称为挂载（mount）</p>
+
+  <p>根文件系统被挂载到根目录下“/”上后，在根目录下就有根文件系统的各个目录，文件：/bin /sbin /mnt等，再将其他分区挂接到/mnt目录上，/mnt目录下就有这个分区的各个目录和文件。</p>
+
+  <p>rootfs是<strong>基于内存的文件系统</strong>，所有操作都在内存中完成；也没有实际的存储设备，所以<strong>不需要设备驱动程序</strong>的参与。基于以上原因，linux在启动阶段使用rootfs文件系统，当磁盘驱动程序和磁盘文件系统成功加载后，linux系统会将系统根目录从rootfs切换到磁盘文件系统。</p>
+
+  <p>– <a href="https://blog.csdn.net/LEON1741/article/details/78159754">浅谈linux中的根文件系统（rootfs的原理和介绍）</a></p>
+</blockquote>
+
+<blockquote>
+  <p>rootfs is a special instance of <strong>ramfs</strong></p>
+
+  <p>– <a href="http://junyelee.blogspot.com/2020/03/ramfs-rootfs-and-initramfs.html">RAMDISK, RAMFS, TMPFS, ROOTFS, INITRD AND INITRAMFS</a></p>
+</blockquote>
+
+<p><em>这里的<strong>ram</strong>(ramfs)可以理解成<strong>内存</strong>吧</em></p>
+
+<h2 id="magisk">Magisk</h2>
+
+<p><a href="https://github.com/topjohnwu/Magisk">github源码</a></p>
+
+<p>完整功能由两部分组成：</p>
+
+<ul>
+  <li>Magisk：核心组件</li>
+  <li>Magisk Manager：用于和Magisk核心交互，管理手机的Root权限</li>
+</ul>
+
+<p>22.0版本开始合并了Magisk和Magisk Manager：</p>
+
+<blockquote>
+  <p>Ever since the first Magisk release, Magisk (the <strong>core</strong> components) and Magisk Manager (the companion <strong>app</strong>) are released separately and isn’t necessarily always in sync. This leads to some confusion and a lot of complexity when downloading/installing Magisk through the app. Starting from v22.0, the Magisk app (renamed from Magisk Manager) includes everything it needs within the APK itself, making installation a 100% offline process.</p>
+
+  <p>From <a href="https://github.com/topjohnwu/Magisk/releases/tag/v22.0">Magisk v22.0</a></p>
+</blockquote>
+
+<blockquote>
+  <p>Magisk is nothing without the Magisk Manager app.</p>
+
+  <p>From <a href="https://androidroothub.jimdofree.com/2019/06/03/how-to-root-android-free-with-magisk/">How To Root Android Free With Magisk</a></p>
+</blockquote>
+
+<h3 id="安装方式">安装方式</h3>
+
+<p>Magisk修补Boot其实是修补Boot镜像中的Ramdisk</p>
+
+<p>因此，对于有Ramdisk的设备，可以直接修补Boot；否则只能修补Recovery（也有例外，取决于OEM的实现方式），这会导致必须从Recovery启动才能使用Magisk <a href="https://topjohnwu.github.io/Magisk/install.html#magisk-in-recovery">doc</a></p>
+
+<h3 id="ab设备ota更新如何保留magiskroot">A/B设备OTA更新，如何保留Magisk(Root)</h3>
+
+<p>对于已有Magisk的A/B分区设备，<strong>全量</strong>OTA更新会安装<em>完整的系统</em>到<em>未使用的槽位</em>（假设Slot B），即使原来Slot B中有Magisk也会被新系统覆盖掉，丢失Magisk</p>
+
+<p><em>Magisk APP</em>提供了【安装到未使用的槽位】，OTA后<strong>不要直接重启</strong>，先在Magisk中【安装到未使用的槽位】，再重启，这样就能保证重启设备后（自动切换槽位），新的分区有Magisk可用</p>
+
+<p>这里重启可能会花较长时间</p>
+
+<p><a href="https://github.com/BadFishy/Mi11_Series_UpdaterMod#%E5%9B%9B%E4%B8%BA%E4%BA%86%E5%9C%A8%E6%9B%B4%E6%96%B0%E5%90%8E%E4%BF%9D%E7%95%99-magisk">Mi11_Series_UpdaterMod</a></p>
+
+<h3 id="busybox">busybox</h3>
+
+<p>Magisk自带功能完整的<a href="https://github.com/topjohnwu/Magisk/blob/master/docs/guides.md#busybox">BusyBox</a>，位于<code class="language-plaintext highlighter-rouge">/data/adb/magisk/busybox</code></p>
+
+<ul>
+  <li>vi编辑器：<code class="language-plaintext highlighter-rouge">busybox vi &lt;filename&gt;</code>
+</li>
+</ul>
+
+<h2 id="ota-更新">OTA 更新</h2>
+
+<blockquote>
+  <p>OTA（Over－the－AirTechnology）</p>
+
+  <p><strong>OTA更新</strong>：手机终端通过无线网络下载远程服务器上的升级包，对系统或应用进行升级的技术。</p>
+
+  <p><a href="https://baike.baidu.com/item/OTA/1381310">百度百科</a></p>
+
+  <p><a href="https://zhidao.baidu.com/question/493144253.html">百度知道</a></p>
+</blockquote>
+
+<p>什么情况会导致无法正常OTA更新？</p>
+
+<ol>
+  <li>刷入第三方TWRP后，<strong>进行OTA更新</strong>，可能会：
+    <ul>
+      <li>OTA会下载全量更新包（完整的系统），TWRP会被替换掉</li>
+      <li>变砖：升级重启时，无限重启进不去</li>
+    </ul>
+  </li>
+</ol>
+
+<p>MIUI官方ROM下载：<a href="https://github.com/mooseIre/update_miui_ota">update_miui_ota</a></p>
+
+<h2 id="卡刷">卡刷</h2>
+
+<p>在BL解锁的状态下，通过<strong>Recovery</strong>，把SD卡中的文件刷入系统</p>
+
+<p>如果刷入不同的<em>系统</em>（ROM，OS），一般都需要清理很多数据（双清、四清）</p>
+
+<p>如果只刷入<em>软件包</em>，如Magisk，就不用清数据</p>
+
+<h2 id="线刷">线刷</h2>
+
+<p>用数据线连接电脑，通过<strong>Fastboot</strong>进行刷机</p>
+
+<h2 id="9008edl--模式">9008/EDL  模式</h2>
+
+<p>可以绕过BL锁（？），最底层的刷机方式（又叫<em>深度刷机</em>），需要9008线（又叫高通EDL线、救砖线、工程线）</p>
+
+<p><a href="https://www.bilibili.com/read/cv205958/">9008是什么？如何进入9008模式给手机解锁，降级？</a></p>
+
+<h2 id="qpst">QPST</h2>
+
+<p>Qualcomm Product Support Tool，高通刷机工具，<a href="https://qpsttool.com/">QPST Tool</a></p>
+
+<p>刷机工具，可以把（原厂）固件刷入基于高通芯片组的设备里面</p>
+
+<p>集成(<a href="https://androidmtk.com/download-qpst-flash-tool">inbuilt</a>)了QFIL</p>
+
+<h3 id="qfil">QFIL</h3>
+
+<p>Qualcomm Flash Image Loader，<a href="https://qfiltool.com/">QFIL Tool</a></p>
+
+<h2 id="ab-分区">A/B 分区</h2>
+
+<p>Android 8.0时，Google提供了A/B分区选项，供应商（OEM）可以选择是否启用这项功能</p>
+
+<p>A/B分区就是同时在硬盘上存储了2套系统，进行OTA更新时，实际是在更新另一套系统（当前在A，就更新B，反之亦然），这样就不会影响当前系统的继续使用，在后台静默更新，也叫<strong>无缝更新</strong>(Seamless Updates)</p>
+
+<p><a href="https://play.google.com/store/apps/details?id=com.kevintresuelo.treble">Treble Check</a> 这个APP可以可以查看当前设备是否支持A/B分区</p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot getvar all</code>其中</p>
+
+<ol>
+  <li>
+<code class="language-plaintext highlighter-rouge">slot-count</code>：有几个分区（槽）</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">current-slot</code>：当前位于哪个分区（槽）</li>
+</ol>
+
+<p>有2种情况会切换分区：</p>
+
+<ol>
+  <li>进行OTA更新，然后重启设备，就会自动切换到新更新的分区</li>
+  <li>使用<code class="language-plaintext highlighter-rouge">fastboot set_active [SLOT]</code>命令手动切换分区</li>
+</ol>
+
+<p><a href="https://krispitech.com/check-partition-slot-a-b/">How to Check if You’re on Partition Slot A or Slot B?</a></p>
+
+<h3 id="刷写镜像">刷写镜像</h3>
+
+<ul>
+  <li>【<strong>! 重要 !</strong>】<strong>USB接口</strong>选择非常重要！<strong>USB2.0</strong>的<strong>兼容性</strong>更好，3.0可能会出现各种奇怪的问题</li>
+  <li>
+<strong>不指定</strong>分区<code class="language-plaintext highlighter-rouge">fastboot flash boot xxx.img</code>会自动刷到当前所在槽位(slot)</li>
+  <li>A/B分区的Boot分别为<code class="language-plaintext highlighter-rouge">boot_a</code>和<code class="language-plaintext highlighter-rouge">boot_b</code>
+</li>
+</ul>
+
+<h3 id="v_ab-分区">V_A/B 分区</h3>
+
+<p>虚拟A/B分区，A/B分区的一种实现方式？</p>
+
+<p>出厂Android 11和V_A/B的机型<em>一般</em><strong>没有独立的Recovery分区</strong>，而是被合并进了Boot分区，也就无法使用传统的卡刷方法</p>
+
+<h2 id="解密data分区">解密DATA分区</h2>
+
+<p>Android 6.0开始对<code class="language-plaintext highlighter-rouge">DATA</code>分区进行了加密，不解密就无法进行读写，也就无法刷入软件包或ROM系统</p>
+
+<p>根据刷入的第三方Rec，解密方式一般有以下几种：</p>
+
+<ol>
+  <li>自带解密的Rec，直接能挂载访问<code class="language-plaintext highlighter-rouge">DATA</code>分区</li>
+  <li>打解密补丁包</li>
+  <li>格式化<code class="language-plaintext highlighter-rouge">DATA</code>分区</li>
+</ol>
+
+<h1 id="android-debug-bridgeadb">Android Debug Bridge(adb)</h1>
+
+<p><a href="https://developer.android.com/studio/command-line/adb">Android 调试桥 (adb)</a></p>
+
+<p><a href="https://developer.android.com/studio/releases/platform-tools">下载 SDK Platform Tools</a></p>
+
+<p><a href="https://adbshell.com/">ADB Shell</a></p>
+
+<h2 id="连接准备">连接准备</h2>
+
+<h3 id="有线连接">有线连接</h3>
+
+<ul>
+  <li>Android设备在开发者选项中打开<strong>USB调试</strong>
+</li>
+  <li>Windows电脑安装USB驱动（好像小米解锁工具里的驱动就行）</li>
+</ul>
+
+<h2 id="adb-命令">adb 命令</h2>
+
+<p><code class="language-plaintext highlighter-rouge">adb --help</code>查看帮助，有很多手册上没写的命令</p>
+
+<p><code class="language-plaintext highlighter-rouge">adb devices -l</code>查看已连接的设备，如果找不到设备可以重启一下adb服务（<code class="language-plaintext highlighter-rouge">adb kill-server</code>）</p>
+
+<p><code class="language-plaintext highlighter-rouge">adb disconnect [HOST[:PORT]]</code>不指定<code class="language-plaintext highlighter-rouge">HOST</code>就断开所有连接，<code class="language-plaintext highlighter-rouge">PORT</code>默认<code class="language-plaintext highlighter-rouge">5555</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">adb reboot [bootloader|recovery|edl]</code>重启到<em>fastboot</em>，<em>recovery</em>，<em>edl</em>模式；不指定模式就重启设备</p>
+
+<p><code class="language-plaintext highlighter-rouge">adb -t [ID] [command]</code> ：根据<code class="language-plaintext highlighter-rouge">transport id</code>选择设备</p>
+
+<p><code class="language-plaintext highlighter-rouge">adb root</code>：以root权限<em>启动</em>adb</p>
+
+<h3 id="adb-shell">adb shell</h3>
+
+<p><code class="language-plaintext highlighter-rouge">adb shell</code>进入交互式shell环境</p>
+
+<p><code class="language-plaintext highlighter-rouge">ls /system/bin</code>查看可用命令</p>
+
+<p><code class="language-plaintext highlighter-rouge">su</code>获取root权限</p>
+
+<p><code class="language-plaintext highlighter-rouge">pm list packages</code>等价于<code class="language-plaintext highlighter-rouge">pm -l</code>：列出安装的所有应用（包）</p>
+
+<p><code class="language-plaintext highlighter-rouge">pm path [package]</code>查看给定包的<code class="language-plaintext highlighter-rouge">.apk</code>所在路径；也可以在<code class="language-plaintext highlighter-rouge">/data/app</code>目录下搜索包名（位于乱码目录的<em>子目录</em>）</p>
+
+<h2 id="fastboot-命令">fastboot 命令</h2>
+
+<p><em>注意：并不是所有机型都支持全部fastboot命令，某些机型可能不支持特定命令</em></p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot</code>的所有命令，需要设备处于fastboot模式下，并且连接到电脑才可以使用</p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot --help</code>查看帮助</p>
+
+<p>查看fastboot模式下的连接设备<code class="language-plaintext highlighter-rouge">fastboot devices</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot oem device-info</code>查看解锁状态</p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot getvar [unlocked|product|...|all]</code>显示指定的<em>bootloader变量</em></p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot flashing unlock</code>解锁</p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot flash PARTITION [FILENAME]</code>以镜像文件(.img)<code class="language-plaintext highlighter-rouge">FILENAME</code>，刷写分区<code class="language-plaintext highlighter-rouge">PARTITION</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot reboot [bootloader]</code>重启设备（到fastboot）</p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot oem reboot-recovery</code>重启到Recovery</p>
+
+<p><code class="language-plaintext highlighter-rouge">fastboot boot xxx.img</code><strong>本次</strong>（临时）以<code class="language-plaintext highlighter-rouge">xxx.img</code>这个boot启动系统（有些机型不支持），以Magisk修补镜像启动可以获得Root权限</p>
+
+<h2 id="手机运行adb">手机运行ADB</h2>
+
+<ol>
+  <li>Magisk ADB模块：<a href="https://github.com/Magisk-Modules-Repo/adb-ndk">ADB &amp; Fastboot for Android NDK</a>
+</li>
+  <li>被调试的设备应打开【USB调试】，调试本机就打开本机的【USB调试】</li>
+  <li>任意终端模拟器，输入<code class="language-plaintext highlighter-rouge">su</code>获取root权限，即可使用adb命令</li>
+</ol>
+
+<h1 id="社区">社区</h1>
+
+<p><a href="https://forum.xda-developers.com/">XDA</a></p>
+
+<p><a href="http://www.romleyuan.com/">ROM乐园</a></p>
+
+<h1 id="实战总结">实战总结</h1>
+
+<h2 id="解锁">解锁</h2>
+
+<p>用fastboot命令解锁前记得关闭锁屏密码，解锁后密码可能失效，导致无法进入系统<img class="emoji" title=":sob:" alt=":sob:" raw="😭" src="https://github.githubassets.com/images/icons/emoji/unicode/1f62d.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">。要么<a href="https://www.htcp.net/3681.html">清除密码</a>，要么格式化<code class="language-plaintext highlighter-rouge">/Data</code>（密码存里面）</p>
+
+<h2 id="刷写镜像-1">刷写镜像</h2>
+
+<p>【玄学事件】命令就是<code class="language-plaintext highlighter-rouge">fastboot flash boot xxx.img</code>没错，默认刷到当前槽位，但由于<strong>未知的神秘原因</strong>刷入失败，重启设备再尝试，成功刷入。开始以为是USB3.0的问题，后面再测试发现3.0也能正常刷入<img class="emoji" title=":confounded:" alt=":confounded:" raw="😖" src="https://github.githubassets.com/images/icons/emoji/unicode/1f616.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">。也测试了指定槽位<code class="language-plaintext highlighter-rouge">fastboot flash boot_b xxx.img</code>，一切正常</p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>VS Code</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>VS Code</h1>
+<!-- <p>Posted on 27 Sep 2020, Last updated: </p> -->
+<!-- <p>发表于 2020 年 09 月 27 日 | 更新于 </p> -->
+<p>发布于 2020 年 09 月 27 日  | 更新于 2021 年 12 月 29 日 </p>
+
+<div class="post_content">
+    <h2 id="命令行指令">命令行指令</h2>
+
+<p><code class="language-plaintext highlighter-rouge">code .</code>用VSCode打开当前文件夹</p>
+
+<h2 id="快捷键">快捷键</h2>
+
+<p><code class="language-plaintext highlighter-rouge">Ctrl+Shift+P</code>或<code class="language-plaintext highlighter-rouge">F1</code>打开命令面板，可以快速找到很多设置选项</p>
+
+<ul>
+  <li>
+    <p>多行选择</p>
+
+    <ol>
+      <li>
+<code class="language-plaintext highlighter-rouge">Alt+左键</code>选择多个光标位置</li>
+      <li>选中一个元素，<code class="language-plaintext highlighter-rouge">Ctrl+d</code>继续向下选择多个相同元素，<code class="language-plaintext highlighter-rouge">Ctrl+u</code>撤销上一个选择</li>
+      <li>鼠标中键：块选择</li>
+    </ol>
+  </li>
+</ul>
+
+<p>查找文件：<code class="language-plaintext highlighter-rouge">Ctrl + P</code>或<code class="language-plaintext highlighter-rouge">Ctrl + E</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">Ctrl+k Ctrl+r</code>打开<a href="https://code.visualstudio.com/shortcuts/keyboard-shortcuts-windows.pdf">快捷键文档</a>(keyboard shortcuts reference)</p>
+
+<h2 id="插件">插件</h2>
+
+<h3 id="主题相关">主题相关</h3>
+
+<ul>
+  <li>One Dark Pro：Atom的iconic one dark主题移植</li>
+  <li>
+<del>Bracket Pair Colorizer 2：给括号对打上不同的颜色</del>（1.6版本自带括号对着色）</li>
+  <li>vscode-icons：文件图标主题</li>
+</ul>
+
+<h3 id="代码相关">代码相关</h3>
+
+<ul>
+  <li>Better Comments：各种颜色的高亮注释</li>
+  <li>Code Runner：添加直接运行程序的快捷键，无法调试。注意：设置搜索run in terminal，并勾选，否则不能在vscode的终端中进行输入</li>
+  <li>C/C++：提供调试功能（Bug：<code class="language-plaintext highlighter-rouge">Ctrl+F5</code>Run Without Debugging无法使用，还是会Debug）</li>
+  <li>Pylance：代码检查，可以替代pylint(?)</li>
+  <li>shellman：shell代码块(Snippet)</li>
+</ul>
+
+<h3 id="版本控制">版本控制</h3>
+
+<ul>
+  <li>Git Gragh：时间线显示commit记录</li>
+  <li>GitLens：在代码行、块后显示最后变更记录</li>
+</ul>
+
+<h2 id="配置">配置</h2>
+
+<h3 id="cc编译器安装">C/C++编译器安装</h3>
+
+<p>Windows下推荐配置WSL2环境，方便快捷BUG少</p>
+
+<p>win10环境下的编译器以要装MinGW-W64，装MinGW的话可能无法在vscode终端进行输入输出。（bug: mingw-w64的gdb无法按下标打印vector容器的元素值。输入<code class="language-plaintext highlighter-rouge">p vec[i]</code>会直接退出gdb ）</p>
+
+<blockquote>
+  <p><a href="https://blog.csdn.net/whatday/article/details/87113007">MinGW和MinGW-W64的关系</a></p>
+
+  <p><a href="https://code.visualstudio.com/docs/cpp/config-mingw">VSCode配置MinGW官方文档</a></p>
+</blockquote>
+
+<h2 id="ssh远程开发">SSH远程开发</h2>
+
+<p>安装Remote-SSH插件</p>
+
+<p>第一次连接（或VSCode更新后？）会自动下载服务器端所需的文件，如果服务器没网，会自动在本地下载然后scp传到服务器</p>
+
+<p>离线安装服务器端文件：<a href="https://stackoverflow.com/questions/56718453/using-remote-ssh-in-vscode-on-a-target-machine-that-only-allows-inbound-ssh-co/56781109#56781109">Using “Remote SSH” in VSCode on a target machine that only allows inbound SSH connections</a></p>
+
+<p>有些插件需要安装在服务器端才会起作用，比如<code class="language-plaintext highlighter-rouge">python</code>。离线安装插件：</p>
+
+<ol>
+  <li>先在本地安装插件，找到本地插件目录<code class="language-plaintext highlighter-rouge">~/.vscode/extensions</code>
+</li>
+  <li>将本地插件的文件夹直接复制到服务器的<code class="language-plaintext highlighter-rouge">/home/zhn/.vscode-server/extensions</code>目录下</li>
+  <li>重启VS Code？</li>
+</ol>
+
+<h3 id="pylint报错have-no-member">Pylint报错have no member</h3>
+
+<blockquote>
+  <p><a href="https://github.com/pytorch/pytorch/issues/701">https://github.com/pytorch/pytorch/issues/701</a></p>
+</blockquote>
+
+<p>虽然会报错，但是可以执行</p>
+
+<p>VS Code配置文件中添加如下代码：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"python.linting.pylintArgs": [
+	"--errors-only", // 这句与该问题无关，只是顺便关掉一些pep8警告
+	"--generated-members=torch.*" // 主要是这句
+]
+</code></pre></div></div>
+
+<p>*<em>也可以<strong>禁用</strong>pylint，改用pylance</em></p>
+
+<h3 id="pylint报错-value--is-unsubscriptable-unsubscriptable-object">Pylint报错: Value ‘***’ is unsubscriptable (unsubscriptable-object)</h3>
+
+<p><a href="https://github.com/PyCQA/pylint/issues/3882#issuecomment-786194897">https://github.com/PyCQA/pylint/issues/3882#issuecomment-786194897</a></p>
+
+<p>更新pylint到2.7.0及以上版本</p>
+
+<h3 id="vs-code启动终端时不要自动激活conda">VS Code启动终端时，不要自动激活conda：</h3>
+
+<p>设置-&gt;搜索python.terminal.activateEnvironment-&gt;关闭</p>
+
+<h2 id="快捷键设置">快捷键设置</h2>
+
+<h3 id="函数参数提示">函数参数提示</h3>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">editor.action.triggerParameterHints</code></li>
+  <li>默认: <code class="language-plaintext highlighter-rouge">ctrl+shift+space</code>
+</li>
+</ul>
+
+<h2 id="设置wrap自动换行">设置wrap(自动换行)</h2>
+
+<p>设置编辑器内自动换行：<code class="language-plaintext highlighter-rouge">"editor.wordWrap": "on"</code></p>
+
+<p>设置output内容自动换行：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// set “output” window wrap
+"[Log]": {
+    "editor.wordWrap": "on"
+}
+</code></pre></div></div>
+
+<h2 id="自定义语义高亮">自定义语义高亮</h2>
+
+<p><a href="https://code.visualstudio.com/blogs/2017/02/08/syntax-highlighting-optimizations#_new-textmate-scope-inspector-widget">doc</a></p>
+
+<p>打开命令面板<em>Command Palette</em>（<code class="language-plaintext highlighter-rouge">F1</code>或<code class="language-plaintext highlighter-rouge">Ctrl+Shift+P</code>），输入<code class="language-plaintext highlighter-rouge">Developer: Inspect Editor Tokens and Scopes</code>，查看各个符号(Tokens)的的<em>渲染信息</em>，有如下关键项：</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">semantic token type</code>：<code class="language-plaintext highlighter-rouge">variable</code>、<code class="language-plaintext highlighter-rouge">parameter</code>等</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">modifiers</code>：<code class="language-plaintext highlighter-rouge">declaration</code>，<code class="language-plaintext highlighter-rouge">typeHint</code>等</li>
+</ul>
+
+<p>根据格式：<code class="language-plaintext highlighter-rouge">"[semantic token type].[modifiers]:[language]": "#RGB"</code>，写到主题(One Dark Pro)的<code class="language-plaintext highlighter-rouge">rules</code>中</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">"editor.semanticTokenColorCustomizations"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"[One Dark Pro]"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="nl">"enabled"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
+        </span><span class="nl">"rules"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nl">"variable"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#ABB2BF"</span><span class="p">,</span><span class="w"> </span><span class="err">//</span><span class="w"> </span><span class="err">One</span><span class="w"> </span><span class="err">Dark</span><span class="w"> </span><span class="err">Pro's</span><span class="w"> </span><span class="err">default</span><span class="w"> </span><span class="err">text</span><span class="w"> </span><span class="err">color</span><span class="w">
+            </span><span class="nl">"parameter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#a0c77f"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"selfParameter"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#E5C07B"</span><span class="p">,</span><span class="w">
+            </span><span class="nl">"*.typeHint:python"</span><span class="p">:</span><span class="w"> </span><span class="s2">"#5500aa"</span><span class="p">,</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+	</span><span class="p">}</span><span class="w">
+</span><span class="p">}</span><span class="err">,</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="插件配置">插件配置</h2>
+
+<h3 id="pylance">Pylance</h3>
+
+<p>通过<code class="language-plaintext highlighter-rouge">pip install</code>安装的<em>本地包</em>可能会报错（找不到包<img class="emoji" title=":confused:" alt=":confused:" raw="😕" src="https://github.githubassets.com/images/icons/emoji/unicode/1f615.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">）</p>
+
+<p>解决方案：在<code class="language-plaintext highlighter-rouge">settings.json</code>中指定包的安装路径，如下</p>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">//</span><span class="w"> </span><span class="err">.vscode/settings.json</span><span class="w">
+</span><span class="nl">"python.analysis.extraPaths"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="w">
+    </span><span class="s2">"/home/zhn/anaconda3/envs/1_torch1.7/lib/python3.8/site-packages"</span><span class="w">
+</span><span class="p">]</span><span class="w">
+</span></code></pre></div></div>
+
+<p>参考：<a href="https://blog.csdn.net/DynastyRumble/article/details/109680796">【Python】VS Code导入本地工具包和消除<code class="language-plaintext highlighter-rouge">Import [module] could not be resolved in Pylance</code></a></p>
+
+<h2 id="括号对着色">括号对着色</h2>
+
+<p>启用：<code class="language-plaintext highlighter-rouge">"editor.bracketPairColorization.enabled": true</code> (<a href="https://code.visualstudio.com/updates/v1_60#_high-performance-bracket-pair-colorization">after the 1.60 update</a>)</p>
+
+<p><code class="language-plaintext highlighter-rouge">editor.guide.bracketPairs</code>：括号对引导线（？</p>
+
+<blockquote>
+  <p><a href="https://code.visualstudio.com/blogs/2021/09/29/bracket-pair-colorization">Bracket pair colorization 10,000x faster</a></p>
+</blockquote>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

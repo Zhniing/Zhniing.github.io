@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Linux指令</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Linux指令</h1>
+<!-- <p>Posted on 28 Sep 2020, Last updated: </p> -->
+<!-- <p>发表于 2020 年 09 月 28 日 | 更新于 </p> -->
+<p>发布于 2020 年 09 月 28 日  | 更新于 2022 年 04 月 02 日 </p>
+
+<div class="post_content">
+    <h1 id="帮助文档的符号说明">帮助文档的符号说明</h1>
+
+<p><code class="language-plaintext highlighter-rouge">[]</code>：可有可无的东西</p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;&gt;</code>：必须要有的东西，需要替换成实际的东西，如：路径、文件名等</p>
+
+<p><code class="language-plaintext highlighter-rouge">-a|b|c</code>：只能选其中一个</p>
+
+<p><code class="language-plaintext highlighter-rouge">-abc</code>：任意组合都可以，如<code class="language-plaintext highlighter-rouge">-ab</code>、<code class="language-plaintext highlighter-rouge">-bc</code>、<code class="language-plaintext highlighter-rouge">-abc</code>等</p>
+
+<p><code class="language-plaintext highlighter-rouge">...</code>：表示可以有多个（前面的东西），如：<code class="language-plaintext highlighter-rouge">rm [OPTION]... [FILE]...</code></p>
+
+<h1 id="切换到root用户">切换到root用户</h1>
+
+<p><code class="language-plaintext highlighter-rouge">sudo su</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo -i</code></p>
+
+<h1 id="指令解析">指令解析</h1>
+
+<h2 id="ip">ip</h2>
+
+<blockquote>
+  <p>Linux ip 命令与 <a href="https://www.runoob.com/linux/linux-comm-ifconfig.html">ifconfig</a> 命令类似，但比 ifconfig 命令更加强大，主要功能是用于显示或设置网络设备。</p>
+
+  <p>ip 命令是 Linux 加强版的的网络配置工具，用于代替 ifconfig 命令。</p>
+
+  <p>– <a href="https://www.runoob.com/linux/linux-comm-ip.html">Linux ip 命令</a></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">ip addr</code>：查看IP地址</p>
+
+<h2 id="curl">curl</h2>
+
+<p><code class="language-plaintext highlighter-rouge">-o</code>将服务器的返回保存为文件</p>
+
+<blockquote>
+  <p>-o, –output <file> Write to file instead of stdout</file></p>
+</blockquote>
+
+<p>获取数据并保存到文件:<code class="language-plaintext highlighter-rouge">curl -o &lt;file&gt; &lt;url&gt;</code>或<code class="language-plaintext highlighter-rouge">curl &lt;url&gt; &gt; &lt;file&gt;</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">--connect-timeout &lt;seconds&gt;</code>设置最大请求时间</p>
+
+<p><code class="language-plaintext highlighter-rouge">-m</code>或<code class="language-plaintext highlighter-rouge">--max-time &lt;seconds&gt;</code>设置最大传输时间</p>
+
+<h2 id="grep">grep</h2>
+
+<p><code class="language-plaintext highlighter-rouge">-v</code>反选</p>
+
+<p><code class="language-plaintext highlighter-rouge">grep -v grep</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">-i</code>忽略大小写</p>
+
+<p><code class="language-plaintext highlighter-rouge">-r</code>递归查找，并显示文件名</p>
+
+<p><code class="language-plaintext highlighter-rouge">-n</code>显示行号，与<code class="language-plaintext highlighter-rouge">-r</code>一起使用可以精确定位</p>
+
+<p><code class="language-plaintext highlighter-rouge">-E</code>启用正则表达式</p>
+
+<h3 id="egrep">egrep</h3>
+
+<p>使用正则表达式同时搜索多个pattern</p>
+
+<p><code class="language-plaintext highlighter-rouge">egrep 'pa|pb'</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">egrep</code>等价于<code class="language-plaintext highlighter-rouge">grep -E</code></p>
+
+<h2 id="find">find</h2>
+
+<p>常用的格式：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="nb">.</span> <span class="nt">-name</span> <span class="s1">'*aaa*'</span> <span class="nt">-type</span> f
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">-name</code>：含<em>通配符</em>的模式要用<strong>引号括起来</strong><img class="emoji" title=":exclamation:" alt=":exclamation:" raw="❗️" src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))"></p>
+
+<p><code class="language-plaintext highlighter-rouge">-type f|d</code>：指定匹配的文件类型，<code class="language-plaintext highlighter-rouge">f</code>文件，<code class="language-plaintext highlighter-rouge">d</code>目录</p>
+
+<p><code class="language-plaintext highlighter-rouge">-path './aaa/*'</code>：按路径过滤文件，即，只显示和<code class="language-plaintext highlighter-rouge">./aaa/*</code>匹配的文件（<code class="language-plaintext highlighter-rouge">*</code>是一个通配符）</p>
+
+<p>对找到的文件<strong>执行命令</strong>：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>find <span class="nb">.</span> <span class="nt">-exec</span> &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="se">\;</span> <span class="c"># 一些不要文件参数的命令可以这样执行，如：pwd</span>
+find <span class="nb">.</span> <span class="nt">-exec</span> &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="o">{}</span> <span class="o">[</span>options] <span class="se">\;</span>  <span class="c"># 参数可以放在{}后面</span>
+find <span class="nb">.</span> <span class="nt">-exec</span> &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="o">{}</span> <span class="se">\;</span> <span class="nt">-exec</span> &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="o">{}</span> <span class="se">\;</span>  <span class="c"># 执行多个命令</span>
+find <span class="nb">.</span> <span class="nt">-exec</span> &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="o">{}</span> +
+find <span class="nb">.</span> <span class="nt">-execdir</span> &lt;<span class="nb">command</span><span class="o">&gt;</span> <span class="o">{}</span> +
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">-exec &lt;command&gt; {} +</code>：对找到的每个文件执行指定命令，占位符<code class="language-plaintext highlighter-rouge">{}</code>代表当前的文件名，<code class="language-plaintext highlighter-rouge">+</code>表示在后面追加所有找到的文件，执行命令的目录是调用<code class="language-plaintext highlighter-rouge">find</code>的目录，<code class="language-plaintext highlighter-rouge">-exec</code>存在<a href="https://www.gnu.org/software/findutils/manual/html_node/find_html/Race-Conditions-with-_002dexec.html">安全隐患</a>（没看太懂）</p>
+
+<p><code class="language-plaintext highlighter-rouge">-execdir</code>：在找到的<strong>文件所在目录</strong>执行命令，可以避免<code class="language-plaintext highlighter-rouge">-exec</code>的安全隐患</p>
+
+<h2 id="sed">sed</h2>
+
+<p>一些常用的总结：<a href="https://github.com/adrianscheff/useful-sed">useful-sed</a></p>
+
+<p><code class="language-plaintext highlighter-rouge">sed 's/RegExr/../[g|p]'</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">/</code>，<code class="language-plaintext highlighter-rouge">@</code>，都可以作为分隔符</p>
+
+<p><code class="language-plaintext highlighter-rouge">s</code>：表示执行替换动作</p>
+
+<p><code class="language-plaintext highlighter-rouge">g</code>：替换<strong>每一个匹配</strong>到的模式，默认只替换第一个匹配到的模式</p>
+
+<p><code class="language-plaintext highlighter-rouge">p</code>：<strong>打印</strong>匹配到的<strong>行</strong>，通常与<code class="language-plaintext highlighter-rouge">-n</code>选项同时使用</p>
+
+<p><code class="language-plaintext highlighter-rouge">/&lt;pattern&gt;/d</code>：删除行</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">&amp;</code> is special in the replacement text: it means “the whole part of the input that was matched by the pattern”</p>
+
+  <p>To insert an actual ampersand in the replacement text, use <code class="language-plaintext highlighter-rouge">\&amp;</code>.</p>
+
+  <p>– <a href="https://unix.stackexchange.com/questions/296705/using-sed-with-ampersand">using sed with ampersand (&amp;)</a></p>
+</blockquote>
+
+<h3 id="选项">选项</h3>
+
+<p><code class="language-plaintext highlighter-rouge">-r|-E</code>：使用<a href="https://www.gnu.org/software/sed/manual/html_node/ERE-syntax.html#ERE-syntax">扩展的正则表达式</a>（分组匹配，BRE：<code class="language-plaintext highlighter-rouge">\(ab\)</code>，ERE：<code class="language-plaintext highlighter-rouge">(ab)</code>）</p>
+
+<p><code class="language-plaintext highlighter-rouge">-n|--silent|--quiet</code>：不打印文件内容，默认会把（处理后的）文件内容全部打印出来</p>
+
+<p><code class="language-plaintext highlighter-rouge">-i|--in-place</code>：<strong>将标准输出重定向到文件</strong>，一般不和<code class="language-plaintext highlighter-rouge">-n</code>同时使用，因为<code class="language-plaintext highlighter-rouge">-n</code>不会打印原文到标准输出</p>
+
+<p><code class="language-plaintext highlighter-rouge">-i.bak</code>：创建备份文件，<code class="language-plaintext highlighter-rouge">.bak</code>表示备份文件的后缀，可指定任意后缀</p>
+
+<p>当使用<code class="language-plaintext highlighter-rouge">-n</code>和<code class="language-plaintext highlighter-rouge">/p</code>确认命令无误后，改为<code class="language-plaintext highlighter-rouge">-i</code>覆盖原文件时，忘记删除<code class="language-plaintext highlighter-rouge">/p</code>，导致出现<em>连续的重复行</em>，解决方案：<a href="https://blog.csdn.net/Longyu_wlz/article/details/84206368">sed 与 awk 处理重复行</a></p>
+
+<h3 id="分组匹配">分组匹配</h3>
+
+<p>小括号括起来的模式<code class="language-plaintext highlighter-rouge">(.{10})</code>匹配到的内容，可以在替换的时候用<code class="language-plaintext highlighter-rouge">\n</code>保留，n取1、2、3……代表匹配到的第几组，如：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sed</span> <span class="nt">-ri</span> <span class="s1">'s/^last-updated-date: (.{10}) (.{8}) (.{3})(.{2})$/last-updated-date: \1T\2\3\:\4/'</span> <span class="nv">$file</span>
+</code></pre></div></div>
+
+<h3 id="只处理第一次命中的行">只处理第一次命中的行</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sed</span> <span class="nt">-r</span> <span class="s1">'0,/^last-updated-date:.*$/{/^last-updated-date:.*$/d}'</span> <span class="nv">$file</span>
+</code></pre></div></div>
+
+<p><a href="http://bbs.chinaunix.net/thread-3616467-1-1.html">sed修改第一个匹配的行</a></p>
+
+<h2 id="awk">awk</h2>
+
+<p><code class="language-plaintext highlighter-rouge">awk '&lt;pattern&gt; {&lt;action&gt;}'</code></p>
+
+<ul>
+  <li>&lt;pattern&gt;：用来筛选“行”，如<code class="language-plaintext highlighter-rouge">$3=="abc"</code>
+</li>
+  <li>&lt;action&gt;：执行的具体操作（对筛出来的“行”），如<code class="language-plaintext highlighter-rouge">print $3</code>
+</li>
+  <li>默认以<em>空格</em>分段，<code class="language-plaintext highlighter-rouge">$1 $2 $3 ...</code>表示第几段，<code class="language-plaintext highlighter-rouge">$0</code>表示<strong>整行</strong>
+</li>
+</ul>
+
+<p>例1：<code class="language-plaintext highlighter-rouge">awk '{print $1 $3}' &lt;file&gt;</code>打印文件中每行的第一和第三个字符串（字符串以空格为区分）</p>
+
+<p>例2：<code class="language-plaintext highlighter-rouge">ps aux | awk '$1=="aaa" {print $0}'</code>打印用户名为<code class="language-plaintext highlighter-rouge">aaa</code>的进程</p>
+
+<h2 id="xargs">xargs</h2>
+
+<blockquote>
+  <p>xargs 是一个强有力的命令，它能够捕获一个命令的输出，然后传递给另外一个命令。</p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">ps aux | grep &lt;process name&gt; | grep -v grep | awk '{print $2}' | xargs kill -9</code></p>
+
+<h2 id="top">top</h2>
+
+<h3 id="选项-1">选项</h3>
+
+<p><code class="language-plaintext highlighter-rouge">-u|U [user]</code>只显示指定用户的进程</p>
+
+<h3 id="按键说明">按键说明</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>按键</th>
+      <th>说明</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>h</td>
+      <td>查看帮助</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>显示每个cpu核心的使用情况</td>
+    </tr>
+    <tr>
+      <td>P</td>
+      <td>按cpu使用率排序</td>
+    </tr>
+    <tr>
+      <td>M</td>
+      <td>按内存使用率排序</td>
+    </tr>
+    <tr>
+      <td>T</td>
+      <td>按累计时间排序</td>
+    </tr>
+    <tr>
+      <td>R</td>
+      <td>倒序</td>
+    </tr>
+    <tr>
+      <td>c</td>
+      <td>仅命令名称或包含命令行参数</td>
+    </tr>
+    <tr>
+      <td>z</td>
+      <td>以更明显的颜色区分运行中(R)程序</td>
+    </tr>
+    <tr>
+      <td>i</td>
+      <td>忽略闲置和僵尸进程</td>
+    </tr>
+    <tr>
+      <td>f</td>
+      <td>自定义显示内容（仅本次生效）</td>
+    </tr>
+    <tr>
+      <td>d</td>
+      <td>设置刷新间隔(delay)</td>
+    </tr>
+    <tr>
+      <td>k</td>
+      <td>输入PID，kill进程</td>
+    </tr>
+    <tr>
+      <td>alt + j/k/h/l</td>
+      <td>上下左右移动</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="ps">ps</h2>
+
+<p>自定义查看进程信息<code class="language-plaintext highlighter-rouge">ps -A -ostat,user,pid,ppid,start,cmd</code></p>
+
+<h2 id="cp">cp</h2>
+
+<p><code class="language-plaintext highlighter-rouge">-n, --no-clobber</code>不覆盖已有文件</p>
+
+<p><code class="language-plaintext highlighter-rouge">-i, --interactive</code>交互式询问是否覆盖</p>
+
+<h2 id="read">read</h2>
+
+<p><code class="language-plaintext highlighter-rouge">-p PROMPT</code>：设置提示字符串<code class="language-plaintext highlighter-rouge">PROMPT</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">-n 1</code>：只读入1个字符</p>
+
+<h2 id="head--tail">head / tail</h2>
+
+<p><code class="language-plaintext highlighter-rouge">head -n 3 [file]</code>查看文件头3行</p>
+
+<p><code class="language-plaintext highlighter-rouge">tail -n 3 [file]</code>查看文件尾3行</p>
+
+<h2 id="tr">tr</h2>
+
+<p><strong>tr</strong>anslate or delete characters（替换或删除<em>字符</em>——逐字符处理）</p>
+
+<p>从标准输入设备读取数据，也可通过管道输入，结果输出到标准输出设备</p>
+
+<p><code class="language-plaintext highlighter-rouge">tr [OPTION]... &lt;SET1&gt; [SET2]</code> 将 <code class="language-plaintext highlighter-rouge">SET1</code> 中的字符替换为 <code class="language-plaintext highlighter-rouge">SET2</code>  中的对应字符</p>
+
+<blockquote>
+  <p>Translation occurs if -d is not given and both SET1 and SET2 appear. – <code class="language-plaintext highlighter-rouge">man tr</code></p>
+</blockquote>
+
+<p>例子：</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">tr abc 1</code> 把字符 <code class="language-plaintext highlighter-rouge">a</code> <code class="language-plaintext highlighter-rouge">b</code> <code class="language-plaintext highlighter-rouge">c</code> 都换成 <code class="language-plaintext highlighter-rouge">1</code>
+</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">tr -d '\n'</code> 删除换行符，转义字符要加引号</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">tr '\n' ,</code> 换行符替换为逗号 <code class="language-plaintext highlighter-rouge">,</code>
+</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">tr a-z A-Z</code> 小写转大写</li>
+</ul>
+
+<h1 id="unix指令-增强版">Unix指令 增强版</h1>
+
+<p><a href="https://github.com/ibraheemdev/modern-unix">Modern Unix</a></p>
+
+<h2 id="fd">fd</h2>
+
+<blockquote>
+  <p><a href="https://github.com/sharkdp/fd"><em>fd</em></a>是一种简单ㄡ快速和用户友好的<a href="https://www.gnu.org/software/findutils/"><em>find</em></a>替代方案.</p>
+</blockquote>
+
+<ul>
+  <li>安装</li>
+</ul>
+
+<p>Manjaro:  <code class="language-plaintext highlighter-rouge">sudo pacman -S fd</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">fd -h</code>中有详细的使用说明</p>
+
+<ul>
+  <li>
+    <p>Usage</p>
+
+    <p><code class="language-plaintext highlighter-rouge">fd [FLAGS/OPTIONS] [&lt;pattern&gt;] [&lt;path&gt;...]</code></p>
+  </li>
+  <li>
+    <p>FLAGS</p>
+
+    <p><code class="language-plaintext highlighter-rouge">-H</code>显示隐藏文件</p>
+  </li>
+  <li>
+    <p>OPTIONS</p>
+
+    <p><code class="language-plaintext highlighter-rouge">-e</code>指定后缀搜索</p>
+  </li>
+</ul>
+
+<h1 id="常见操作">常见操作</h1>
+
+<h2 id="搜索历史命令">搜索历史命令</h2>
+
+<p>在终端按<code class="language-plaintext highlighter-rouge">Ctrl + r</code>，然后输入<strong>关键字</strong>，就会出现包含关键字的<strong>最近使用过的</strong>命令，反复按<code class="language-plaintext highlighter-rouge">Ctrl + r</code>继续往历史方向搜索(<em>reverse</em>, <em>backward</em>)；<code class="language-plaintext highlighter-rouge">Ctrl + s</code>搜索方向与其相反(<em>forward</em>)</p>
+
+<p><a href="https://askubuntu.com/questions/74631/how-do-i-search-my-command-line-history-for-commands-i-used-before">How do I search my command-line history for commands I used before?</a></p>
+
+<h2 id="获取并杀死某个进程">获取并杀死某个进程</h2>
+
+<p><code class="language-plaintext highlighter-rouge">ps aux | grep &lt;process name&gt; | grep -v grep | awk '{print $2}' | xargs kill -9</code></p>
+
+<h2 id="后台运行">后台运行</h2>
+
+<p><code class="language-plaintext highlighter-rouge">nohup &lt;process name&gt; &gt; /dev/null 2&gt;&amp;1 &amp;</code></p>
+
+<ol>
+  <li>
+<code class="language-plaintext highlighter-rouge">nohup</code>不中断</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">&lt;process name&gt;</code>要运行的程序</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">&gt; /dev/null</code>标准输出重定向到/dev/null(丢掉 销毁)</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">2&gt;&amp;1</code>标准错误(stderr)重定向到标准输出(stdout), 递归地重定向到/dev/null
+    <ul>
+      <li>
+<code class="language-plaintext highlighter-rouge">0</code>stdin   标准输入</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">1</code>stdout 标准输出</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">2</code>stderr  标准错误</li>
+    </ul>
+  </li>
+  <li>
+<code class="language-plaintext highlighter-rouge">&amp;</code>后台运行</li>
+</ol>
+
+<h2 id="shell管理">Shell管理</h2>
+
+<p>查看已有shell<code class="language-plaintext highlighter-rouge">cat /etc/shells</code></p>
+
+<p>查看当前shell<code class="language-plaintext highlighter-rouge">echo $SHELL</code></p>
+
+<p>更改当前用户的默认shell<code class="language-plaintext highlighter-rouge">chsh -s /bin/bash</code></p>
+
+<h2 id="终端设置代理">终端设置代理</h2>
+
+<p>该终端下的网络指令都会根据这三个环境变量来决定是否走代理</p>
+
+<p>注意区分大小写</p>
+
+<p><code class="language-plaintext highlighter-rouge">export http_proxy=http://localhost:7890</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">export https_proxy=https://localhost:7890</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">export ALL_PROXY=socks5://localhost:7891</code></p>
+
+<p>可能遇到的问题</p>
+
+<ul>
+  <li>开启代理后无法从github clone</li>
+</ul>
+
+<p>报错：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>curl: (35) OpenSSL SSL_connect: SSL_ERROR_SYSCALL in connection to 127.0.0.1:7890
+</code></pre></div></div>
+
+<p>解决方案：未知。。。</p>
+
+<h2 id="curl查询公网出口ip">curl查询公网出口ip</h2>
+
+<p><code class="language-plaintext highlighter-rouge">curl ipecho.net/plain</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">curl ifconfig.me</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">curl ipinfo.io</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">curl www.trackip.net/ip</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">curl cip.cc</code></p>
+
+<h2 id="更改主目录文件夹名为英文">更改主目录文件夹名为英文</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo pacman -S xdg-user-dirs-gtk
+export LANG=en_US
+xdg-user-dirs-gtk-update
+</code></pre></div></div>
+
+<h2 id="显示文件中的非打印字符隐藏字符">显示文件中的非打印字符(隐藏字符)</h2>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">cat -A</code>等价于<code class="language-plaintext highlighter-rouge">cat -vET</code></p>
+
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">-v, --show-nonprinting</code></li>
+      <li><code class="language-plaintext highlighter-rouge">-E, --show-ends</code></li>
+      <li><code class="language-plaintext highlighter-rouge">-T, --show-tabs</code></li>
+    </ul>
+  </li>
+  <li>
+    <p>vim中<code class="language-plaintext highlighter-rouge">:set invlist</code>（好像不行）</p>
+  </li>
+</ol>
+
+<h2 id="批量修改文件名">批量修改文件名</h2>
+
+<p><code class="language-plaintext highlighter-rouge">rename</code>可以实现批量重命名文件，<img class="emoji" title=":exclamation:" alt=":exclamation:" raw="❗️" src="https://github.githubassets.com/images/icons/emoji/unicode/2757.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">有<strong>两种</strong>实现：</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">rename</code>：一个<a href="http://zh.wikipedia.org/wiki/Perl">Perl</a>脚本，类似<code class="language-plaintext highlighter-rouge">sed</code>的<em>正则</em>替换语法</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">rename.ul</code>：<em>util-linux package</em>的一部分，<em>简单易用</em>的语法，用<code class="language-plaintext highlighter-rouge">?</code>匹配任意<strong>一个字符</strong>；新版Ubuntu(18.04以上)好像只有这种</li>
+</ul>
+
+<p>选项：</p>
+
+<ul>
+  <li>
+<code class="language-plaintext highlighter-rouge">-v|--verbose</code>：打印出被更改的文件</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">-n|--no-act</code>：不发生实际的改动 ，结合<code class="language-plaintext highlighter-rouge">-v</code>确认哪些文件会被更改（类似<code class="language-plaintext highlighter-rouge">rsync -vn</code>）</li>
+</ul>
+
+<p>将所有以.htm结尾的文件名中的.htm修改为.html，如下：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>rename <span class="s1">'s/\.htm$/\.html/'</span> <span class="k">*</span>.htm
+rename.ul <span class="nt">-vn</span> .htm .html <span class="k">*</span>.htm
+</code></pre></div></div>
+
+<p><a href="http://linux-wiki.cn/wiki/zh-hans/%E6%89%B9%E9%87%8F%E9%87%8D%E5%91%BD%E5%90%8D%E6%96%87%E4%BB%B6">批量重命名文件</a></p>
+
+<h2 id="发出通知">发出通知</h2>
+
+<p>Ringing the terminal bell</p>
+
+<p><code class="language-plaintext highlighter-rouge">echo -e "\a"</code></p>
+
+<h2 id="查看发行版信息">查看发行版信息</h2>
+
+<p><code class="language-plaintext highlighter-rouge">cat /etc/*release</code></p>
+
+<h1 id="文件的时间参数">文件的时间参数</h1>
+
+<p>文件重命名后改变的是CTime，Change time</p>
+
+<blockquote>
+  <p>Linux 系统中，每个文件主要拥有 3 个时间参数（通过 stat 命令进行查看），分别是文件的访问时间、数据修改时间以及状态修改时间：</p>
+  <ul>
+    <li>访问时间（Access Time，简称 atime）：只要文件的内容被读取，访问时间就会更新。例如，使用 cat 命令可以查看文件的内容，此时文件的访问时间就会发生改变。</li>
+    <li>数据修改时间（Modify Time，简称 mtime）：当文件的内容数据发生改变，此文件的数据?修改时间就会跟着相应改变。</li>
+    <li>状态修改时间（Change Time，简称 ctime）：当文件的状态发生变化，就会相应改变这个时间。比如说，如果文件的权限或者属性发生改变，此时间就会相应改变。</li>
+  </ul>
+</blockquote>
+
+<h1 id="用户组管理">用户组管理</h1>
+
+<p>将用户user到组group中</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>adduser user group
+</code></pre></div></div>
+
+<p>查看用户user的<strong>用户id</strong>(uid)，<strong>组id</strong>(gid)和<strong>所在的组</strong>(groups)</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">id </span>user
+</code></pre></div></div>
+
+<h1 id="端口">端口</h1>
+
+<p>查看端口占用：</p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo lsof -i:3389</code>查看占用3389端口的程序（需要root权限，否则不会显示任何信息）</p>
+
+<blockquote>
+  <p><a href="https://www.runoob.com/w3cnote/linux-check-port-usage.html">菜鸟教程</a></p>
+</blockquote>
+
+<p>查看tcp连接：</p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo ss -tpln</code>显示进程需要root权限</p>
+
+<h1 id="最近安装的软件包">最近安装的软件包</h1>
+
+<p>查看dpkg日志：<code class="language-plaintext highlighter-rouge">grep " install " /var/log/dpkg.log</code></p>
+
+<p>查看apt历史命令：<code class="language-plaintext highlighter-rouge">grep " install " /var/log/apt/history.log</code></p>
+
+<blockquote>
+  <p><a href="https://ubuntuqa.com/article/416.html">参考资料</a></p>
+</blockquote>
+
+<h1 id="kill进程">kill进程</h1>
+
+<p><code class="language-plaintext highlighter-rouge">kill [pid]</code>发送SIG<strong>TERM</strong>(15)信号，能被进程捕获并<strong>响应</strong>，进程自己执行结束代码，如无相应代码，则直接kill</p>
+
+<p><code class="language-plaintext highlighter-rouge">kill -9 [pid]</code>发送SIG<strong>KILL</strong>(9)信号，不能被进程捕获，立即结束（不通知进程，暴力结束）</p>
+
+<p>总结：TERM通知进程<strong>主动</strong>结束，KILL是进程<strong>被迫</strong>结束</p>
+
+<p>根据<code class="language-plaintext highlighter-rouge">man kill</code>，某些shell有<strong><em>a built-in kill command</em></strong>，无法通过<code class="language-plaintext highlighter-rouge">-L</code>打印信号表，建议替换为<code class="language-plaintext highlighter-rouge">/bin/kill</code></p>
+
+<p>使用<strong>built-in kill</strong>（注意<strong>不是</strong>/bin/kill）可以杀死后台任务：<code class="language-plaintext highlighter-rouge">kill %n</code>，<code class="language-plaintext highlighter-rouge">n</code>为<code class="language-plaintext highlighter-rouge">jobs</code>中的任务编号</p>
+
+<p>可以通过<code class="language-plaintext highlighter-rouge">builtin kill %1</code>调用<strong>built-in kill</strong></p>
+
+<h1 id="打包压缩备份">打包、压缩、备份</h1>
+
+<ul>
+  <li>
+    <p><strong>打包</strong>只是把多个文件绑起来成为一个<strong>归档文件</strong>，常用命令<code class="language-plaintext highlighter-rouge">tar</code></p>
+  </li>
+  <li>
+    <p><strong>压缩</strong>是通过特定算法来减小文件大小，常用命令<code class="language-plaintext highlighter-rouge">gzip</code></p>
+  </li>
+</ul>
+
+<h2 id="tar">tar</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">-z</span> <span class="c">#通过gzip指令压缩/解压缩文件，文件名最好为*.tar.gz</span>
+<span class="nt">-v</span> <span class="c">#显示指令执行过程</span>
+<span class="nt">-c</span> <span class="c">#建立新的备份文件</span>
+<span class="nt">-x</span> <span class="c">#从归档文件中提取文件</span>
+<span class="nt">-f</span> <span class="c">#指定生成的文件名</span>
+<span class="nt">-t</span> <span class="c">#列出归档文件的内容</span>
+<span class="nt">-C</span> <span class="c">#切换工作目录，解压到指定目录</span>
+<span class="nt">--strip-components</span><span class="o">=</span>NUMBER <span class="c">#去掉NUMBER层文件夹：`/some/file`去掉1层文件夹为`file`</span>
+</code></pre></div></div>
+
+<p><a href="https://unix.stackexchange.com/questions/535772/what-does-strip-components-c-mean-in-tar">What does –strip-components -C mean in tar?</a></p>
+
+<p><code class="language-plaintext highlighter-rouge">-</code>可省略</p>
+
+<p>默认解压到当前（工作）目录，可以用<code class="language-plaintext highlighter-rouge">-C</code>切换工作目录，即解压的目标目录</p>
+
+<p><code class="language-plaintext highlighter-rouge">tar</code>命令一般都要结合<code class="language-plaintext highlighter-rouge">-f</code>，用于<strong>指定</strong>要操作的tar文件，如查看tar包内容：<code class="language-plaintext highlighter-rouge">tar tf </code></p>
+
+<p>打包：</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">tar zcvf test.tar.gz /etc/</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">tar zcv 1 2 3/ &gt; test.tar.gz</code></p>
+  </li>
+</ul>
+
+<p>解压：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">tar xvf test.tar</code></li>
+  <li>
+<code class="language-plaintext highlighter-rouge">tar zxvf test.tar.gz</code>，<code class="language-plaintext highlighter-rouge">z</code>代表需要压缩/解压</li>
+  <li>只提取部分文件：<code class="language-plaintext highlighter-rouge">tar xvf &lt;tar包&gt; [tar包中的文件]...</code>
+</li>
+  <li>解压<code class="language-plaintext highlighter-rouge">.tar.zst</code>：<code class="language-plaintext highlighter-rouge">tar xvf &lt;.tar.zst&gt;</code>
+</li>
+</ul>
+
+<h2 id="gzip">gzip</h2>
+
+<p><img class="emoji" title=":bulb:" alt=":bulb:" raw="💡" src="https://github.githubassets.com/images/icons/emoji/unicode/1f4a1.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">只能压缩<strong>单个</strong>普通文件 (<strong>regular file</strong>)，会忽略符号链接 (symbolic links)</p>
+
+<p><code class="language-plaintext highlighter-rouge">gzip [OPTION]... &lt;FILE&gt;...</code><strong>分别</strong>压缩给定的文件，每个源文件都会被一个压缩文件 <em>.gz</em> <strong>替换</strong>（不会保留源文件）</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>选项</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>-l</td>
+      <td>列出压缩文件的相关信息</td>
+    </tr>
+    <tr>
+      <td>-tv</td>
+      <td>检测压缩包的完整性</td>
+    </tr>
+    <tr>
+      <td>-v</td>
+      <td>显示详细信息</td>
+    </tr>
+    <tr>
+      <td>-k</td>
+      <td>保留源文件（解压和压缩默认<strong>不保留</strong>源文件）</td>
+    </tr>
+  </tbody>
+</table>
+
+<blockquote>
+  <p><a href="https://linuxize.com/post/gzip-command-in-linux/#:~:text=Gzip%20compresses%20only%20single%20files%20and%20creates%20a%20compressed%20file%20for%20each%20given%20file.">Gzip Command in Linux</a></p>
+</blockquote>
+
+<p>有次压缩后，用<code class="language-plaintext highlighter-rouge">gzip -l</code>查看信息，发现压缩率为负，原文件大小显示也不正确，不知道什么原因。。</p>
+
+<p>解压：<code class="language-plaintext highlighter-rouge">gunzip test.gz</code></p>
+
+<h2 id="zip">zip</h2>
+
+<p><code class="language-plaintext highlighter-rouge">unzip &lt;.zip&gt; ['仅提取部分子文件夹/*']</code>仅提取指定文件，默认：<strong>保留目录结构</strong>、提取到当前文件夹</p>
+
+<p><code class="language-plaintext highlighter-rouge">zip -sf &lt;.zip&gt;</code> (<strong>s</strong>how <strong>f</strong>iles) 显示压缩包内容</p>
+
+<p><code class="language-plaintext highlighter-rouge">-d &lt;dir&gt;</code><strong>解压到</strong>指定目录</p>
+
+<p><code class="language-plaintext highlighter-rouge">-j</code>忽略压缩包内的<strong>目录结构</strong></p>
+
+<h1 id="rsync">rsync</h1>
+
+<p><code class="language-plaintext highlighter-rouge">--progress</code>显示进度条</p>
+
+<p><code class="language-plaintext highlighter-rouge">-a</code>归档模式</p>
+
+<p><code class="language-plaintext highlighter-rouge">-v</code>详细模式</p>
+
+<p><code class="language-plaintext highlighter-rouge">-u, --update</code>This  forces rsync to skip any files which <strong>exist on the destination</strong> and have a <strong>modified time that is newer than the source file</strong>.  (If an existing destination file has a modification time equal to the source file’s, it  will be updated if the sizes are different.)</p>
+
+<p><code class="language-plaintext highlighter-rouge">--delete</code>镜像模式，会删除不存在于源地址而存在于目的地址的文件</p>
+
+<p><code class="language-plaintext highlighter-rouge">-n|--dry-run</code>试运行，不会真的拷贝文件，配合<code class="language-plaintext highlighter-rouge">-v</code>可以查看哪些文件会发生变动</p>
+
+<p><code class="language-plaintext highlighter-rouge">--max-size='200k'</code>限制传输文件的大小，超过限制的文件不会被传输</p>
+
+<blockquote>
+  <p><a href="https://www.kancloud.cn/thinkphp/linux-command-line/39450">参考</a></p>
+</blockquote>
+
+<h1 id="apt-mark">apt-mark</h1>
+
+<p>设置软件包的<strong>各种状态</strong>（自动更新，手动更新，不更新）</p>
+
+<p>设置软件包不更新，使<code class="language-plaintext highlighter-rouge">sudo apt upgrade</code><strong>忽略</strong>该包（不更新）：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-mark hold <span class="o">[</span>pkg]  <span class="c"># 设为不更新</span>
+apt-mark unhold <span class="o">[</span>pkg]  <span class="c"># 恢复</span>
+apt-mark showhold <span class="o">[</span>pkg]  <span class="c"># 查看</span>
+</code></pre></div></div>
+
+<p>设置和查看<strong>自动</strong>更新：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-mark auto <span class="o">[</span>pkg]
+apt-mark showauto <span class="o">[</span>pkg]
+</code></pre></div></div>
+
+<p>设置和查看<strong>手动</strong>更新：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-mark manual <span class="o">[</span>pkg]
+apt-mark showmanual <span class="o">[</span>pkg]
+</code></pre></div></div>
+
+<h1 id="runlevel">runlevel</h1>
+
+<p>2个常用的<strong>runlevel/target</strong>：</p>
+
+<ul>
+  <li>
+<strong>multi-user</strong>.target: analogous to runlevel <strong>3</strong>, Text mode</li>
+  <li>
+<strong>graphical</strong>.target: analogous to runlevel <strong>5</strong>, GUI mode with X server</li>
+</ul>
+
+<p>查看runlevel：<code class="language-plaintext highlighter-rouge">runlevel</code>或<code class="language-plaintext highlighter-rouge">systemctl get-default</code></p>
+
+<p>设置默认的启动runlevel：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>systemctl <span class="nb">enable </span>multi-user.target
+systemctl set-default multi-user.target
+</code></pre></div></div>
+
+<p>不重启系统，切换runlevel：<code class="language-plaintext highlighter-rouge">init 3</code></p>
+
+<p>可以通过切换runlevel为3来禁用Xserver</p>
+
+<blockquote>
+  <p><a href="https://www.systutorials.com/change-systemd-boot-target-linux/">reference</a></p>
+</blockquote>
+
+<h1 id="查看硬件">查看硬件</h1>
+
+<ol>
+  <li>
+    <p>cpu</p>
+
+    <p><code class="language-plaintext highlighter-rouge">lscpu</code></p>
+
+    <p><code class="language-plaintext highlighter-rouge">cat /proc/cpuinfo</code></p>
+
+    <p><code class="language-plaintext highlighter-rouge">top</code>: load average 查看cpu负载</p>
+
+    <p><code class="language-plaintext highlighter-rouge">w</code>: 查看登录用户和负载</p>
+  </li>
+  <li>
+    <p>mem</p>
+
+    <p><code class="language-plaintext highlighter-rouge">cat /proc/meminfo</code></p>
+  </li>
+</ol>
+
+<p><a href="https://mp.weixin.qq.com/s/3hU1fROsT1dPwzsnoTB0Sw">Linux 系统信息收集备忘录</a></p>
+
+<p><a href="https://mp.weixin.qq.com/s/Z-1zCKCESISkmZ-gROxNyA">9个Linux 常用查看系统硬件信息命令(实例详解)</a></p>
+
+<h2 id="pci硬件序列号">pci硬件序列号</h2>
+
+<p><code class="language-plaintext highlighter-rouge">lspci -vnn | grep VGA -A 15</code>查看显卡详细信息</p>
+
+<p>其中<code class="language-plaintext highlighter-rouge">[10de:1e07]</code>代表硬件的序列号，在http://pci-ids.ucw.cz/read/PC/可以查询<strong>生产商</strong>和<strong>具体型号</strong></p>
+
+<h2 id="查看显卡">查看显卡</h2>
+
+<p><code class="language-plaintext highlighter-rouge">sudo lshw -c display</code>(跟<code class="language-plaintext highlighter-rouge">sudo lshw -c video</code>是一样的?)</p>
+
+<p><code class="language-plaintext highlighter-rouge">configuration: driver=nvidia latency=0</code>表示驱动名字（？</p>
+
+<p><code class="language-plaintext highlighter-rouge">modinfo nvidia</code>根据上面的名字，查看驱动模块的详细信息</p>
+
+<h1 id="netplan">netplan</h1>
+
+<p><a href="https://netplan.io/">官网</a></p>
+
+<p>netplan屏蔽了<strong>底层网络管理工具</strong>(renderer)配置的差异性，只需一个<code class="language-plaintext highlighter-rouge">YAML</code>文件，就能生成对应的底层管理工具所需的配置。只要是netplan支持的底层管理工具就行，目前支持的renderer有：</p>
+
+<ol>
+  <li>NetworkManager</li>
+  <li>Systemd-networkd</li>
+</ol>
+
+<p>YAML文件位于<code class="language-plaintext highlighter-rouge">/etc/netplan</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">netplan apply</code>：修改YAML后，应用配置</p>
+
+<p><code class="language-plaintext highlighter-rouge">networkctl</code>：查看网络设备</p>
+
+<p><code class="language-plaintext highlighter-rouge">networkctl status</code>：显示所有ip的详细信息</p>
+
+<h1 id="bc">bc</h1>
+
+<h2 id="特殊变量">特殊变量</h2>
+
+<p><code class="language-plaintext highlighter-rouge">scale=3</code> 保留3位小数</p>
+
+<p><code class="language-plaintext highlighter-rouge">ibase=16</code> 指定输入为16进制</p>
+
+<p><code class="language-plaintext highlighter-rouge">obase=16</code> 指定输出为16进制</p>
+
+<p>不进入交互式环境直接计算：<code class="language-plaintext highlighter-rouge">echo scale=3; 3/2 | bc</code></p>
+
+<p>多条语句用分号 <code class="language-plaintext highlighter-rouge">;</code> 隔开</p>
+
+<h1 id="ssh">ssh</h1>
+
+<p><code class="language-plaintext highlighter-rouge">ssh [-t] [-p port] [user@]hostname [command]</code></p>
+
+<p>如果没有指定<code class="language-plaintext highlighter-rouge">command</code>，默认运行一个<em>login shell</em></p>
+
+<p>如果指定了<code class="language-plaintext highlighter-rouge">command</code>，则直接执行，不会运行<em>login shell</em></p>
+
+<p>多个命令用<code class="language-plaintext highlighter-rouge">"</code>包起来，用<code class="language-plaintext highlighter-rouge">;</code>或<code class="language-plaintext highlighter-rouge">&amp;&amp;</code>分割</p>
+
+<p>如果要执行交互性命令，如<code class="language-plaintext highlighter-rouge">top</code>或<code class="language-plaintext highlighter-rouge">sudo</code>，则添加需要<code class="language-plaintext highlighter-rouge">-t</code>参数</p>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">-t</code>      Force pseudo-terminal allocation.</p>
+</blockquote>
+
+<p><strong>参考</strong></p>
+
+<ol>
+  <li><a href="https://www.cnblogs.com/sparkdev/p/6842805.html">SSH 远程执行任务</a></li>
+</ol>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>
