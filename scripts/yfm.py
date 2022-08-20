@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 
-# Script for YFM(YAML front matter) operation
+"""
+该脚本用于自动更新 YFM(YAML front matter)
+使git显示中文: `git config --global core.quotepath false`, 否则无法识别文件
+"""
 
 import os
-import frontmatter
+import frontmatter  # pip install python-frontmatter (not 'frontmatter' !!!)
 import datetime
 from typing import Tuple
 from glob import glob
@@ -25,7 +28,7 @@ def modified_md_files(dirs: Tuple[str, ...] = ['_posts']):
     with os.popen(cmd='git ls-files -m') as fd_cmd:  # 将命令的输出当作一个文件
         files = fd_cmd.read().splitlines()  # 获取文件名list
         for file in files:  # splitlines() 去掉'\n'
-            if not os.path.isfile(file):
+            if not os.path.isfile(file):  # 使git显示中文 `git config --global core.quotepath false`
                 continue  # 跳过已删除的文件
             if not file.endswith('.md'):
                 continue  # 仅md文件
