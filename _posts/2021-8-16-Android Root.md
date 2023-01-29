@@ -202,7 +202,7 @@ Magisk自带功能完整的[BusyBox](https://github.com/topjohnwu/Magisk/blob/ma
 1. 刷入第三方TWRP后，**进行OTA更新**，可能会：
    - OTA会下载全量更新包（完整的系统），TWRP会被替换掉
    - 变砖：升级重启时，无限重启进不去
-   
+
 
 MIUI官方ROM下载：[update_miui_ota](https://github.com/mooseIre/update_miui_ota)
 

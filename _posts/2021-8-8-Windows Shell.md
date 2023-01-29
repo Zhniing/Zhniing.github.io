@@ -62,7 +62,7 @@ copy a.jpg /b + b.txt /a c.jpg
 
 copy /b a.mpg + b.jpg c.mpg
 
-# /b 写在最前面，指定所有文件的格式 
+# /b 写在最前面，指定所有文件的格式
 ```
 
 `tree`：以树状结构打印目录，`-f`显示子目录中的内容
@@ -119,7 +119,7 @@ copy /b a.mpg + b.jpg c.mpg
   C:\>set a=1
   C:\>set /a a+=1
   2
-  
+
   C:\>set /a a=1+1
   2
   C:\>set /a a=1--1
@@ -312,9 +312,9 @@ echo a1
 - `title`：设置窗口（黑框框）标题
 
 - `mode `：
-  
+
   - `mode con cols=15 lines=20`：设置窗口大小
-  
+
 - 打印包含特殊字符的字符串：**转义**符`^`
 
   ```batch
@@ -350,7 +350,7 @@ echo a1
   ```batch
   C:\>echo hello & echo: & echo batch
   hello
-  
+
   batch
   ```
 
