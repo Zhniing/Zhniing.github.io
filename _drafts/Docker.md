@@ -52,3 +52,56 @@ OPTIONS
 docker rm <container>  # 删除容器
 docker start | restart | stop <container>  # 启动、重启、停止容器
 ```
+
+### 连接容器shell
+
+```bash
+docker exec -it 28a5cadfdbbc bash
+```
+
+### 连接容器mysql
+
+1. 将3306端口暴露出来
+
+```bash
+docker run -dt --name sqli-lab -p 8888:80 -p 8889:3306 acgpiano/sqli-labs:latest
+```
+
+2. 将登录用户的`host`字段设置为`%`（修改后重启docker生效）
+
+查看目前的`host`字段值：
+
+```sql
+select host, user from mysql.user;
+```
+
+执行修改：
+
+```sql
+update user set host='%' where host='localhost' and user='root';
+```
+
+修改后：
+
+```
++------------+------------------+
+| host       | user             |
++------------+------------------+
+| %          | root             |
++------------+------------------+
+```
+
+`%`表示：允许来自任何IP地址的连接
+
+3. 确保`bind-address`被设置为`0.0.0.0`
+
+```bash
+mysqld --verbose --help | grep bind-address
+```
+
+```
+  --bind-address=name IP address to bind to.
+bind-address                                      0.0.0.0
+```
+
+参考：[Host '172.18.0.1' is not allowed to connect to this MySQL server #275](https://github.com/docker-library/mysql/issues/275#issuecomment-292208567)
