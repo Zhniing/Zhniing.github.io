@@ -81,6 +81,8 @@ Normal模式下，按`:`，然后就可以输入各种命令
 
 `:ls`查看缓冲区
 
+`%s@/home/user@$HOME@g`替换文件中所有`/home/user`为`$HOME`（详见帮助`:h \:s`）
+
 ## 插件
 
 [vim-plug](https://github.com/junegunn/vim-plug)：插件管理器
@@ -116,7 +118,7 @@ set expandtab     " 用空格替换制表符(\t)
 
 ## NeoVim与vim共享配置
 
-*不推荐，因为Neovim大多用Lua配置，而Vim只支持Vimscript*
+**不推荐！因为Neovim大多用Lua配置，而Vim只支持Vimscript**
 
 1. 查看nvim的`runtimepath`（简写`rtp`）：
 

@@ -1,3 +1,5 @@
+# Burp Suite
+
 ## 配置CA证书
 
 没有CA证书就无法访问https网站
@@ -39,3 +41,13 @@
 1. [Burp Suite User Forum](https://forum.portswigger.net/thread/burp-interception-does-not-work-for-localhost-in-chrome-a787f541#:~:text=%22When%20the%20instructions%20tell%20you%20to%20clear%20the%20exceptions%2C%20enter%20%3C%2Dloopback%3E%20as%20the%20sole%20entry%20and%20save.%22)
 2. [Burp Interception does not work for localhost in Chrome](https://stackoverflow.com/a/55850268)
 3. [在Chrome71上，Auto Switch配置规则localhost和127.0.0.1无法正确跳转到指定的代理 #1712](https://github.com/FelisCatus/SwitchyOmega/issues/1712#issuecomment-565323980)
+
+## Intruder线程数
+
+Intruder -> Resource pool -> Create new resource pool -> Maximum concurrent requests
+
+> So creating a new resource pool and marking the option of 'maximum concurrent requests' with the value 128, will create 128 threads?
+>
+> That is correct, yes.
+>
+> -- [Using Burp Intruder threads option](https://forum.portswigger.net/thread/using-burp-intruder-threads-option-ae100db9)
