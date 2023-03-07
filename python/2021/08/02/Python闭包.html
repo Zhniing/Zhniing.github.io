@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Python闭包</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Python闭包</h1>
+<!-- <p>Posted on 02 Aug 2021, Last updated: </p> -->
+<!-- <p>发表于 2021 年 08 月 02 日 | 更新于 </p> -->
+<p>发布于 2021 年 08 月 02 日  | 更新于 2021 年 08 月 17 日 </p>
+
+<div class="post_content">
+    <h1 id="闭包形成条件">闭包形成条件</h1>
+
+<ol>
+  <li>在函数中定义函数。分别称为：
+    <ul>
+      <li>外部函数：<strong>Enclosing</strong> function</li>
+      <li>
+<a href="https://realpython.com/inner-functions-what-are-they-good-for/">内部函数</a>：<strong>Enclosed</strong> function，Inner function，Nested function</li>
+    </ul>
+  </li>
+  <li>外部函数的<strong>返回值</strong>是内部函数</li>
+  <li>内部函数使用了外部函数的变量，称为<strong>自由变量</strong>
+</li>
+</ol>
+
+<h1 id="自由变量">自由变量</h1>
+
+<p>内部函数（外部函数的返回值）会被延迟执行，执行内部函数需要用到外部函数定义的变量，那么就只有将这些（自由）变量保存起来；又Python万物皆对象，函数也是一个对象，因此就将这些自由变量保存到内部函数的成员变量<code class="language-plaintext highlighter-rouge">__closure__</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">__closure__</code>是一个<strong>tuple</strong>，包含内部函数<strong>需要的</strong>所有外部函数的变量（自由变量）</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">outer</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="mi">5</span>
+    <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span>  <span class="c1"># 没有被使用，也就没保存到__closure__里面
+</span>    <span class="k">def</span> <span class="nf">inner</span><span class="p">():</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">inner</span>
+
+<span class="n">closure_f</span> <span class="o">=</span> <span class="nf">outer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nf">closure_f</span><span class="p">()</span>  <span class="c1"># 1 5
+# 获取自由变量名
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">closure_f</span><span class="p">.</span><span class="n">__code__</span><span class="p">.</span><span class="n">co_freevars</span><span class="p">))</span>  <span class="c1"># 2
+</span><span class="nf">print</span><span class="p">(</span><span class="n">closure_f</span><span class="p">.</span><span class="n">__code__</span><span class="p">.</span><span class="n">co_freevars</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>  <span class="c1"># 'a'
+</span><span class="nf">print</span><span class="p">(</span><span class="n">closure_f</span><span class="p">.</span><span class="n">__code__</span><span class="p">.</span><span class="n">co_freevars</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>  <span class="c1"># 'x'
+# 获取自由变量值，index与变量名一致
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">len</span><span class="p">(</span><span class="n">closure_f</span><span class="p">.</span><span class="n">__closure__</span><span class="p">))</span>  <span class="c1"># 2
+</span><span class="nf">print</span><span class="p">(</span><span class="n">closure_f</span><span class="p">.</span><span class="n">__closure__</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="n">cell_contents</span><span class="p">)</span>  <span class="c1"># 5
+</span><span class="nf">print</span><span class="p">(</span><span class="n">closure_f</span><span class="p">.</span><span class="n">__closure__</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">cell_contents</span><span class="p">)</span>  <span class="c1"># 1
+</span></code></pre></div></div>
+
+<p>如果外部函数返回<strong>多个</strong>内部函数，这些内部函数共享（<strong>浅拷贝</strong>）一个<code class="language-plaintext highlighter-rouge">__closure__</code>，也就是说，其中一个函数修改了自由变量，其他函数访问的自由变量也会跟着改变</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">outer</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">funcs</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">a</span> <span class="ow">in</span> <span class="nf">range</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">def</span> <span class="nf">inner</span><span class="p">():</span>
+            <span class="k">nonlocal</span> <span class="n">a</span>
+            <span class="n">a</span> <span class="o">+=</span> <span class="mi">1</span>
+            <span class="k">return</span> <span class="n">a</span>
+        <span class="n">funcs</span><span class="p">.</span><span class="nf">append</span><span class="p">(</span><span class="n">inner</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">funcs</span>
+
+<span class="n">closure_f</span> <span class="o">=</span> <span class="nf">outer</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="nf">print</span><span class="p">([</span><span class="nf">f</span><span class="p">()</span> <span class="k">for</span> <span class="n">f</span> <span class="ow">in</span> <span class="n">closure_f</span><span class="p">])</span>  <span class="c1"># -&gt; [3, 4, 5]
+</span></code></pre></div></div>
+
+<h1 id="修改自由变量">修改自由变量</h1>
+
+<p>这个规则跟全局变量很相似，只不过<code class="language-plaintext highlighter-rouge">global</code>用于全局变量，<code class="language-plaintext highlighter-rouge">nonlocal</code>用于嵌套函数的外部变量（表明该变量即不在全局作用域也不在局部作用域）</p>
+
+<ol>
+  <li>
+<em>不可变类型(int, str等)</em>不能直接修改，要要加上<code class="language-plaintext highlighter-rouge">nonlocal</code>修饰才能修改</li>
+  <li>
+<em>可变类型(list等)</em>可以修改其内容，如<code class="language-plaintext highlighter-rouge">append</code>，<code class="language-plaintext highlighter-rouge">+=</code>等</li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">outer</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span>
+    <span class="k">def</span> <span class="nf">inner</span><span class="p">():</span>
+        <span class="k">nonlocal</span> <span class="n">x</span>
+        <span class="nf">print</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">a</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="k">return</span> <span class="n">inner</span>
+
+<span class="n">closure_f</span> <span class="o">=</span> <span class="nf">outer</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="nf">closure_f</span><span class="p">()</span>  <span class="c1"># 1 5
+</span><span class="nf">closure_f</span><span class="p">()</span>  <span class="c1"># 2 6
+</span><span class="nf">closure_f</span><span class="p">()</span>  <span class="c1"># 3 7
+</span></code></pre></div></div>
+
+<p><a href="https://realpython.com/inner-functions-what-are-they-good-for/">Python Inner Functions: What Are They Good For? – Real Python</a></p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

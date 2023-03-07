@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Pytorch</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Pytorch</h1>
+<!-- <p>Posted on 26 Apr 2021, Last updated: </p> -->
+<!-- <p>发表于 2021 年 04 月 26 日 | 更新于 </p> -->
+<p>发布于 2021 年 04 月 26 日  | 更新于 2021 年 09 月 01 日 </p>
+
+<div class="post_content">
+    <h1 id="安装">安装</h1>
+
+<h3 id="anaconda">Anaconda</h3>
+
+<p><code class="language-plaintext highlighter-rouge">.condarc</code>的<code class="language-plaintext highlighter-rouge">channels</code>是有<strong>顺序（优先级）</strong>的：</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>channels:
+  - pytorch
+  - conda-forge
+  - main
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">conda install</code>会从上往下找所需的包，找到了就会安装</p>
+
+<p>如果<em>main</em>放在<em>pytorch</em>前面，就算按照官网的命令安装GPU版，也会装成CPU版，因为<em>main</em>里面只有CPU版的pytorch</p>
+
+<p>要安装GPU版，把<em>pytorch</em>仓库放在<em>main</em>前面即可</p>
+
+<h1 id="后端backends检查">后端(backends)检查</h1>
+
+<p><a href="https://pytorch.org/docs/1.7.1/backends.html">doc</a></p>
+
+<h2 id="cudnn">cuDNN</h2>
+
+<p>版本：<code class="language-plaintext highlighter-rouge">torch.backends.cudnn.version()</code></p>
+
+<p>是否可用:<code class="language-plaintext highlighter-rouge">torch.backends.cudnn.is_available()</code></p>
+
+<p>是否启用：<code class="language-plaintext highlighter-rouge">torch.backends.cudnn.enabled</code></p>
+
+<h2 id="cuda">CUDA</h2>
+
+<p>查看pytorch是否为支持cuda的<strong>版本</strong>：<code class="language-plaintext highlighter-rouge">torch.backends.cuda.is_built()</code></p>
+<blockquote>
+  <p>Returns whether PyTorch <strong>is built with CUDA support</strong>. Note that this doesn’t necessarily mean CUDA is available; just that if this PyTorch binary were run a machine with working CUDA drivers and devices, we would be able to use it.
+返回True只能表示该pytorch（版本）<strong>可以支持</strong>cuda，实际能不能用cuda还要看系统是否安装了cuda环境</p>
+</blockquote>
+
+<h1 id="torchsave">torch.save</h1>
+
+<h3 id="后缀格式">后缀格式</h3>
+
+<p><a href="https://zhuanlan.zhihu.com/p/67053004?from_voters_page=true">知乎</a></p>
+
+<blockquote>
+  <p>首先讲讲保存模型或权重参数的后缀格式，权重参数和模型参数的后缀格式一样，pytorch中最常见的模型保存使用 .pt 或者是 .pth 作为模型文件扩展名。还有其他的保存数据的格式为.t7或者.pkl格式。t7文件是沿用torch7中读取模型权重的方式，而pth文件是python中存储文件的常用格式，而在keras中则是使用.h5文件 。</p>
+</blockquote>
+
+<p><a href="https://cloud.tencent.com/developer/article/1507565">腾讯云</a></p>
+
+<blockquote>
+  <p>要保存多个组件，请在字典中组织它们并使用<code class="language-plaintext highlighter-rouge">torch.save()</code>来序列化字典。PyTorch 中常见的保存checkpoint 是使用 .tar 文件扩展名。</p>
+</blockquote>
+
+<p>小结：</p>
+
+<p>保存<strong>模型</strong>用<code class="language-plaintext highlighter-rouge">.pt</code></p>
+
+<p>保存<strong>Checkpoint</strong>(包含更多、更完整的信息，用于继续训练)用<code class="language-plaintext highlighter-rouge">.tar</code></p>
+
+<h1 id="显存">显存</h1>
+
+<p>参数量与计算量没有绝对的关系，例如比较fc与conv，前者参数量大，但计算量小，后者参数量小，但计算量大。</p>
+
+<p>谷歌提出的MobileNet就以增大参数量为代价换取更小的计算量（空间换时间），从而提升运行速度。</p>
+
+<p>显存占用 = 模型参数 + 计算产生的中间变量</p>
+
+<ol>
+  <li>
+    <p>模型参数</p>
+
+    <p>与输入无关，模型初始化后就固定了</p>
+  </li>
+  <li>
+    <p>中间变量</p>
+
+    <p>梯度与动量（optimizer反向传播时用到）</p>
+  </li>
+</ol>
+
+<h1 id="gpu并行下的错误定位">GPU并行下的错误定位</h1>
+
+<p>错误如下：</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/opt/conda/conda-bld/pytorch_1607370172916/work/aten/src/ATen/native/cuda/ScatterGatherKernel.cu:312: operator(): block: [716,0,0], thread: [17,0,0] Assertion `idx_dim &gt;= 0 &amp;&amp; idx_dim &lt; index_size &amp;&amp; "index out of bounds"` failed.
+
+/opt/conda/conda-bld/pytorch_1607370172916/work/aten/src/ATen/native/cuda/ScatterGatherKernel.cu:312: operator(): block: [716,0,0], thread: [28,0,0] Assertion `idx_dim &gt;= 0 &amp;&amp; idx_dim &lt; index_size &amp;&amp; "index out of bounds"` failed.
+
+/opt/conda/conda-bld/pytorch_1607370172916/work/aten/src/ATen/native/cuda/ScatterGatherKernel.cu:312: operator(): block: [291,0,0], thread: [63,0,0] Assertion `idx_dim &gt;= 0 &amp;&amp; idx_dim &lt; index_size &amp;&amp; "index out of bounds"` failed.
+
+CUDA error: device-side assert triggered
+</code></pre></div></div>
+
+<blockquote>
+  <p>在运行命令前加上`CUDA_LAUNCH_BLOCKING=1，强制同步执行，从而显示出正确的错误定位。<a href="https://blog.csdn.net/baoyongshuai1509/article/details/103314145">参考</a></p>
+</blockquote>
+
+<blockquote>
+  <p>您可以通过设置环境变量强制进行同步计算 <code class="language-plaintext highlighter-rouge">CUDA_LAUNCH_BLOCKING=1</code>。这在 GPU 上发生错误时非常方便。(使用异步执行时，直到实际执行操作后才会报告此类错误，因此堆栈跟踪不会显示请求的位置。）<a href="https://pytorch.apachecn.org/docs/1.0/notes_cuda.html#%E5%BC%82%E6%AD%A5%E6%89%A7%E8%A1%8C">参考</a></p>
+</blockquote>
+
+<blockquote>
+  <p>当模型在GPU上运行的时候其实是没办法显示出真正导致错误的地方的（按照PyTorch Dev的说法：“Because of the asynchronous nature of cuda, the assert might not point to a full correct stack trace pointing to where the assert was triggered from.”即这是CUDA的特性，他们也没办法），所以可以通过将模型改成在CPU上运行来检查出到底是哪里出错（因为CPU模式下会有更加细致的语法/程序检查）。但是当训练网络特别大的时候，这个方法通常是不可行的，转到CPU上训练的话可能会花费很长时间[1]。<a href="https://www.cnblogs.com/ytxwzqin/p/12012025.html">参考</a></p>
+</blockquote>
+
+<p>本例中真正的错误位置与异步的提示位置差了一行，加上<code class="language-plaintext highlighter-rouge">CUDA_LAUNCH_BLOCKING=1</code>后，显示了正确的位置。</p>
+
+<p>错误原因是标签(target, gt)中出现了负值，从而导致数组越界。</p>
+
+<h1 id="nntransformer">nn.Transformer</h1>
+
+<p>https://pytorch.org/docs/master/nn.html#transformer-layers</p>
+
+<h1 id="设置默认gpu">设置默认GPU</h1>
+
+<ol>
+  <li>官方不推荐使用<code class="language-plaintext highlighter-rouge">torch.cuda.set_device(device)</code>，详见<a href="https://pytorch.org/docs/1.2.0/cuda.html#torch.cuda.set_device">文档</a>：</li>
+</ol>
+
+<blockquote>
+  <p>Usage of this function is discouraged in favor of <a href="https://pytorch.org/docs/1.2.0/cuda.html#torch.cuda.device"><code class="language-plaintext highlighter-rouge">device</code></a>. In most cases it’s better to use <code class="language-plaintext highlighter-rouge">CUDA_VISIBLE_DEVICES</code> environmental variable.</p>
+</blockquote>
+
+<ol>
+  <li>
+<code class="language-plaintext highlighter-rouge">torch.cuda.device(device)</code>：Context-manager that changes the selected device.</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">os.environ['CUDA_VISIBLE_DEVICES'] = '3'</code>通过环境变量来设置（<strong>官方推荐</strong>）</li>
+</ol>
+
+<p>尝试后发现：</p>
+
+<ul>
+  <li>
+<strong>方法1</strong>会在每张GPU上都创建一个进程，仅有实际使用的卡有显存占用，其他卡显存占用0</li>
+  <li>
+<strong>方法3</strong>设置环境变量，一切正常，不会生成额外进程（看来还是要按官方建议来）</li>
+</ul>
+
+<h1 id="卷积的bias">卷积的bias</h1>
+
+<p><strong>卷积后接BN</strong>的话，bias就不起作用（<a href="https://blog.csdn.net/u010698086/article/details/78046671">公式推导</a>），设为False，减少计算量</p>
+
+<blockquote>
+  <p><a href="https://blog.csdn.net/u013289254/article/details/98785869">参考</a></p>
+</blockquote>
+
+<h1 id="tensor的复制">Tensor的复制</h1>
+
+<p>需要用<code class="language-plaintext highlighter-rouge">=</code>的时候，都加上<code class="language-plaintext highlighter-rouge">.clone()</code></p>
+
+<h1 id="gather--scatter_">gather &amp; scatter_</h1>
+
+<h2 id="gather">gather</h2>
+
+<p>函数声明：<code class="language-plaintext highlighter-rouge">torch.gather(input, dim, index, out=None, sparse_grad=False) → Tensor</code></p>
+
+<p>一句话解释：按照<em>index</em> –&gt; 从<em>input</em>中找值 –&gt; 替换掉<em>index</em>的值（生成大小跟<em>index</em>一样的新张量）</p>
+
+<p><strong>size</strong>限制：</p>
+
+<ol>
+  <li>除了<em>dim</em>维外(apart from dimension <em>dim</em>)，<em>index</em>的size大小不得超过<em>input</em>（想象把<em>index</em>矩阵盖到<em>input</em>上，按dim方向挑选值。当<em>dim</em>维超过时，只是会选到重复元素；而其他维超过了，找不到对应向量，就不知道从哪选值）</li>
+</ol>
+
+<p><em>output</em>的<strong>size</strong>与<em>index</em>一致</p>
+
+<p><strong>同时看input和index中dim那一维的向量</strong>（比如二维矩阵：dim=0就是纵向量，dim=1就是横向量），从<em>input</em>中按照<em>index</em>来找值，找到的值填回index的对应位置，生成大小跟<em>index</em>一样的新张量</p>
+
+<p>如dim=1，则根据向量<code class="language-plaintext highlighter-rouge">index[i, :, j, ...]</code>的元素值，在向量<code class="language-plaintext highlighter-rouge">a[i, :, j, ...]</code>中找值，找到的值填回<em>index</em>。想象把<em>index</em>盖到<em>input</em>上，</p>
+
+<p><code class="language-plaintext highlighter-rouge">dim=1</code>按<strong>行</strong>看，以<em>中间的行</em>为例，计算方式如下所示：（其余行同理）</p>
+
+<p><img src="/assets/images/gather.png" alt="gather"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">10.</span><span class="p">).</span><span class="nf">view</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="c1"># tensor([[1., 2., 3.],
+#         [4., 5., 6.],
+#         [7., 8., 9.]])
+</span><span class="n">index</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">LongTensor</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="c1"># output = torch.gather(input=a, dim=1, index=index)
+</span><span class="n">a</span><span class="p">.</span><span class="nf">gather</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">)</span>  <span class="c1"># 与上一行等价
+# tensor([[2., 2., 2., 2., 2.],	
+#         [6., 4., 5., 6., 4.],
+#         [8., 9., 7., 7., 9.]])
+</span></code></pre></div></div>
+
+<p>pytorch中有很多类似的等价写法：<code class="language-plaintext highlighter-rouge">func(input=a, **kwargs)</code>等价于<code class="language-plaintext highlighter-rouge">a.func(**kwargs)</code></p>
+
+<p><a href="https://pytorch.org/docs/1.2.0/torch.html#torch.gather">官方</a>计算公式：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># if dim == 0
+</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]][</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># if dim == 1
+</span><span class="n">out</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="nb">input</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]]</span>  <span class="c1"># if dim == 2
+</span></code></pre></div></div>
+
+<h2 id="scatter_">scatter_</h2>
+
+<p>函数声明：<code class="language-plaintext highlighter-rouge">scatter_(dim, index, src) → Tensor</code></p>
+
+<p>一句话解释：将<em>src</em>的值 –&gt; 根据<em>index</em>（用于确定位置） –&gt; 写到<em>self</em>里面（覆盖 or 替换<em>self</em>中相应位置的值）</p>
+
+<p>公式：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">self</span><span class="p">[</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># if dim == 0
+</span><span class="n">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]][</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># if dim == 1
+</span><span class="n">self</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">index</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]]</span> <span class="o">=</span> <span class="n">src</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">][</span><span class="n">k</span><span class="p">]</span>  <span class="c1"># if dim == 2
+</span></code></pre></div></div>
+
+<p><strong>size</strong>限制：</p>
+
+<ol>
+  <li>除了<em>dim</em>维外(apart from dimension <em>dim</em>)，<em>index</em>的size不得超过self（想象把<em>index</em>矩阵盖到<em>self</em>上，dim维超过了，只是会在同一位置重复填值，后填的值覆盖先填的；而其他维超过了，找不到对应向量，就不知道往哪填值）</li>
+  <li>
+<em>index</em>的size不得超过<em>src</em>（想象把 <em>index</em>覆盖到<em>src</em>上，<em>被覆盖的区域</em>就会填到self里面）</li>
+</ol>
+
+<p><em>output</em>的size与<em>self</em>一致</p>
+
+<p>个人认为理解这两个函数的难点在于：<strong>理解<em>dim</em>的含义</strong></p>
+
+<p>这里<em>dim</em>的含义与<em>gather函数</em>是相同的：可以将一个<em>dim</em>维的向量（行向量 or 列向量）当作独立<em>子任务</em>来操作。即选定一个<em>dim</em>维的向量，执行一套完整的计算流程（见<em>一句话解释</em>），再处理<em>dim</em>维的下一个向量</p>
+
+<p><em>scatter_</em>的计算过程与<em>gather</em>类似，都是围绕<em>dim</em>进行的，如上一段所诉。示例代码如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">torch</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'a:</span><span class="se">\n</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="c1"># tensor([[0., 0., 0.],
+#         [0., 0., 0.],
+#         [0., 0., 0.]])
+</span><span class="n">src</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nf">arange</span><span class="p">(</span><span class="mf">1.</span><span class="p">,</span> <span class="mf">16.</span><span class="p">).</span><span class="nf">view</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'src:</span><span class="se">\n</span><span class="si">{</span><span class="n">src</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="c1"># tensor([[ 1.,  2.,  3.,  4.,  5.],
+#         [ 6.,  7.,  8.,  9., 10.],
+#         [11., 12., 13., 14., 15.]])
+</span><span class="n">index</span> <span class="o">=</span> <span class="n">torch</span><span class="p">.</span><span class="nc">LongTensor</span><span class="p">([</span>
+    <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+    <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span>
+<span class="p">])</span>
+<span class="n">a</span><span class="p">.</span><span class="nf">scatter_</span><span class="p">(</span><span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">index</span><span class="p">,</span> <span class="n">src</span><span class="o">=</span><span class="n">src</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="sa">f</span><span class="s">'a:</span><span class="se">\n</span><span class="si">{</span><span class="n">a</span><span class="si">}</span><span class="s">'</span><span class="p">)</span>
+<span class="c1"># tensor([[ 0.,  4.,  0.],
+#         [ 7.,  8.,  9.],
+#         [12., 13., 14.]])
+</span></code></pre></div></div>
+
+<p>以<strong>第一行</strong>为例：</p>
+
+<ol>
+  <li>把1(src)写到张量a的1(index)位置</li>
+  <li>把2(src)写到张量a的1(index)位置（覆盖）</li>
+  <li>把3(src)写到张量a的1(index)位置（覆盖）</li>
+  <li>把4(src)写到张量a的1(index)位置（覆盖）</li>
+  <li>最终张量a的1位置就是4（后面的覆盖了前面的）</li>
+</ol>
+
+<h2 id="总结">总结</h2>
+
+<h3 id="不同">不同</h3>
+
+<ol>
+  <li>
+    <p>gather：从<em>self</em>里面<strong>提取</strong>出需要的元素，组成新的tensor</p>
+
+    <p>scatter_：<strong>替换/修改</strong> <em>self</em> 中的某些元素</p>
+  </li>
+  <li>
+    <p>gather：将<em>self</em>中（被选中的）零散的元素<strong>聚集</strong>起来形成新的tensor</p>
+
+    <p>scatter_：将集中在<em>src</em>中的元素<strong>分散</strong>到<em>self</em>中</p>
+  </li>
+</ol>
+
+<h3 id="相似">相似</h3>
+
+<p><em>dim</em>的含义：都可以将<em>dim</em>维上每个向量当作<em>独立子任务</em>来执行一遍完整的<em>操作</em>(gather/scatter_)</p>
+
+<h2 id="参考">参考</h2>
+
+<p>[1] <a href="https://zhuanlan.zhihu.com/p/101896024">pytorch.gather/scatter_的用法</a></p>
+
+<p>[2] <a href="https://mp.weixin.qq.com/s/xznCKtjxobZ-V23Geg-0bQ">3分钟理解 pytorch 的 gather 和 scatter</a></p>
+
+<h1 id="expand">expand</h1>
+
+<p>函数声明：<code class="language-plaintext highlighter-rouge">expand(*sizes) → Tensor</code>，属于类：<code class="language-plaintext highlighter-rouge">torch.Tensor</code></p>
+
+<p>将大小为<strong>1</strong>的<strong>维</strong>扩展至<em>size</em>指定的大小（原来大小不为1的维不能扩展）</p>
+
+<p><code class="language-plaintext highlighter-rouge">size</code>为<code class="language-plaintext highlighter-rouge">-1</code>表示保持该维大小不变</p>
+
+<p>不会生成分配新的内存，只是在原Tensor上创建一个新的视图（？）</p>
+
+<h1 id="kernel_size1的卷积">kernel_size=1的卷积</h1>
+
+<p><code class="language-plaintext highlighter-rouge">kernel_size=1</code>时，一维二维三维卷积有什么区别？</p>
+
+<h1 id="冻结参数">冻结参数</h1>
+
+<p><a href="https://zhuanlan.zhihu.com/p/34147880">Pytorch自由载入部分模型参数并冻结</a></p>
+
+<p>如何冻结BN：<a href="https://blog.csdn.net/weixin_38443388/article/details/108862603">关于pytorch的BN，在训练的模型上增添新模块[只训练新模块]</a></p>
+
+<h1 id="apply">apply</h1>
+
+<p><code class="language-plaintext highlighter-rouge">apply(fn: Callable[Module, None]) → T</code>，属于类：<code class="language-plaintext highlighter-rouge">torch.nn.Module</code></p>
+
+<blockquote>
+  <p>Applies <code class="language-plaintext highlighter-rouge">fn</code> recursively to every submodule (as returned by <code class="language-plaintext highlighter-rouge">.children()</code>) as well as self.</p>
+</blockquote>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

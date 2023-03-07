@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Python</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Python</h1>
+<!-- <p>Posted on 19 Oct 2020, Last updated: </p> -->
+<!-- <p>发表于 2020 年 10 月 19 日 | 更新于 </p> -->
+<p>发布于 2020 年 10 月 19 日  | 更新于 2022 年 03 月 29 日 </p>
+
+<div class="post_content">
+    <h1 id="安装">安装</h1>
+
+<h1 id="anaconda">Anaconda</h1>
+
+<p>（已安装的）<strong>包提供的可执行文件</strong>（如<code class="language-plaintext highlighter-rouge">pip</code>），<strong>Ubuntu</strong>环境下位于<code class="language-plaintext highlighter-rouge">Anaconda3/bin</code>目录，<strong>Windows</strong>环境下位于<code class="language-plaintext highlighter-rouge">Anaconda3\Scripts</code>目录</p>
+
+<p>就算不知道在哪，也可以通过<code class="language-plaintext highlighter-rouge">python -m pip ...</code>来执行，其中<code class="language-plaintext highlighter-rouge">pip</code>可以替换成其他包提供的的可执行文件</p>
+
+<h1 id="好用的包">好用的包</h1>
+
+<h3 id="pretty-errors"><a href="https://github.com/onelivesleft/PrettyErrors">pretty-errors</a></h3>
+
+<p><code class="language-plaintext highlighter-rouge">pip install pretty_errors</code></p>
+
+<p>使报错内容更易读</p>
+
+<p>配置：执行<code class="language-plaintext highlighter-rouge">python -m pretty_errors</code>，生成默认配置文件（查看已有配置文件的位置），在末尾添加<strong>自定义样式</strong>：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pretty_errors</span><span class="p">.</span><span class="nf">configure</span><span class="p">(</span>
+        <span class="n">separator_character</span> <span class="o">=</span> <span class="s">'*'</span><span class="p">,</span>
+        <span class="n">filename_display</span>    <span class="o">=</span> <span class="n">pretty_errors</span><span class="p">.</span><span class="n">FILENAME_EXTENDED</span><span class="p">,</span>
+        <span class="n">line_number_first</span>   <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">display_link</span>        <span class="o">=</span> <span class="bp">True</span><span class="p">,</span>
+        <span class="n">lines_before</span>        <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+        <span class="n">lines_after</span>         <span class="o">=</span> <span class="mi">2</span><span class="p">,</span>
+        <span class="n">line_color</span>          <span class="o">=</span> <span class="n">pretty_errors</span><span class="p">.</span><span class="n">RED</span> <span class="o">+</span> <span class="s">'&gt; '</span> <span class="o">+</span> <span class="n">pretty_errors</span><span class="p">.</span><span class="n">default_config</span><span class="p">.</span><span class="n">line_color</span><span class="p">,</span>
+        <span class="n">code_color</span>          <span class="o">=</span> <span class="s">'  '</span> <span class="o">+</span> <span class="n">pretty_errors</span><span class="p">.</span><span class="n">default_config</span><span class="p">.</span><span class="n">line_color</span><span class="p">,</span>
+<span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="getch"><a href="https://pypi.org/project/getch/">getch</a></h3>
+
+<p><code class="language-plaintext highlighter-rouge">pip install getch</code></p>
+
+<p>读取单个字符（不用按回车结束）</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="n">getch</span> <span class="kn">import</span> <span class="n">getch</span><span class="p">,</span> <span class="n">getche</span>
+<span class="n">key</span> <span class="o">=</span> <span class="nf">getch</span><span class="p">()</span>   <span class="c1"># 无回显
+</span><span class="n">key</span> <span class="o">=</span> <span class="nf">getche</span><span class="p">()</span>  <span class="c1"># 有回显
+</span>
+<span class="c1"># On Windows
+</span><span class="kn">import</span> <span class="n">msvcrt</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">msvcrt</span><span class="p">.</span><span class="nf">getch</span><span class="p">()</span>
+<span class="n">key</span> <span class="o">=</span> <span class="n">msvcrt</span><span class="p">.</span><span class="nf">getche</span><span class="p">()</span>
+</code></pre></div></div>
+
+<h1 id="argparse-参数解析器">argparse 参数解析器</h1>
+
+<ul>
+  <li>
+    <p>位置参数 positional arguments</p>
+
+    <p>根据参数的位置顺序来进行赋值，缺点是参数多了容易忘记顺序，好处是简单、简洁，适合参数少的情况</p>
+
+    <p>默认情况下必须给一个值，缺点是如果需要指定位置靠后的参数就必须同时指定前面的参数</p>
+
+    <p><code class="language-plaintext highlighter-rouge">nargs='?'</code>表示如果可能的话，从命令行消耗一个参数（表示可有可无），配合<code class="language-plaintext highlighter-rouge">default=...</code>可以给位置参数指定默认值</p>
+  </li>
+  <li>
+    <p>可选参数/选项 optional arguments</p>
+
+    <p>通常全称用<code class="language-plaintext highlighter-rouge">--foo</code>，简称用<code class="language-plaintext highlighter-rouge">-f</code></p>
+
+    <p>通过定义的参数名字来传参<code class="language-plaintext highlighter-rouge">--foo=123</code>，而不是位置，适合参数多的情况</p>
+
+    <p>要让一个选项成为<em>必需的</em>，则可以将<code class="language-plaintext highlighter-rouge">True</code>作为<code class="language-plaintext highlighter-rouge">required=</code>关键字参数传给 <a href="https://docs.python.org/zh-cn/3.7/library/argparse.html#argparse.ArgumentParser.add_argument">add_argument()</a></p>
+  </li>
+  <li>
+    <p>可以直接调用<code class="language-plaintext highlighter-rouge">parse_args</code>来给参数赋值：<code class="language-plaintext highlighter-rouge">parser.parse_args(['--foo', '2'])</code></p>
+  </li>
+</ul>
+
+<h1 id="下划线">下划线</h1>
+
+<p><a href="https://zhuanlan.zhihu.com/p/36173202">知乎</a></p>
+
+<h2 id="前导单下划线">前导单下划线</h2>
+
+<p>定义私有成员。这是一种<strong>约定</strong>，没有强制性，理论上还是可以从外部访问，只是约定不应该从外部访问<code class="language-plaintext highlighter-rouge">_</code>开头的名字</p>
+
+<p>用<strong>通配符</strong>*从模块中导入所有名称默认<strong>不会</strong>导入带有<strong>前导单下划线</strong>的名称</p>
+
+<p>因此，尽量避免使用通配符导入</p>
+
+<h2 id="前导双下划线">前导双下划线</h2>
+
+<p><strong>名称转写</strong>：双下划线开头，<em>结尾最多一个下划线</em>的名字<code class="language-plaintext highlighter-rouge">__a_</code>，会被自动转换成<code class="language-plaintext highlighter-rouge">_类名__a_</code></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/79280319">ref</a></p>
+
+<h2 id="后缀单下划线">后缀单下划线</h2>
+
+<p>通常用于与关键字做区分，当有变量名与python关键字相同时，可以添加后缀单下划线(slice_)进行区分</p>
+
+<h1 id="none">None</h1>
+
+<p>判断list中的<strong>无效</strong>(None)元素：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="ow">is</span> <span class="ow">not</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">pass</span>
+</code></pre></div></div>
+
+<h1 id="函数参数">函数参数</h1>
+
+<h2 id="参数分类">参数分类</h2>
+
+<ol>
+  <li>对于形参（声明函数），可分为
+    <ul>
+      <li>普通参数：既不是默认值参数，也不是可变参数；消耗<strong>一个</strong>位置或关键字参数</li>
+      <li>可选参数<em>optional</em>：带默认值，必须位于普通参数<strong>后面</strong>；消耗<strong>一个</strong>位置或关键字参数</li>
+      <li>
+<strong>可变参数</strong>：本质是一个<strong>容器</strong>(tuple, dict)，包含任意多个参数；消耗<strong>所有未匹配</strong>的参数</li>
+    </ul>
+  </li>
+  <li>对于实参（调用函数），可分为：
+    <ul>
+      <li>位置参数：<code class="language-plaintext highlighter-rouge">function(value1, value2, ...)</code>
+</li>
+      <li>关键字参数：<code class="language-plaintext highlighter-rouge">function(keyword1=value1, keyword2=value2, ...)</code>
+</li>
+    </ul>
+  </li>
+</ol>
+
+<h2 id="和">*和**</h2>
+
+<ol>
+  <li>
+    <p>声明函数时，写在<strong>形参</strong>前，表明该参数为<strong>可变参数</strong>，如<code class="language-plaintext highlighter-rouge">*args</code>和<code class="language-plaintext highlighter-rouge">**kwargs</code></p>
+
+    <ul>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">args</code>是一个元组(<strong>tuple</strong>)，收集实参中<em>所有未匹配</em>的<strong>位置</strong>参数</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">kwargs</code>是一个字典(<strong>dict</strong>)，收集实参中<em>所有未匹配</em>的<strong>关键字</strong>参数</p>
+      </li>
+    </ul>
+
+    <p>参数名<code class="language-plaintext highlighter-rouge">args</code>和<code class="language-plaintext highlighter-rouge">kwargs</code>只是约定成俗的缺省名，可改用其他可读性更高的名字</p>
+  </li>
+  <li>
+    <p>调用函数时，写在<strong>实参</strong>前，用于<strong>解包</strong>，将容器(tuple/list, dict)拆开，变成多个位置或关键字参数</p>
+  </li>
+</ol>
+
+<h2 id="参数顺序">参数顺序</h2>
+
+<ul>
+  <li>声明（形参）：</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">my_function</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">普通参数</span><span class="p">],</span> <span class="p">[</span><span class="n">可选参数</span><span class="p">],</span> <span class="p">[</span><span class="o">*</span><span class="n">args</span><span class="p">],</span>    <span class="c1"># 这一行接收位置参数
+</span>    <span class="p">[</span><span class="n">普通参数</span><span class="p">],</span> <span class="p">[</span><span class="n">可选参数</span><span class="p">],</span> <span class="p">[</span><span class="o">**</span><span class="n">kwargs</span><span class="p">]</span>  <span class="c1"># 这一行接收关键字参数
+</span><span class="p">):</span>
+    <span class="k">pass</span>
+</code></pre></div></div>
+
+<p>由于实参的<em>关键字</em>参数必须放在<em>位置</em>参数<strong>后面</strong>，因此形参只有先接收<em>位置</em>参数，再接收<em>关键字</em>参数</p>
+
+<ul>
+  <li>调用（实参）：</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nf">my_function</span><span class="p">(</span> <span class="p">[</span><span class="n">位置参数</span><span class="p">],</span> <span class="p">[</span><span class="n">关键字参数</span><span class="p">]</span> <span class="p">)</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p><strong>可变参数</strong>，必须定义在<strong>普通参数</strong>（也称位置参数、必选参数、选中参数等名称）以及<strong>默认值参数</strong>的后面，这是因为可变参数会收集所有未匹配的参数，如果定义在前面，那么普通参数与默认值参数就无法匹配到传入的参数（因为都收集到可变参数中了…………）
+<a href="https://blog.csdn.net/cadi2011/article/details/84871401">参考</a></p>
+</blockquote>
+
+<h1 id="判断变量是否为某种类型的实例">判断变量是否为某种类型的实例</h1>
+
+<p>比较两变量的类型是否相同</p>
+
+<p>函数原型<code class="language-plaintext highlighter-rouge">isinstance(object, classinfo)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">isinstance(x, int)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">isinstance(x, np.ndarray)</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">isinstance(x, torch.float32)</code></p>
+
+<h1 id="模块包">模块&amp;包</h1>
+
+<p>一个<code class="language-plaintext highlighter-rouge">py</code>文件被视为一个<strong>模块</strong>，含有<code class="language-plaintext highlighter-rouge">__init__.py</code>的文件夹被称为<strong>包</strong></p>
+
+<h2 id="语法">语法</h2>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">import ...</code>只能导入<strong>模块</strong></p>
+
+    <p><code class="language-plaintext highlighter-rouge">import [module]</code></p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">from ... import ...</code>既可以导入<strong>模块</strong>也模块中的<strong>方法</strong></p>
+
+    <p><code class="language-plaintext highlighter-rouge">from [module] import [function]</code></p>
+  </li>
+</ul>
+
+<h2 id="包模块的概念">包/模块的概念</h2>
+
+<blockquote>
+  <p>利用<code class="language-plaintext highlighter-rouge">__init__.py</code>对外提供类型、变量和接口，对用户隐藏各个子模块的实现。一个模块的实现可能非常复杂，你需要用很多个文件，甚至很多子模块来实现，但用户可能只需要知道一个类型和接口。就像我们的arithmetic例子中，用户只需要知道四则运算有add、sub、mul、dev四个接口，却并不需要知道它们是怎么实现的，也不想去了解arithmetic中是如何组织各个子模块的。由于各个子模块的实现有可能非常复杂，而对外提供的类型和接口有可能非常的简单，我们就可以通过这个方式来对用户隐藏实现，同时提供非常方便的使用。</p>
+
+  <p><a href="https://zhuanlan.zhihu.com/p/115350758">参考</a></p>
+</blockquote>
+
+<p><del>python中导入（import）要写相对于（项目）根目录的路径</del></p>
+
+<h2 id="循环导入">循环导入</h2>
+
+<p>a.py导入b.py，同时b.py导入a.py，就会发生循环导入，导致引入失败并<strong>报错</strong></p>
+
+<blockquote>
+  <p>《python核心编程》：</p>
+
+  <p>加载模块会导致这个模块<strong>被执行</strong>。也就是被执行模块的顶层代码将直接被执行。这通常包含设定全局变量以及类和函数的声明</p>
+
+  <p>一个模块只被加载一次，无论它被导入多少次。这可以阻止多重导入时代码被多次执行</p>
+</blockquote>
+
+<h1 id="eval">eval</h1>
+
+<p><code class="language-plaintext highlighter-rouge">eval(expression[, globals[, locals]])</code></p>
+
+<p>将参数（字符串）当作python语句来执行。</p>
+
+<p>可以实现通过字符串调用类或方法。</p>
+
+<h1 id="逻辑运算andor">逻辑运算(and/or)</h1>
+
+<p>返回值不是True或False，而是以两个运算数之一作为返回值</p>
+
+<p>短路求值：只有当第一个运算数的值无法确定逻辑运算的结果时，才对第二个运算数进行求值。</p>
+
+<p>and：前真返后，前假返前</p>
+
+<p>or：前真返前，前假返后</p>
+
+<p>模拟C语言的<strong>三目运算</strong>a ? b : c，如下：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="ow">and</span> <span class="n">b</span> <span class="ow">or</span> <span class="n">c</span>
+</code></pre></div></div>
+
+<h1 id="f-string">f-string</h1>
+
+<blockquote>
+  <p>f-string在功能方面不逊于传统的<a href="https://docs.python.org/3/library/stdtypes.html#old-string-formatting">%-formatting语句</a>和<a href="https://docs.python.org/3/library/stdtypes.html#str.format"><code class="language-plaintext highlighter-rouge">str.format()</code>函数</a>，同时<a href="http://www.mlln.cn/2018/05/19/python3%20f-string%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E9%AB%98%E7%BA%A7%E7%94%A8%E6%B3%95/">性能</a>又优于二者，且使用起来也更加简洁明了，因此对于Python3.6及以后的版本，推荐使用f-string进行字符串格式化。</p>
+
+  <p>采用<code class="language-plaintext highlighter-rouge">{content:format}</code>设置字符串格式</p>
+
+  <p><a href="https://blog.csdn.net/sunxb10/article/details/81036693">https://blog.csdn.net/sunxb10/article/details/81036693</a></p>
+</blockquote>
+
+<p>例：<code class="language-plaintext highlighter-rouge">f"{a:3.2f}"</code>，与printf的格式化输出相似，<code class="language-plaintext highlighter-rouge">3</code>指定宽度，<code class="language-plaintext highlighter-rouge">2</code>指定精度，<code class="language-plaintext highlighter-rouge">f</code>表示浮点数</p>
+
+<h1 id="list">list</h1>
+
+<p><code class="language-plaintext highlighter-rouge">[start : stop : step]</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>  <span class="c1"># 逆序
+</span><span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[::</span><span class="mi">2</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">3</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">:</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h1 id="dict">dict</h1>
+
+<h2 id="获取元素">获取元素</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="nf">dict</span><span class="p">()</span>
+<span class="n">a</span><span class="p">.</span><span class="nf">items</span><span class="p">()</span>  <span class="c1"># 以(key, value)对的形式，返回字典a的内容
+</span><span class="n">a</span><span class="p">.</span><span class="nf">keys</span><span class="p">()</span>
+<span class="n">a</span><span class="p">.</span><span class="nf">values</span><span class="p">()</span>
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>返回值说明</p>
+
+    <p>以上3个函数返回的是<a href="https://docs.python.org/3/library/stdtypes.html?highlight=keys#dictionary-view-objects"><em>Dictionary view objects</em></a>(视图对象)，是一种<strong>dynamic</strong> view(动态视图)</p>
+
+    <p><em>view objects</em>可迭代，但无法<strong>按索引</strong>(随机)访问</p>
+
+    <p><strong>dynamic</strong>体现在：如果原本的dict更新，<em>view objects</em>也会<strong>自动更新</strong></p>
+
+    <p>python2中，返回的是<em>list</em>，即可迭代也可随机访问</p>
+  </li>
+  <li>
+    <p>实际应用</p>
+
+    <p>可用于for循环迭代；直接迭代<code class="language-plaintext highlighter-rouge">a</code>的话，只能得到key</p>
+
+    <p>如果需要按索引访问，可以先转换成<code class="language-plaintext highlighter-rouge">list( a.keys() )</code></p>
+  </li>
+</ul>
+
+<h2 id="删除元素">删除元素</h2>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">.</span><span class="nf">fromkeys</span><span class="p">(</span><span class="s">'abcd'</span><span class="p">)</span>  <span class="c1"># {'a': None, 'b': None, 'c': None, 'd': None}
+</span><span class="n">a</span><span class="p">.</span><span class="nf">pop</span><span class="p">(</span><span class="n">key</span><span class="p">[,</span> <span class="n">default</span><span class="p">])</span>  <span class="c1"># 返回value，如key不存在，返回default，如未指定default，报错
+</span><span class="n">a</span><span class="p">.</span><span class="nf">popitem</span><span class="p">()</span>  <span class="c1"># 返回被移除的item: (key, value)，一个tuple
+</span></code></pre></div></div>
+
+<p>python3.7使dict具有了<em>顺序性</em>（几乎可以替代<a href="https://docs.python.org/3/library/collections.html#ordereddict-objects">OrderedDict</a>）</p>
+
+<p>使得<code class="language-plaintext highlighter-rouge">popitem()</code>能够遵循栈的<em>LIFO(last-in, first-out)</em>规则，python3.7之前为随机pop(<a href="https://docs.python.org/3/library/stdtypes.html?highlight=keys#dict.popitem">docs</a>)</p>
+
+<h1 id="查看对象属性">查看对象属性</h1>
+
+<p><code class="language-plaintext highlighter-rouge">vars(object)</code>等价于<code class="language-plaintext highlighter-rouge">object.__dict__</code>，返回一个字典<strong>对象</strong>，包含对象的属性和值</p>
+
+<p>对于模块(<em>module</em>)：</p>
+
+<p><code class="language-plaintext highlighter-rouge">module.__dict__</code>会包含模块的魔法成员（双下划线变量，如<code class="language-plaintext highlighter-rouge">__name__</code>）</p>
+
+<p>可以通过遍历<code class="language-plaintext highlighter-rouge">__dict__</code>，筛选出非魔法成员：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">{</span><span class="n">key</span><span class="p">:</span> <span class="n">value</span> <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">module</span><span class="p">.</span><span class="n">__dict__</span><span class="p">.</span><span class="nf">items</span><span class="p">()</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">key</span><span class="p">.</span><span class="nf">startswith</span><span class="p">(</span><span class="s">'__'</span><span class="p">)}</span>
+</code></pre></div></div>
+
+<h1 id="环境变量">环境变量</h1>
+
+<p>可以在python命令前添加当次生效的环境变量，如：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CUDA_LAUNCH_BLOCKING</span><span class="o">=</span>1 python main.py
+</code></pre></div></div>
+
+<p>然后可以在代码中调用<code class="language-plaintext highlighter-rouge">os.environ['CUDA_LAUNCH_BLOCKING']</code>来获取环境变量</p>
+
+<p>有点神秘，这到底是python的特性还是shell的特性呢？<em>是shell的特性，也可以用该方法运行一个指定环境变量的bash</em></p>
+
+<h1 id="-u">-u</h1>
+
+<blockquote>
+  <p>原因是python缓存机制，虽然stderr和stdout默认都是指向屏幕的，但是stderr是无缓存的，程序往stderr输出一个字符，就会在屏幕上显示一个；而stdout是有缓存的，只有遇到换行或者积累到一定的大小，才会显示出来。这就是为什么上面的会最先显示两个stderr的原因。</p>
+
+  <p><a href="https://blog.csdn.net/wonengguwozai/article/details/81668240">参考</a></p>
+</blockquote>
+
+<p>实例代码：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">sys</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="s">"stdout1"</span><span class="p">)</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="s">"stderr1"</span><span class="p">)</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">stdout</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="s">"stdout2"</span><span class="p">)</span>
+<span class="n">sys</span><span class="p">.</span><span class="n">stderr</span><span class="p">.</span><span class="nf">write</span><span class="p">(</span><span class="s">"stderr2"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="contextlibredirect_stdout">contextlib.redirect_stdout</h1>
+
+<p><strong>重定向标准输出</strong>的<em>上下文管理器</em>（用于临时重定向，便于限制有效范围）</p>
+
+<blockquote>
+  <p><a href="https://docs.python.org/3/library/contextlib.html#contextlib.redirect_stdout">python3文档</a></p>
+</blockquote>
+
+<p><strong>python3.4</strong>加入的<em>新特性</em>（就这百度就搜不到了。。）</p>
+
+<blockquote>
+  <p><em>New in version 3.4.</em></p>
+</blockquote>
+
+<p>例：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">with</span> <span class="nf">open</span><span class="p">(</span><span class="s">'a.txt'</span><span class="p">,</span> <span class="s">'w'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="k">with</span> <span class="nf">redirect_stdout</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+        <span class="nf">print</span><span class="p">(</span><span class="s">'hello'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h1 id="http服务器">http服务器</h1>
+
+<p>在当前目录创建http服务器，如果存在index.html文件，则默认为主页（<a href="http://magic.iswbm.com/zh/latest/c02/c02_06.html">参考</a>）：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python3</span> <span class="o">-</span><span class="n">m</span> <span class="n">http</span><span class="p">.</span><span class="n">server</span> <span class="mi">8888</span>
+</code></pre></div></div>
+
+<h1 id="all--any">all() &amp; any()</h1>
+
+<p>built-in函数</p>
+
+<p><code class="language-plaintext highlighter-rouge">all(iterable)</code>：若<code class="language-plaintext highlighter-rouge">iterable</code>中每个元素都为True，则返回True</p>
+
+<p><code class="language-plaintext highlighter-rouge">any(iterable)</code>：若<code class="language-plaintext highlighter-rouge">iterable</code>中存在为True的元素，则返回True</p>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>all</th>
+      <th>any</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>All Truthy values</td>
+      <td>True</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>All Falsy values</td>
+      <td>False</td>
+      <td>False</td>
+    </tr>
+    <tr>
+      <td>One Truthy value(all others are Falsy)</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>One Falsy value(all others are Truthy)</td>
+      <td>False</td>
+      <td>True</td>
+    </tr>
+    <tr>
+      <td>Empty</td>
+      <td>True</td>
+      <td>False</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>一些<em>数组类</em>对象也绑定了<code class="language-plaintext highlighter-rouge">all()</code>、<code class="language-plaintext highlighter-rouge">any()</code>方法，如：<code class="language-plaintext highlighter-rouge">(a==b).all()</code>用于判断两个数组是否完全相同（每个元素都相同）</p>
+
+<h1 id="__str__和__repr__">__str__和__repr__</h1>
+
+<p><code class="language-plaintext highlighter-rouge">__str__</code>定义print语句的打印格式</p>
+
+<p><code class="language-plaintext highlighter-rouge">__repr__</code>定义python交互模式中对象的显示，以及一些编辑器的变量显示</p>
+
+<ul>
+  <li>如果只定义了<code class="language-plaintext highlighter-rouge">__repr__</code>没有定义<code class="language-plaintext highlighter-rouge">__str__</code>，则<code class="language-plaintext highlighter-rouge">print</code>也会打印<code class="language-plaintext highlighter-rouge">__str__</code>的内容</li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nf">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="n">a</span><span class="p">.</span><span class="n">__str__</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span>
+<span class="n">a</span><span class="p">.</span><span class="n">__repr__</span>
+</code></pre></div></div>
+
+<h1 id="filter-map">filter, map</h1>
+
+<p>用指定的函数，来处理<code class="language-plaintext highlighter-rouge">list</code>，以迭代器（生成器）的形式返回结果</p>
+
+<p>好像只有在访问结果的时候才会去计算。也就是说如果参数不匹配也会到实际访问的时候才报错。</p>
+
+<h3 id="filter"><a href="https://docs.python.org/3.8/library/functions.html#filter">filter</a></h3>
+
+<p><code class="language-plaintext highlighter-rouge">filter(function, iterable)</code>，python内置函数</p>
+
+<p><code class="language-plaintext highlighter-rouge">function</code>必须接收1个参数（单目运算）</p>
+
+<p>以<code class="language-plaintext highlighter-rouge">function</code>返回<code class="language-plaintext highlighter-rouge">True</code>来筛选<code class="language-plaintext highlighter-rouge">iterable</code>里的元素</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nf">list</span><span class="p">(</span><span class="nf">filter</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">2</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]))</span>
+<span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h3 id="map"><a href="https://docs.python.org/3.8/library/functions.html#map">map</a></h3>
+
+<p><code class="language-plaintext highlighter-rouge">map(function, iterable, ...)</code>，python内置函数</p>
+
+<p><code class="language-plaintext highlighter-rouge">function</code>接收的参数个数与传入的<code class="language-plaintext highlighter-rouge">iterable</code>的个数一致</p>
+
+<p>对多个<code class="language-plaintext highlighter-rouge">iterable</code>做元素级运算：相应元素送入<code class="language-plaintext highlighter-rouge">function</code></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="nf">list</span><span class="p">(</span><span class="nf">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">:</span> <span class="n">a</span> <span class="o">*</span> <span class="n">b</span> <span class="o">*</span> <span class="n">c</span><span class="p">,</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]))</span>
+<span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">18</span><span class="p">]</span>
+</code></pre></div></div>
+
+<h1 id="reduce">reduce</h1>
+
+<p><code class="language-plaintext highlighter-rouge">functools.reduce(function, iterable[, initializer])</code></p>
+
+<p>将<code class="language-plaintext highlighter-rouge">iterable</code>缩减为1个值：$return=x_1 \odot x_2 … \odot x_n$，$\odot$表示二元运算<code class="language-plaintext highlighter-rouge">function</code>（必须接收2个参数）</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="kn">from</span> <span class="n">functools</span> <span class="kn">import</span> <span class="nb">reduce</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="kn">import</span> <span class="n">operator</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">reduce</span><span class="p">(</span><span class="n">operator</span><span class="p">.</span><span class="n">mul</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="mi">24</span>
+</code></pre></div></div>
+
+<p>更多参见<a href="https://docs.python.org/3.8/library/functools.html?highlight=reduce#functools.reduce">文档</a></p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

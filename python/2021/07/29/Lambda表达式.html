@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Lambda表达式</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Lambda表达式</h1>
+<!-- <p>Posted on 29 Jul 2021, Last updated: </p> -->
+<!-- <p>发表于 2021 年 07 月 29 日 | 更新于 </p> -->
+<p>发布于 2021 年 07 月 29 日  | 更新于 2021 年 08 月 17 日 </p>
+
+<div class="post_content">
+    <p>作用：定义匿名函数</p>
+
+<p>语法：</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">lambda</span> <span class="n">arg1</span><span class="p">,</span> <span class="n">arg2</span><span class="p">,</span> <span class="p">...</span> <span class="p">:</span> <span class="n">expression</span>
+</code></pre></div></div>
+
+<p>以<code class="language-plaintext highlighter-rouge">lambda</code>开头，<code class="language-plaintext highlighter-rouge">:</code>用于分隔开；前面是<em>参数表</em>，可以有<code class="language-plaintext highlighter-rouge">*args, **kwargs</code>可变参数，参数间用<code class="language-plaintext highlighter-rouge">,</code>隔开；后面是<em>函数体</em>，只能有一个表达式，表达式的结果就是返回值。</p>
+
+<p>整个lambda表达式就是一个匿名函数，可以赋值给<em>变量</em>、作为<em>函数参数</em>或<em>返回值</em></p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

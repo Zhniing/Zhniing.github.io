@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>分解质因数</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>分解质因数</h1>
+<!-- <p>Posted on 18 Feb 2022, Last updated: </p> -->
+<!-- <p>发表于 2022 年 02 月 18 日 | 更新于 </p> -->
+<p>发布于 2022 年 02 月 18 日 </p>
+
+<div class="post_content">
+    <h1 id="分解质因数">分解质因数</h1>
+
+<h2 id="质数判定">质数判定</h2>
+
+<h3 id="直接判定">直接判定</h3>
+
+<p>质数一定和<strong>6</strong>的倍数<strong>相邻</strong>（除了2和3），即$prime=6i\pm1$，除以6必定<strong>余1或5</strong>，可以利用这个必要条件来减少循环次数：</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">bool</span> <span class="nf">IsPrime</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">2</span> <span class="o">||</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">3</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="mi">6</span> <span class="o">!=</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">x</span> <span class="o">%</span> <span class="mi">6</span> <span class="o">!=</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="c1">// 下面的x都是 6i+1 或 6i-1</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">6</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="n">i</span> <span class="o">+=</span> <span class="mi">6</span><span class="p">)</span> <span class="c1">// 以6为步长</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">x</span> <span class="o">%</span> <span class="p">(</span><span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><img class="emoji" title=":bulb:" alt=":bulb:" raw="💡" src="https://github.githubassets.com/images/icons/emoji/unicode/1f4a1.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">上面第12行只需要判断是否为$6i\pm1$的倍数，因为任意$6i\pm1$的数不可能是2或3的倍数，也就不可能是$6i+2=2(3i+1)$，$6i+3=3(2i+1)$，$6i+4=2(3i+2)$的倍数</p>
+
+<h3 id="质数表">质数表</h3>
+
+<p>预先计算出一个数组，值为0或1，表示当前下标是否为质数；然后就可以通过下标访问，快速判断是否为质数</p>
+
+<p>只需几秒钟，就能列出16位十进制数$x$的所有可能质因数（小于$\sqrt x$的所有质数）：</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;</span> <span class="n">GeneratePrimes</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">long</span> <span class="kt">long</span><span class="o">&gt;</span> <span class="n">primes</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="n">primes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="n">primes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">primes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">primes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">primes</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">j</span> <span class="o">+=</span> <span class="n">i</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">primes</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">primes</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>算法描述：从<code class="language-plaintext highlighter-rouge">i=2</code>开始遍历，将<code class="language-plaintext highlighter-rouge">i</code>的倍数全部设为0</p>
+
+<h2 id="分解质因数-1">分解质因数</h2>
+
+<p>可以在有效时间内解出16位十进制<strong>合数</strong>的所有质因数：</p>
+
+<div class="language-c++ highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="kt">long</span> <span class="kt">long</span> <span class="n">Base</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="kt">int</span> <span class="n">Exponent</span><span class="p">;</span>
+<span class="k">typedef</span> <span class="n">pair</span><span class="o">&lt;</span><span class="n">Base</span><span class="p">,</span> <span class="n">Exponent</span><span class="o">&gt;</span> <span class="n">Factor</span><span class="p">;</span>
+<span class="n">vector</span><span class="o">&lt;</span><span class="n">Factor</span><span class="o">&gt;</span> <span class="n">factors</span><span class="p">;</span>
+
+<span class="kt">void</span> <span class="nf">PrimeFactorization</span><span class="p">(</span><span class="kt">long</span> <span class="kt">long</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">factors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">make_pair</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">long</span> <span class="kt">long</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">power</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">i</span> <span class="o">&lt;=</span> <span class="n">x</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// 最后一个质因数</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">IsPrime</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+        <span class="p">{</span>
+            <span class="n">factors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Factor</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="mi">1</span><span class="p">));</span>
+            <span class="k">break</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">while</span> <span class="p">(</span><span class="n">x</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="p">{</span>
+            <span class="n">power</span> <span class="o">+=</span> <span class="mi">1</span><span class="p">;</span>
+            <span class="n">x</span> <span class="o">/=</span> <span class="n">i</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="k">if</span> <span class="p">(</span><span class="n">power</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+            <span class="n">factors</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">Factor</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">power</span><span class="p">));</span>
+        <span class="n">i</span><span class="o">++</span><span class="p">;</span>
+        <span class="n">power</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="轮子">轮子</h2>
+
+<p>Linux命令行工具<code class="language-plaintext highlighter-rouge">factor</code>：</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">factor </span>2021041820210418
+2021041820210418: 2 3 3 3 17 131 2857 5882353
+</code></pre></div></div>
+
+<h2 id="参考">参考</h2>
+
+<p><a href="https://baike.baidu.com/item/%E5%88%86%E8%A7%A3%E8%B4%A8%E5%9B%A0%E6%95%B0">百度百科：分解质因数</a></p>
+
+<p><a href="https://zhidao.baidu.com/question/1820503852562055668.html">百度知道</a></p>
+
+<p><a href="https://www.cnblogs.com/EdwardZhang/p/10713124.html">快速质因数分解（复杂度n^1/4)</a></p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

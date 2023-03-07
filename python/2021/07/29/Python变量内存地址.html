@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Python变量内存地址</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Python变量内存地址</h1>
+<!-- <p>Posted on 29 Jul 2021, Last updated: </p> -->
+<!-- <p>发表于 2021 年 07 月 29 日 | 更新于 </p> -->
+<p>发布于 2021 年 07 月 29 日  | 更新于 2021 年 08 月 17 日 </p>
+
+<div class="post_content">
+    <h1 id="变量的实现方式">变量的实现方式</h1>
+
+<ul>
+  <li>
+    <p><strong>Python</strong>中的所有变量都是<em>指针</em>（<em>引用</em>），变量里存的是值的<em>地址</em>，因此所有变量占用的空间都一样（地址的大小）。这种存储方式被称为<strong>指针语义</strong>（引用语义、对象语义）。通过<code class="language-plaintext highlighter-rouge">id(变量)</code><strong>查看变量所指向的地址</strong></p>
+  </li>
+  <li>
+    <p><strong>C语言</strong>中，不同类型变量占用空间不同（int占4字节，char占1字节），可以看出：变量里存的是<em>值本身</em>。这种方式称为<strong>值语义</strong></p>
+  </li>
+</ul>
+
+<h1 id="不可变可变数据类型">不可变&amp;可变数据类型</h1>
+
+<h2 id="不可变数据类型-immutable">不可变数据类型 Immutable</h2>
+
+<p><code class="language-plaintext highlighter-rouge">int</code>，<code class="language-plaintext highlighter-rouge">float</code>，<code class="language-plaintext highlighter-rouge">str</code>，<code class="language-plaintext highlighter-rouge">tuple</code></p>
+
+<p>不允许内存中的值发生变化，要<strong>修改值</strong>（运算）的情况，不会将修改后的值放回（覆盖）原地址，而是直接<strong>新增一块地址空间</strong>，来存放修改后的值，然后使变量（引用）指向新的地址空间</p>
+
+<p><strong>除tuple外</strong>，不可变数据在整个内存中是<strong>唯一</strong>的，<strong>相同值只能存在一个地址中</strong></p>
+
+<h2 id="可变数据类型-mutable">可变数据类型 Mutable</h2>
+
+<p><code class="language-plaintext highlighter-rouge">list</code>，<code class="language-plaintext highlighter-rouge">dict</code>，<code class="language-plaintext highlighter-rouge">class</code></p>
+
+<p>我理解成<strong>容器</strong>类型（二级指针？指向数组的指针？），允许容器内的值发生变化（<code class="language-plaintext highlighter-rouge">append</code>或<code class="language-plaintext highlighter-rouge">+=</code>），而容器本身的地址不会变化，容器内的元素也可以是容器</p>
+
+<p>在整个内存中，相同值可以存在多份（多个不同地址空间），由此想到以下两种情况：</p>
+
+<ol>
+  <li>
+    <p>相同的容器（立即数？）赋值给<em>多个变量</em>（不是赋值拷贝）：这些变量的<code class="language-plaintext highlighter-rouge">id</code>不一样</p>
+  </li>
+  <li>
+    <p>多次赋值给<em>同一变量</em>（不是赋值拷贝）：变量的<code class="language-plaintext highlighter-rouge">id</code>会发生变化（那上一个地址空间被销毁了吗？）</p>
+  </li>
+</ol>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="mi">140508626205888</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="mi">140508626146176</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># 上一个地址(...5888)就被回收了，下次赋值时使用
+</span><span class="o">&gt;&gt;&gt;</span> <span class="nf">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="mi">140508626145984</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">c</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]</span>  <span class="c1"># 使用了上面被回收的地址(...5888)
+</span><span class="o">&gt;&gt;&gt;</span> <span class="nf">id</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+<span class="mi">140508626205888</span>
+
+<span class="s">'''
+感觉tuple像介于可变和不可变之间的东西
+即满足容器的一些特性
+又不能修改容器的内容
+'''</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">b</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="mi">140274137290688</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">id</span><span class="p">(</span><span class="n">b</span><span class="p">)</span>
+<span class="mi">140274137163712</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="n">a</span> <span class="o">+=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="o">&gt;&gt;&gt;</span> <span class="nf">id</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="mi">140274137546560</span>
+</code></pre></div></div>
+
+<p>底层实现的猜想：</p>
+
+<ol>
+  <li>每当给变量赋值一个容器（立即数？）时，都会在一个新的地址空间中生成容器，然后让变量指向（引用）该容器</li>
+  <li>如果赋给同一变量，那么之前的地址空间就被回收，供下次使用</li>
+</ol>
+
+<p><a href="https://blog.csdn.net/as480133937/article/details/87305247">ref</a></p>
+
+<h1 id="浅拷贝和深拷贝">浅拷贝和深拷贝</h1>
+
+<p>3种拷贝方式：<a href="https://www.runoob.com/w3cnote/python-understanding-dict-copy-shallow-or-deep.html">ref</a></p>
+
+<h2 id="赋值拷贝">赋值拷贝(=)</h2>
+
+<p>只是新建一个引用，两个变量（引用）指向同一个地址</p>
+
+<p>如果把引用比作<em>快捷方式</em>，那么<code class="language-plaintext highlighter-rouge">=</code>就相当于新增了一个快捷方式，指向相同的地址</p>
+
+<p><strong>函数传参</strong>相当于<code class="language-plaintext highlighter-rouge">形参=实参</code></p>
+
+<p><img src="https://www.runoob.com/wp-content/uploads/2017/03/1489720931-7116-4AQC6.png" alt="=_from_runoob"></p>
+
+<h2 id="浅拷贝copy">浅拷贝(copy)</h2>
+
+<p>只拷贝<strong>父对象</strong>，不拷贝父对象内部的<strong>子对象</strong>，只拷贝子对象的引用</p>
+
+<p>只拷贝<em>第一层变量</em>（最外层容器本身），内部变量相当于赋值拷贝（快捷方式）</p>
+
+<p><img src="https://www.runoob.com/wp-content/uploads/2017/03/1489720930-6827-Vtk4m.png" alt="copy_from_runoob"></p>
+
+<h2 id="深拷贝deepcopy">深拷贝(deepcopy)</h2>
+
+<p><strong>完全拷贝</strong>所有内容，开辟全新的内存空间</p>
+
+<p><img src="https://www.runoob.com/wp-content/uploads/2017/03/1489720930-5882-BO4qO.png" alt="deepcopy_from_runoob"></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="n">copy</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]]</span>
+<span class="n">a_</span> <span class="o">=</span> <span class="n">a</span>
+<span class="n">a_copy</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="nf">copy</span><span class="p">()</span>  <span class="c1"># &lt;==&gt; a_copy = copy.copy(a)
+</span><span class="n">a_deepcopy</span> <span class="o">=</span> <span class="n">copy</span><span class="p">.</span><span class="nf">deepcopy</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a</span><span class="p">))</span>             <span class="c1"># 139751405433920
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>          <span class="c1"># 93898578046432
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>          <span class="c1"># 139751404912448
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_</span><span class="p">))</span>            <span class="c1"># 139751405433920
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>         <span class="c1"># 93898578046432
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>         <span class="c1"># 139751404912448
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_copy</span><span class="p">))</span>        <span class="c1"># 139751406233856
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_copy</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>     <span class="c1"># 93898578046432
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_copy</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>     <span class="c1"># 139751404912448
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_deepcopy</span><span class="p">))</span>    <span class="c1"># 139751405539072
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_deepcopy</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="c1"># 93898578046432
+</span><span class="nf">print</span><span class="p">(</span><span class="nf">id</span><span class="p">(</span><span class="n">a_deepcopy</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span> <span class="c1"># 139751406590080
+</span></code></pre></div></div>
+
+<h1 id="hash">Hash</h1>
+
+<p>有<code class="language-plaintext highlighter-rouge">__hash__()</code>方法的对象称为<a href="https://docs.python.org/3.8/glossary.html#term-hashable"><strong>Hashable</strong></a></p>
+
+<p>不可变对象一定是可哈希的Hashable，Hashable不一定是不可变对象</p>
+
+<p><code class="language-plaintext highlighter-rouge">hash(object)</code>返回<code class="language-plaintext highlighter-rouge">object.__hash__()</code>方法的值（根据机器字长进行截断）</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">class</span> <span class="nc">A</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">__hash__</span><span class="p">(</span><span class="n">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="mi">1</span>
+
+<span class="n">a</span> <span class="o">=</span> <span class="nc">A</span><span class="p">()</span>
+<span class="nf">hash</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>  <span class="c1"># 1
+</span></code></pre></div></div>
+
+<p><a href="https://hynek.me/articles/hashes-and-equality/">Python Hashes and Equality</a></p>
+
+<p><a href="https://stackoverflow.com/a/37429666">What does “hashable” mean in Python?</a></p>
+
+<p><a href="https://blog.csdn.net/lnotime/article/details/81194962">Python中的__hash__和__eq__方法之间的一些使用问题</a></p>
+
+<h1 id="总结">总结</h1>
+
+<ol>
+  <li>Python中所有变量都是<strong>引用</strong>（指针）</li>
+  <li>不可变数据发生变化时，生成新值，而不是修改原值，相同的值在内存中是<strong>唯一</strong>的</li>
+  <li>可变数据变化时，不会重新分配新的容器地址，只改变<em>容器内的变量</em>
+</li>
+  <li>三种拷贝方式：对于不可变数据，不管哪种拷贝，都只是快捷方式，<code class="language-plaintext highlighter-rouge">id</code>都相同。<strong>只有操作可变数据，才能体现出差异性</strong>
+</li>
+</ol>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

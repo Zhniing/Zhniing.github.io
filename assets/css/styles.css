@@ -1,0 +1,215 @@
+@charset "UTF-8";
+body {
+  font-family: "Arial", "Microsoft YaHei", "宋体", sans-serif;
+  font-size: 18px;
+  line-height: 3ch;
+}
+
+.wrapper {
+  max-width: 125ch;
+  margin: 4rem auto;
+  padding: 0 1rem;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+code.language-plaintext {
+  background-color: #eeeeee;
+  padding: 1px 0.5ch;
+  margin: 0 0.5ch;
+  border-radius: 5px;
+}
+
+pre.highlight {
+  background-color: #282c34;
+  padding: 2ch;
+  border-radius: 5px;
+}
+
+blockquote {
+  border-left: 0.4ch solid #3d58a1;
+  background-color: #f7f7f7;
+  padding: 1ch 1ch 1ch 2ch;
+}
+
+.clearfloat :after {
+  display: block;
+  clear: both;
+  content: "";
+  visibility: hidden;
+  height: 0;
+}
+
+.clearfloat {
+  zoom: 1;
+}
+
+nav.navbar {
+  margin: 0 0 4rem 0;
+}
+
+nav.navbar a {
+  float: right;
+  padding: 0 1rem;
+}
+
+h1 {
+  margin: 2rem 0;
+}
+
+.post_item_div {
+  margin: 1.5rem 0;
+  width: 100%;
+}
+
+.hover-underline {
+  position: relative;
+}
+
+.hover-underline:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: #333333;
+  transform: scaleX(0);
+  transition: transform 200ms ease-in-out;
+}
+
+.hover-underline:hover:after {
+  visibility: visible;
+  transform: scaleX(1);
+}
+
+.post_date {
+  float: right;
+}
+
+.post_content {
+  margin-left: 25ch;
+}
+
+.post_content a {
+  color: #1e6bb8;
+}
+
+p > img:not(.emoji) {
+  margin: 0 auto;
+  display: block;
+  max-width: 90%;
+  margin: 5px 2em;
+  border-radius: 5px;
+}
+
+img.emoji {
+  font-size: 1.2em;
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  font-style: normal !important;
+  font-weight: 400;
+  line-height: 1;
+  vertical-align: -0.075em;
+  margin: 0 1px;
+}
+
+table {
+  padding: 0;
+  width: 100%;
+}
+
+table tr {
+  border-top: 1px solid #cccccc;
+  background-color: white;
+  margin: 0;
+  padding: 0;
+}
+
+table tr:nth-child(2n) {
+  background-color: #f8f8f8;
+}
+
+table tr th {
+  font-weight: bold;
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr td {
+  border: 1px solid #cccccc;
+  text-align: left;
+  margin: 0;
+  padding: 6px 13px;
+}
+
+table tr th :first-child,
+table tr td :first-child {
+  margin-top: 0;
+}
+
+table tr th :last-child,
+table tr td :last-child {
+  margin-bottom: 0;
+}
+
+.scroll-nav {
+  font-size: 13px;
+  background-color: #f8f9fa;
+  border: 1px solid #a2a9b1;
+  padding: 15px 10px;
+  position: sticky;
+  top: 10px;
+}
+@media screen and (min-width: 700px) {
+  .scroll-nav {
+    float: left;
+    padding: 15px 10px;
+    width: 25ch;
+    top: 20px;
+  }
+}
+@media screen and (min-width: 1000px) {
+  .scroll-nav {
+    width: 25ch;
+  }
+}
+
+.scroll-nav__list {
+  margin: 0;
+  padding-left: 1ch;
+  list-style-type: none;
+  line-height: 2em;
+}
+
+.scroll-nav__sub-list {
+  margin: 0;
+  padding-left: 2ch;
+  list-style-type: none;
+  line-height: 1.5em;
+}
+
+.scroll-nav__item {
+  list-style-type: none;
+}
+
+.scroll-nav__item--active > a {
+  font-weight: bold;
+  position: relative;
+  color: #000000;
+  text-decoration: none;
+}
+.scroll-nav__item--active > a:hover {
+  color: #000;
+}
+
+.scroll-nav__link {
+  color: #000;
+  text-decoration: none;
+}
+
+/*# sourceMappingURL=styles.css.map */

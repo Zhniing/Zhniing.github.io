@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Jekyll建站</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Jekyll建站</h1>
+<!-- <p>Posted on 24 Sep 2020, Last updated: </p> -->
+<!-- <p>发表于 2020 年 09 月 24 日 | 更新于 </p> -->
+<p>发布于 2020 年 09 月 24 日  | 更新于 2021 年 09 月 15 日 </p>
+
+<div class="post_content">
+    <h1 id="ruby">Ruby</h1>
+
+<blockquote>
+  <p>Ruby 是一种开源的面向对象程序设计的服务器端<strong>脚本语言</strong>
+<a href="https://www.runoob.com/ruby/ruby-tutorial.html">Ruby 教程</a></p>
+</blockquote>
+
+<h1 id="gem">Gem</h1>
+
+<blockquote>
+  <p>RubyGems 是 Ruby 的一个包管理器，它提供一个分发 Ruby 程序和库的标准格式，还提供一个管理程序包安装的工具。RubyGems 旨在方便地管理 gem 安装的工具，以及用于分发 gem 的服务器。这<strong>类似于</strong> Ubuntu 下的apt-get, Centos 的 yum，Python 的 <strong>pip</strong>。
+<a href="https://www.runoob.com/ruby/ruby-rubygems.html">Ruby RubyGems</a></p>
+</blockquote>
+
+<h1 id="本地jekyll环境搭建">本地Jekyll环境搭建</h1>
+
+<h2 id="目的">目的</h2>
+
+<p>为实现Jekyll博客的本地预览</p>
+
+<h2 id="安装jekyll">安装Jekyll</h2>
+
+<ul>
+  <li>
+    <p>Ubuntu环境：</p>
+
+    <p><a href="https://jekyllrb.com/docs/installation/ubuntu/">Jekyll on Ubuntu</a></p>
+  </li>
+  <li>
+    <p>Windows环境：</p>
+
+    <ol>
+      <li>下载<a href="https://rubyinstaller.org/downloads/">Ruby Installer</a>并安装（记得勾选加入环境变量）</li>
+      <li><code class="language-plaintext highlighter-rouge">gem install jekyll</code></li>
+    </ol>
+  </li>
+</ul>
+
+<h2 id="运行已有项目">运行已有项目</h2>
+
+<ol>
+  <li>
+    <p>切换到<strong>项目根目录</strong>（即Gemfile所在目录），运行cli.bat（实际分为以下两步）</p>
+
+    <ol>
+      <li>
+        <p>安装依赖<code class="language-plaintext highlighter-rouge">bundle install</code>，会根据Gemfile安装依赖的gem包，并生成Gemfile.lock文件</p>
+      </li>
+      <li>
+        <p>启动服务<code class="language-plaintext highlighter-rouge">bundle exec jekyll serve --watch --host=127.0.0.1 --port=8899</code>（8899可以更改为其他端口号）或直接<code class="language-plaintext highlighter-rouge">bundle exec jekyll serve</code></p>
+      </li>
+    </ol>
+
+    <blockquote>
+      <p>If you’re not using a <code class="language-plaintext highlighter-rouge">Gemfile</code> you can just run <code class="language-plaintext highlighter-rouge">jekyll serve</code></p>
+
+      <p>from <a href="https://www.jekyll.com.cn/docs/ruby-101/">https://www.jekyll.com.cn/docs/ruby-101/</a></p>
+    </blockquote>
+
+    <blockquote>
+      <p>You can now prefix all jekyll commands listed in this tutorial with <code class="language-plaintext highlighter-rouge">bundle exec</code> to make sure you use the jekyll version defined in your <code class="language-plaintext highlighter-rouge">Gemfile</code>.</p>
+
+      <p><a href="https://www.jekyll.com.cn/docs/step-by-step/01-setup/">https://www.jekyll.com.cn/docs/step-by-step/01-setup/</a></p>
+    </blockquote>
+  </li>
+  <li>
+    <p>浏览器打开&lt;127.0.0.1:8899&gt;</p>
+  </li>
+</ol>
+
+<h2 id="命令介绍">命令介绍</h2>
+
+<ol>
+  <li>
+<code class="language-plaintext highlighter-rouge">jekyll s --host=`hostname -I` --port=4001</code>：监听本机ip的4001端口（WSL中很好用<img class="emoji" title=":yum:" alt=":yum:" raw="😋" src="https://github.githubassets.com/images/icons/emoji/unicode/1f60b.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">）</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">jekyll new &lt;myblog&gt;</code>会根据默认模板创建一个站点，里面包含index，Gemfile等一些文件</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">bundle exec jekyll serve --drafts</code>可以显示位于<code class="language-plaintext highlighter-rouge">_drafts</code>下的草稿（若未设定日期，则使用文件修改时间作为日期）</li>
+</ol>
+
+<h2 id="可能出现的问题">可能出现的问题</h2>
+
+<ul>
+  <li>
+    <p>win10命令行乱码：</p>
+
+    <p>运行cli.bat前，先执行<code class="language-plaintext highlighter-rouge">CHCP 65001</code>，更改编码（字符集）为utf-8</p>
+  </li>
+  <li>
+    <p>过长（超过4个汉字）的中文文件名无法本地预览：</p>
+
+    <p>打开<code class="language-plaintext highlighter-rouge">C:\Ruby27-x64\lib\ruby\2.7.0\webrick\httpservlet\filehandler.rb</code>（安装路径可能不同）</p>
+
+    <div class="language-ruby highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="n">path</span> <span class="o">=</span> <span class="n">req</span><span class="p">.</span><span class="nf">path_info</span><span class="p">.</span><span class="nf">dup</span><span class="p">.</span><span class="nf">force_encoding</span><span class="p">(</span><span class="no">Encoding</span><span class="p">.</span><span class="nf">find</span><span class="p">(</span><span class="s2">"filesystem"</span><span class="p">))</span>
+<span class="c1"># 加入下面这行</span>
+<span class="n">path</span><span class="p">.</span><span class="nf">force_encoding</span><span class="p">(</span><span class="s2">"UTF-8"</span><span class="p">)</span> <span class="c1"># 加入编码</span>
+<span class="k">if</span> <span class="n">trailing_pathsep?</span><span class="p">(</span><span class="n">req</span><span class="p">.</span><span class="nf">path_info</span><span class="p">)</span>
+</code></pre></div>    </div>
+
+    <div class="language-ruby highlighter-rouge">
+<div class="highlight"><pre class="highlight"><code><span class="k">break</span> <span class="k">if</span> <span class="n">base</span> <span class="o">==</span> <span class="s2">"/"</span>
+<span class="c1"># 加入下面这行</span>
+<span class="n">base</span><span class="p">.</span><span class="nf">force_encoding</span><span class="p">(</span><span class="s2">"UTF-8"</span><span class="p">)</span> <span class="c1"># 加入编码</span>
+<span class="k">break</span> <span class="k">unless</span> <span class="no">File</span><span class="p">.</span><span class="nf">directory?</span><span class="p">(</span><span class="no">File</span><span class="p">.</span><span class="nf">expand_path</span><span class="p">(</span><span class="n">res</span><span class="p">.</span><span class="nf">filename</span> <span class="o">+</span> <span class="n">base</span><span class="p">))</span>
+</code></pre></div>    </div>
+
+    <p>重启jekyll serve，OK</p>
+
+    <blockquote>
+      <p>参考博客：<a href="https://blog.csdn.net/yinaoxiong/article/details/54025482">https://blog.csdn.net/yinaoxiong/article/details/54025482</a></p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="文件说明">文件说明</h2>
+
+<ul>
+  <li>Gemfile：指明需要的依赖包</li>
+</ul>
+
+<h2 id="参考资料">参考资料</h2>
+
+<p><a href="https://github.com/TMaize/tmaize-blog">Jekyll主题的github地址</a></p>
+
+<p><a href="https://www.runoob.com/ruby/ruby-installation-windows.html">菜鸟教程 Ruby安装-Windows</a></p>
+
+<p><a href="https://www.jekyll.com.cn/docs/">Jekyll官方文档</a></p>
+
+<h1 id="yaml-front-matter">YAML Front Matter</h1>
+
+<blockquote>
+  <p>任何包含<a href="https://link.juejin.cn/?target=http%3A%2F%2Fyaml.org%2F">YAML</a> front matter块的文件都将由Jekyll作为特殊文件进行处理。Front Matter必须是文件中的第一个事物，并且必须采用在三条虚线之间设置的有效YAML的形式。</p>
+
+  <p><a href="https://juejin.cn/post/6844903629682376711#:~:text=%E4%BB%BB%E4%BD%95%E5%8C%85%E5%90%ABYAML%20front%20matter%E5%9D%97%E7%9A%84%E6%96%87%E4%BB%B6%E9%83%BD%E5%B0%86%E7%94%B1Jekyll%E4%BD%9C%E4%B8%BA%E7%89%B9%E6%AE%8A%E6%96%87%E4%BB%B6%E8%BF%9B%E8%A1%8C%E5%A4%84%E7%90%86%E3%80%82Front%20Matter%E5%BF%85%E9%A1%BB%E6%98%AF%E6%96%87%E4%BB%B6%E4%B8%AD%E7%9A%84%E7%AC%AC%E4%B8%80%E4%B8%AA%E4%BA%8B%E7%89%A9%EF%BC%8C%E5%B9%B6%E4%B8%94%E5%BF%85%E9%A1%BB%E9%87%87%E7%94%A8%E5%9C%A8%E4%B8%89%E6%9D%A1%E8%99%9A%E7%BA%BF%E4%B9%8B%E9%97%B4%E8%AE%BE%E7%BD%AE%E7%9A%84%E6%9C%89%E6%95%88YAML%E7%9A%84%E5%BD%A2%E5%BC%8F%E3%80%82">Jekyll使用教程笔记 三</a></p>
+</blockquote>
+
+<p><a href="https://www.runoob.com/w3cnote/yaml-intro.html">YAML 入门教程</a></p>
+
+<h1 id="功能扩展">功能扩展</h1>
+
+<p>GitHub Pages默认运行在<code class="language-plaintext highlighter-rouge">safe</code>模式，仅支持<a href="https://pages.github.com/versions/">部分gem包</a></p>
+
+<p>利用GitHub Action，部署包含任意gem包的Jekyll站点：<a href="https://github.com/jeffreytse/jekyll-deploy-action">jekyll-deploy-action</a></p>
+
+<h2 id="语法高亮">语法高亮</h2>
+
+<p><a href="https://blog.csdn.net/u013961139/article/details/78853544">使用prismjs实现Jekyll代码语法高亮并显示行号</a></p>
+
+<p><a href="https://prismjs.com/download.html#themes=prism-coy&amp;languages=markup+css+clike+javascript+bash+batch+c+cpp+css-extras+git+json+powershell+python+regex+ruby+scss+sql&amp;plugins=line-highlight+line-numbers+autolinker+highlight-keywords+inline-color+command-line">我的prism配置</a></p>
+
+<h2 id="文章目录">文章目录</h2>
+
+<p><a href="https://scrollnav.com/">scrollnav.js</a></p>
+
+<p><a href="https://lei1025.github.io/Implement-Scroll-Spy-in-Jekyll-without-Bootstrap/">Implement Scroll Spy in Jekyll without Bootstrap</a></p>
+
+<h2 id="emoji支持">Emoji支持</h2>
+
+<p><a href="https://github.com/jekyll/jemoji"><del>Jemoji</del></a></p>
+
+<p><a href="https://stackoverflow.com/questions/65535998/jekyll-jemoji-how-to-config-emoji-size">Jekyll + Jemoji : How to config emoji size?</a></p>
+
+<p><a href="https://github.com/jeffreytse/jekyll-spaceship">jekyll-spaceship</a></p>
+
+<h2 id="文章更新日期">文章更新日期</h2>
+
+<p>由于<strong>Git</strong>不会保留文件的修改时间（？），pull下来的文件修改时间会变成当前时间，目前找到2种获取<em>修改时间</em>的方案（大概）：</p>
+
+<ul>
+  <li>在<code class="language-plaintext highlighter-rouge">.md</code>文档的<strong>yaml front matter</strong>中写入最后修改时间（hardcode），Python有专门处理Front Matter的<a href="https://pypi.org/project/python-frontmatter/">包</a>，可以批量操作，比较方便<img class="emoji" title=":+1:" alt=":+1:" raw="👍" src="https://github.githubassets.com/images/icons/emoji/unicode/1f44d.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">
+</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">git log -1 --format="%ct" &lt;file_name&gt;</code>获取文件的<strong>UNIX timestamp</strong>，通过<a href="https://stackoverflow.com/questions/36758072/how-to-insert-the-last-updated-time-stamp-in-jekyll-page-at-build-time">插件</a>为每篇文章设置<em>修改时间</em>；这种方法在本地可行，但是提交到GitHub后，无法通过该命令获取提交记录<img class="emoji" title=":heavy_multiplication_x:" alt=":heavy_multiplication_x:" raw="✖️" src="https://github.githubassets.com/images/icons/emoji/unicode/2716.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">
+</li>
+</ul>
+
+<blockquote>
+  <p><a href="https://blog.csdn.net/weixin_34413357/article/details/90660457">从 Git 提交历史中「恢复」文件修改时间</a></p>
+</blockquote>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

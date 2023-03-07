@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Latex</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  <script>MathJax={"tex":{"inlineMath":[["$","$"],["\\(","\\)"]],"displayMath":[["$$","$$"],["\\[","\\]"]]},"svg":{"fontCache":"global"}}</script><script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script><script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Latex</h1>
+<!-- <p>Posted on 13 Jul 2021, Last updated: </p> -->
+<!-- <p>发表于 2021 年 07 月 13 日 | 更新于 </p> -->
+<p>发布于 2021 年 07 月 13 日  | 更新于 2021 年 12 月 01 日 </p>
+
+<div class="post_content">
+    <h1 id="名词解释">名词解释</h1>
+
+<ol>
+  <li>
+    <p>TeX</p>
+
+    <p>Donald Ervin Knuth 创建的<strong>排版引擎</strong>，及其所使用的<strong>标记语言</strong>的名称</p>
+  </li>
+  <li>
+    <p><strong>La</strong>TeX</p>
+
+    <p>L. Lamport 开发的<strong>基于TeX</strong>的排版系统</p>
+
+    <p>它定义了一套编写格式（语法），并配备一个可执行文件（编译器？），能够将LaTeX语法写成的文件解释成TeX语法，再交由TeX引擎处理</p>
+  </li>
+  <li>
+    <p><strong>pdf</strong>TeX &amp; pdfLaTeX</p>
+
+    <p>由Hàn Thế Thành开发，扩展了TeX，TeX生成的文件是独特的<strong>dvi</strong>格式，而pdfTeX直接生成pdf格式</p>
+  </li>
+  <li>
+    <p><strong>Xe</strong>TeX &amp; XeLaTeX</p>
+
+    <p>支持Unicode字符集，实现<strong>中文</strong>排版</p>
+  </li>
+  <li>
+    <p>发行版（套装）</p>
+
+    <p>CTeX，MiKTeX，TeX Live等</p>
+
+    <p>发行版是一个<strong>软件合集</strong>，整合了整套排版流程所需的全部工具、软件</p>
+  </li>
+</ol>
+
+<h3 id="个人理解">个人理解</h3>
+
+<ol>
+  <li>如果把TeX比作<strong>机器语言</strong>（同时指对应的<strong>编译器</strong>），那LaTeX就可以看作<strong>高级语言</strong>（比如C），由LaTeX把易读的语法解释为TeX能理解的语法，再由TeX引擎进行排版操作</li>
+  <li>pdf和Xe分别对TeX引擎进行了<strong>扩展</strong>，添加了新功能：输出pdf文档以及支持Unicode字符集</li>
+  <li>实际使用的时候，往往需要一套完整的软件集合，以便处理文档类、模板和字体等细节，这样的软件集合叫做<strong>发行版</strong>
+</li>
+</ol>
+
+<p><a href="https://liam.page/2014/09/08/latex-introduction/">《一份其实很短的 LaTeX 入门文档》</a></p>
+
+<h1 id="宏包-packages">宏包 Packages</h1>
+
+<blockquote>
+  <p>所谓宏包，就是一系列控制序列的合集。这些控制序列太常用，以至于人们会觉得每次将他们写在导言区太过繁琐，于是将他们打包放在同一个文件中，成为所谓的宏包（台湾方面称之为「巨集套件」）。<code class="language-plaintext highlighter-rouge">\usepackage{}</code> 可以用来调用宏包。</p>
+
+  <p>– <a href="https://liam.page/2014/09/08/latex-introduction/">《一份其实很短的 LaTeX 入门文档》</a></p>
+</blockquote>
+
+<p>上面这个解释有点像C语言宏定义的意思了</p>
+
+<blockquote>
+  <p>宏包是用来扩展/增强LaTeX的功能，宏包与LaTeX的关系和浏览器插件与浏览器的关系类似，通过安装不同的宏包可以实现一些复杂排版功能，例如插入复杂的列表表格、插入公式和特殊符号、插入代码、设置文档版式等。</p>
+
+  <p>– <a href="https://blog.csdn.net/qq_37556330/article/details/106190148">LaTeX 宏包（\usepackage)</a></p>
+</blockquote>
+
+<p>实际<a href="https://miktex.org/packages">MiKTeX Packages</a>包含的东西很多，比如，编译器(texify, latexmk)也可用通过packages来管理</p>
+
+<h1 id="miktex">MiKTeX</h1>
+
+<p>听说以前只支持Windows，现在全平台支持</p>
+
+<p>自带编译器：texify</p>
+
+<p>特点：使用时安装(install on-the-fly)，不需要一开始就安装所有组件（很多用不到），如果编译时检测到使用了未安装的包，就会自动提示安装。相比TeX Live的安装<a href="https://mirrors.tuna.tsinghua.edu.cn/CTAN/systems/texlive/Images/">镜像</a>有4G</p>
+
+<h1 id="bibtex">BibTeX</h1>
+
+<p><strong>Bib</strong>liography</p>
+
+<blockquote>
+  <p>BibTeX 不是用来排版参考文献的，更不是个排版工具，<strong>它只是根据需要，按照（<code class="language-plaintext highlighter-rouge">bst</code> 文件规定的）某种格式，将（<code class="language-plaintext highlighter-rouge">bib</code> 文件中包含的）参考文献信息，<em>格式化</em> 为 LaTeX 能够使用的列表信息</strong>。</p>
+
+  <p>– <a href="https://www.latexstudio.net/archives/5594">LaTeX技巧829:使用BibTeX生成参考文献列表</a></p>
+</blockquote>
+
+<h2 id="相关文件">相关文件</h2>
+
+<p><code class="language-plaintext highlighter-rouge">.bst</code>：</p>
+
+<ul>
+  <li>参考文献的排版格式，一般由文章接收方提供（？），大多数发行版都自带<code class="language-plaintext highlighter-rouge">unsrt.bst</code>(unsrt=unsort)</li>
+  <li>在<code class="language-plaintext highlighter-rouge">.tex</code>中由<code class="language-plaintext highlighter-rouge">\bibliographystyle{...}</code>指定（不要后缀）</li>
+  <li>在<code class="language-plaintext highlighter-rouge">.aux</code>中对应<code class="language-plaintext highlighter-rouge">\bibstyle{...}</code>
+</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">.bib</code>：</p>
+
+<ul>
+  <li>文献库（也叫Database file），文章中要引用的文献都从这里面找，一般谷歌学术和知网都有<code class="language-plaintext highlighter-rouge">Bib TeX</code>格式的引用，复制过来就行</li>
+  <li>在<code class="language-plaintext highlighter-rouge">.tex</code>中由<code class="language-plaintext highlighter-rouge">\bibliography{...}</code>指定（不要后缀）</li>
+  <li>在<code class="language-plaintext highlighter-rouge">.aux</code>中对应<code class="language-plaintext highlighter-rouge">\bibdata{...}</code>
+</li>
+</ul>
+
+<h2 id="引用语法">引用语法</h2>
+
+<p><code class="language-plaintext highlighter-rouge">\cite{label}</code>：根据<code class="language-plaintext highlighter-rouge">label</code>来引用<code class="language-plaintext highlighter-rouge">.bib</code>中的文献</p>
+
+<h1 id="bib编译流程">Bib编译流程</h1>
+
+<p>TeX相关的很多命令都<em>省略文件后缀</em>（？）</p>
+
+<p>要编译带参考文献的tex需要编译<strong>4次</strong></p>
+
+<ol>
+  <li>
+<code class="language-plaintext highlighter-rouge">(xe/pdf)latex</code>第一次编译<code class="language-plaintext highlighter-rouge">.tex</code>，会警告找不到<code class="language-plaintext highlighter-rouge">.bbl</code>文件，然后生成：
+    <ul>
+      <li>
+<code class="language-plaintext highlighter-rouge">.aux</code>：辅助文件(<strong>aux</strong>iliary)，根据<code class="language-plaintext highlighter-rouge">.tex</code>的<code class="language-plaintext highlighter-rouge">\cite</code>生成<code class="language-plaintext highlighter-rouge">.aux</code>的<code class="language-plaintext highlighter-rouge">\citation</code>，记录了引用的文章标签<code class="language-plaintext highlighter-rouge">label</code>
+</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">.dvi</code>：TeX排版的输出格式，(Xe/pdf)LaTeX还会生成pdf，文中的<strong>引用编号</strong>会显示<code class="language-plaintext highlighter-rouge">?</code>
+</li>
+    </ul>
+  </li>
+  <li>
+<code class="language-plaintext highlighter-rouge">bibtex</code>编译<code class="language-plaintext highlighter-rouge">.aux</code>，根据<code class="language-plaintext highlighter-rouge">\bibstyle</code>，<code class="language-plaintext highlighter-rouge">\bibdata</code>和<code class="language-plaintext highlighter-rouge">\citation</code>，生成：
+    <ul>
+      <li>
+<code class="language-plaintext highlighter-rouge">.bbl</code>：<code class="language-plaintext highlighter-rouge">latex</code>能理解的<em>参考文献</em>语法</li>
+      <li>
+<code class="language-plaintext highlighter-rouge">.blg</code>：bibtex的日志(<strong>b</strong>ib <strong>l</strong>o<strong>g</strong>)</li>
+    </ul>
+  </li>
+  <li>
+<code class="language-plaintext highlighter-rouge">(xe/pdf)latex</code>第二次编译<code class="language-plaintext highlighter-rouge">.tex</code>，根据<code class="language-plaintext highlighter-rouge">.bbl</code>，在<code class="language-plaintext highlighter-rouge">\bibliography</code>的位置生成参考文献<strong>列表</strong>，在<code class="language-plaintext highlighter-rouge">.aux</code>中增加<code class="language-plaintext highlighter-rouge">\bibcite</code>（依据列表顺序）</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">(xe/pdf)latex</code>第三次编译<code class="language-plaintext highlighter-rouge">.tex</code>，根据<code class="language-plaintext highlighter-rouge">.aux</code>的<code class="language-plaintext highlighter-rouge">\bibcite</code>，确定文中的<strong>引用编号</strong>
+</li>
+</ol>
+
+<h1 id="常用语法">常用语法</h1>
+
+<p><code class="language-plaintext highlighter-rouge">%</code>：行尾注释，可用<code class="language-plaintext highlighter-rouge">\</code>转义</p>
+
+<div class="language-tex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">\documentclass</span><span class="p">{</span>article<span class="p">}</span>
+<span class="c">% \documentclass和\begin之间：导言区</span>
+<span class="c">% 导言区的设置影响整篇文章，比如：页脚页眉</span>
+<span class="nt">\begin{document}</span>
+<span class="c">% \begin和\end之间：正文内容</span>
+xxx
+<span class="nt">\end{document}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">\cite{label[, label2, ...]}</code>：引用文献，逗号分隔多个引用</p>
+
+<p><code class="language-plaintext highlighter-rouge">\nocite{ label | * }</code>：在参考文献中显示，但不在文中引用</p>
+
+<p><code class="language-plaintext highlighter-rouge">\par</code>：分段（另起一段），留一个及以上的空行也可以分段</p>
+
+<p><code class="language-plaintext highlighter-rouge">\\</code>：强制<strong>换行</strong>（一行太长超出纸的宽度就会自动换行），不分段（不另起一段），不会被latex认为是新的段落</p>
+
+<p><code class="language-plaintext highlighter-rouge">{\bf 要加粗的文本}</code>：加粗（在一些论文模板里，建议用<strong>pdfTeX</strong>编译，<strong>XeTeX</strong>可能出现奇怪的问题，<a href="https://blog.csdn.net/weixin_45459911/article/details/108581475">ref</a>）</p>
+
+<h1 id="环境">环境</h1>
+
+<h2 id="插入图片">插入图片</h2>
+
+<div class="language-tex highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">\begin{figure}</span>[h]
+    <span class="k">\includegraphics</span><span class="na">[width=0.5\textwidth, inner]</span><span class="p">{</span>overleaf-logo<span class="p">}</span>
+    <span class="k">\caption</span><span class="p">{</span>Caption<span class="p">}</span>
+    <span class="k">\label</span><span class="p">{</span>fig:figure2<span class="p">}</span>
+<span class="nt">\end{figure}</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">[h]</code> <em>here</em> 表示放在当前源码的位置</p>
+
+<p><code class="language-plaintext highlighter-rouge">[t]</code> <em>top</em> 表示放在该页顶部</p>
+
+<p>更多参见：<a href="https://www.overleaf.com/learn/latex/Positioning_images_and_tables#:~:text=the%20next%20values%3A-,Parameter,Requires%20the%20float%20package.%20This%20is%20somewhat%20equivalent%20to%20h!.,-You%20can%20put">Positioning images and tables</a></p>
+
+<blockquote>
+  <p>It’s important to add <code class="language-plaintext highlighter-rouge">\label</code> <em>after</em> a <strong>numbered element</strong> e.g. <code class="language-plaintext highlighter-rouge">\section</code>, <code class="language-plaintext highlighter-rouge">\subsection</code>, <code class="language-plaintext highlighter-rouge">\caption</code> etc.</p>
+
+  <p>– <a href="https://www.overleaf.com/learn/latex/Referencing_Figures">Referencing Figures</a></p>
+</blockquote>
+
+<h1 id="公式">公式</h1>
+
+<p><code class="language-plaintext highlighter-rouge">\overline{}</code>：头顶横线(bar)，如：$\frac{22}{7}=3.\overline{142857}$</p>
+
+<p><code class="language-plaintext highlighter-rouge">\dot{}</code>：头顶点，如：$\frac{22}{7}=3.\dot{1}4285\dot{7}$</p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Nvidia驱动</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Nvidia驱动</h1>
+<!-- <p>Posted on 14 Dec 2020, Last updated: </p> -->
+<!-- <p>发表于 2020 年 12 月 14 日 | 更新于 </p> -->
+<p>发布于 2020 年 12 月 14 日  | 更新于 2021 年 08 月 17 日 </p>
+
+<div class="post_content">
+    <h2 id="查看当前显卡驱动">查看当前显卡驱动</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>lspci | <span class="nb">grep</span> <span class="nt">-i</span> vga | <span class="nb">awk</span> <span class="s1">'{print $1}'</span> <span class="c"># 找到显卡的Bus-Id</span>
+07:00.0
+lspci <span class="nt">-s</span> 07:00.0 <span class="nt">-v</span>  <span class="c"># 指定Bus-Id 查看详细信息</span>
+07:00.0 ...
+        ...
+        Kernel driver <span class="k">in </span>use: nouveau
+        ...
+</code></pre></div></div>
+
+<h2 id="驱动安装流程">驱动安装流程</h2>
+
+<p>尝试Kali Linux的官方<a href="https://www.kali.org/docs/general-use/install-nvidia-drivers-on-kali-linux/">教程</a>，失败，安装后分辨率只有1024x768，且无其他分辨率可选，无法识别第二块屏幕</p>
+
+<p>随后采用下面的方法安装成功！</p>
+
+<h3 id="1-清理之前装过的nvidia驱动">1. 清理之前装过的NVIDIA驱动</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo</span> /usr/bin/nvidia-uninstall
+<span class="nb">sudo </span>apt-get <span class="nt">--purge</span> remove <span class="s2">"*nvidia*"</span>
+</code></pre></div></div>
+
+<h3 id="2-禁用nouveau驱动">2. 禁用nouveau驱动</h3>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo cat</span> <span class="o">&gt;</span> /etc/modprobe.d/nouveau-blacklist.conf
+blacklist nouveau
+options nouveau <span class="nv">modeset</span><span class="o">=</span>0
+<span class="nb">sudo </span>update-initramfs <span class="nt">-u</span>
+<span class="nb">sudo </span>reboot <span class="nt">-f</span>  <span class="c"># 重启后应该无法进入图形界面了</span>
+</code></pre></div></div>
+
+<h3 id="3-从官网下载驱动安装脚本run执行脚本安装">3. 从<a href="https://www.nvidia.com/en-us/geforce/drivers/">官网</a>下载驱动安装脚本(<code class="language-plaintext highlighter-rouge">.run</code>)，执行脚本安装</h3>
+
+<h2 id="内核模块">内核模块</h2>
+
+<p>内核模块（modules）一般都在<code class="language-plaintext highlighter-rouge">/lib/modules/内核版本/kernel/</code>（或/usr/lib？）下面</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>modinfo /lib/modules/<span class="si">$(</span><span class="nb">uname</span> <span class="nt">-r</span><span class="si">)</span>/kernel/drivers/video/nvidia.ko | <span class="nb">grep</span> ^version  <span class="c"># 打印当前内核的nvidia驱动版本</span>
+find /lib/modules <span class="nt">-name</span> nvidia.ko  <span class="c"># 直接搜索模块</span>
+</code></pre></div></div>
+
+<h2 id="dkms">dkms</h2>
+
+<p><strong>内核版本变动</strong>，会导致一些模块失效。</p>
+
+<p>通过dkms重新加载nvidia驱动模块：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>dkms <span class="nb">install</span> <span class="nt">-m</span> nvidia <span class="nt">-v</span> 455.23.04
+</code></pre></div></div>
+
+<p>查看用dkms添加的模块：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dkms status
+</code></pre></div></div>
+
+<p>安装的模块路径：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">/var/lib/dkms/nvidia/455.23.04/5.4.0-72-generic/x86_64/module</code></li>
+  <li><code class="language-plaintext highlighter-rouge">/lib/modules/5.4.0-72-generic/updates/dkms/</code></li>
+</ul>
+
+<p>参考资料：</p>
+
+<blockquote>
+  <p><a href="http://c.biancheng.net/view/1039.html">Linux内核模块管理</a></p>
+
+  <p><a href="https://blog.csdn.net/fouweng/article/details/53435602">DKMS</a>（里面有个练手的例子）</p>
+
+  <p><a href="https://www.cnblogs.com/wwang/archive/2011/06/21/2085571.html">练手例子</a></p>
+
+  <p><a href="https://www.jianshu.com/p/3cedce05a481">https://www.jianshu.com/p/3cedce05a481</a></p>
+</blockquote>
+
+<h2 id="nvidia-smi">nvidia-smi</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nvidia-smi <span class="nt">-pm</span> 1    <span class="c"># 打开持久模式（0则为关闭）</span>
+nvidia-smi dmon     <span class="c"># 按GPU持续打印状态</span>
+nvidia-smi pmon     <span class="c"># 按进程持续打印状态</span>
+nvidia-smi <span class="nt">-L</span>       <span class="c"># 打印可用的/检测到的GPU，可以看哪些卡掉了</span>
+nvidia-smi <span class="nt">-a</span>       <span class="c"># 打印所有GPU的详细信息</span>
+nvidia-smi <span class="nt">-i</span> 0 <span class="nt">-q</span>  <span class="c"># 打印指定GPU的详细信息</span>
+nvidia-smi <span class="nt">-r</span> <span class="nt">-i</span> 0  <span class="c"># 重启指定GPU</span>
+</code></pre></div></div>
+
+<h2 id="查看日志">查看日志</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>nvidia-bug-report.sh
+</code></pre></div></div>
+
+<p>搜索字符串：”/var/log/kern.log”</p>
+
+<h2 id="查看电源情况">查看电源情况</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>nvidia-smi <span class="nt">-q</span> <span class="nt">-d</span> POWER
+</code></pre></div></div>
+
+<h2 id="内核版本的自动更新">内核版本的自动更新</h2>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-mark hold linux-image-generic linux-headers-generic    <span class="c"># 禁用自动更新</span>
+<span class="nb">sudo </span>apt-mark unhold linux-image-generic linux-headers-generic  <span class="c"># 恢复自动更新</span>
+</code></pre></div></div>
+
+<h2 id="卸载驱动">卸载驱动</h2>
+
+<p><code class="language-plaintext highlighter-rouge">sudo /usr/bin/nvidia-uninstall</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">sudo apt-get --purge remove "*nvidia*"</code></p>
+
+<h2 id="相关文件">相关文件</h2>
+
+<p>X configuration file: <code class="language-plaintext highlighter-rouge">/etc/X11/xorg.conf</code></p>
+
+<p>卸载日志：<code class="language-plaintext highlighter-rouge">/var/log/nvidia uninstall.log</code></p>
+
+<h2 id="从ubuntu仓库安装驱动">从Ubuntu仓库安装驱动</h2>
+
+<p>查看<code class="language-plaintext highlighter-rouge">ubuntu-drivers devices</code></p>
+
+<p>安装推荐版本的驱动<code class="language-plaintext highlighter-rouge">sudo ubuntu-drivers install</code></p>
+
+<p>装完后要<strong>重启！</strong>才会生效</p>
+
+<p>这种方式安装的驱动不在<code class="language-plaintext highlighter-rouge">/lib/modules/$(uname -r)/kernel/drivers/video</code>，而是在<code class="language-plaintext highlighter-rouge">/lib/modules/$(uname -r)/kernel/nvidia-460</code></p>
+
+<p><a href="https://linuxconfig.org/benchmark-your-graphics-card-on-linux#h5-1-ubuntu-debian">GPU性能测试</a></p>
+
+<p><a href="https://zhuanlan.zhihu.com/p/59618999">reference</a></p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>

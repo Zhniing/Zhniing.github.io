@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Git</title>
+    <script type="text/javascript" src="/assets/js/prism.js"></script>
+    <link rel="stylesheet" href="/assets/css/styles.css">
+    <link rel="stylesheet" href="/assets/css/prism.css">
+    <script type="text/javascript" src="/assets/js/jquery-3.6.0.js"></script>
+    <script src="/assets/js/scrollnav.min.umd.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="clearfloat">
+        <nav class="navbar">
+    <!-- <a href="/" >
+        Home
+    </a>
+    <a href="/about.html" >
+        About
+    </a> -->
+    
+        <!-- <a href="https://github.com/Zhniing"  target="_self"> -->
+        <a href="https://github.com/Zhniing" target="_blank">
+            Github
+        </a>
+    
+        <!-- <a href="/about.html"  target="_self"> -->
+        <a href="/about.html" target="_self">
+            About
+        </a>
+    
+        <!-- <a href="/games/hiker"  target="_self"> -->
+        <a href="/games/hiker" target="_self">
+            Game
+        </a>
+    
+        <!-- <a href="/"  target="_self"> -->
+        <a href="/" target="_self">
+            Home
+        </a>
+    
+</nav>
+      </div>
+      <base target="_blank"> <!-- 仅post页面的a标签为_blank -->
+
+<h1>Git</h1>
+<!-- <p>Posted on 07 May 2021, Last updated: </p> -->
+<!-- <p>发表于 2021 年 05 月 07 日 | 更新于 </p> -->
+<p>发布于 2021 年 05 月 07 日  | 更新于 2022 年 03 月 12 日 </p>
+
+<div class="post_content">
+    <h1 id="常用命令">常用命令</h1>
+
+<p>获取所有文件名：<code class="language-plaintext highlighter-rouge">git ls-files</code></p>
+
+<p>重命名文件：<code class="language-plaintext highlighter-rouge">git mv</code></p>
+
+<p>只提交<em>更新</em>（忽略新增文件）：<code class="language-plaintext highlighter-rouge">git add -u .</code></p>
+
+<p>列出（满足各种条件的）文件名：<code class="language-plaintext highlighter-rouge">git ls-files -c|--cached|-d|-deleted|-m|--modified|...</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">git show &lt;Commit Hash&gt;</code>查看该commit的信息，包括：做了哪些修改</p>
+
+<p><code class="language-plaintext highlighter-rouge">git status --porcelain</code>查看未提交的文件，包括工作区和暂存区</p>
+
+<p>打印单行历史记录：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git log --oneline</code></li>
+  <li><code class="language-plaintext highlighter-rouge">git log --pretty=oneline</code></li>
+</ul>
+
+<h1 id="分支">分支</h1>
+
+<p><img class="emoji" title=":bulb:" alt=":bulb:" raw="💡" src="https://github.githubassets.com/images/icons/emoji/unicode/1f4a1.png" style="vertical-align: middle; display: inline; max-width: 1em; visibility: hidden;" onload="this.style.visibility='visible'" onerror="this.replaceWith(this.getAttribute('raw'))">分支的用处体现在过程，而不是结果</p>
+
+<p><a href="https://blog.csdn.net/fenglailea/article/details/120866768">Git分支管理案例</a></p>
+
+<p>创建新分支：<code class="language-plaintext highlighter-rouge">git branch &lt;branchname&gt;</code></p>
+
+<p>创建（<strong>并切换</strong>到）新分支：<code class="language-plaintext highlighter-rouge">git checkout -b [-b|-B|--orphan] &lt;new_branch&gt;</code>，等价于：</p>
+
+<p>切换分支：</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">git checkout &lt;branch name&gt;</code></li>
+  <li><code class="language-plaintext highlighter-rouge">git switch &lt;branch name&gt;</code></li>
+</ul>
+
+<h1 id="合并">合并</h1>
+
+<h2 id="合并方式">合并方式</h2>
+
+<h3 id="rebase">rebase</h3>
+
+<p><code class="language-plaintext highlighter-rouge">git rebase -i &lt;commit|branch&gt;</code> 将当前分支移植到指定的 <code class="language-plaintext highlighter-rouge">commit</code> 或 <code class="language-plaintext highlighter-rouge">branch</code> 上，具体来说，就是从当前分支和目标分支的共同祖先开始，将当前分支<strong>接到</strong>目标分支后面</p>
+
+<p>不会产生合并节点，不会保留分支结构，可以保证一条清晰的代码历史</p>
+
+<h3 id="merge">merge</h3>
+
+<p>可能会产生新的无意义的<em>合并节点</em>，可能会在历史记录中保留分支结构</p>
+
+<h2 id="合并策略">合并策略</h2>
+
+<p><a href="https://www.lzane.com/tech/git-merge/">这才是真正的GIT——分支合并</a></p>
+
+<p><del>git是为每个文件创建一个整体快照，而<strong>不逐行</strong>分析文件内容，因此，如果在两个分支上<strong>修改同一个文件</strong>就会在合并时发生<strong>冲突</strong>（尽管修改的是完全不相关的行，也会发生冲突）</del></p>
+
+<h2 id="冲突处理">冲突处理</h2>
+
+<p>git的冲突是按<strong>代码段</strong>来算的，如果两个分支<strong>修改了同一段代码</strong><del>（中间没有空行）</del>（连续相邻的行称为同一段代码），那么合并时就会发生冲突，需要手动解决。</p>
+
+<ol>
+  <li>
+    <p>解释：相邻的行通常为一个<strong>整体</strong>，执行一段连续的逻辑操作。如果直接合并相邻行的更改，可能就会导致一些逻辑错误。<a href="https://softwareengineering.stackexchange.com/questions/194788/why-doesnt-git-merge-adjacent-lines-without-conflict/378258#378258">ref</a></p>
+  </li>
+  <li>
+    <p>显然：<strong>同一文件中</strong>，连续<strong>相邻行</strong>的修改会被git视为<em>一个修改</em>（<strong>1 change</strong>），<del>因此，只要两条分支不是在同一个地方发生的<strong>change</strong>，就不会产生冲突</del>，因为git将相邻行视为<em>同一个上下文</em>（<strong>context</strong>），这也是为了避免发生上述逻辑错误。</p>
+  </li>
+</ol>
+
+<p>这样的设计虽然会降低一点实用性，但可以避免更大的风险。</p>
+
+<h1 id="git-mv">git mv</h1>
+
+<p>实际上做了<strong>2个更改</strong>：</p>
+
+<ol>
+  <li>删除原文件</li>
+  <li>新建内容一样的文件</li>
+</ol>
+
+<p>再将这两个操作<strong>添加</strong>(add)到暂存区等待<strong>提交</strong>(commit)</p>
+
+<p>以下两组命令都等价于<code class="language-plaintext highlighter-rouge">git mv</code>：</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">mv </span>a b
+git add a b
+</code></pre></div></div>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">cp </span>a b
+<span class="nb">rm </span>a
+git add a b
+</code></pre></div></div>
+
+<p><strong>注</strong>：不论哪种方式，恢复的话，都需要<strong>手动删除新文件</strong></p>
+
+<h1 id="修改历史版本">修改历史版本</h1>
+
+<h2 id="修改提交消息commit-message">修改提交消息(commit message)</h2>
+
+<blockquote>
+  <p><a href="https://docs.github.com/cn/github/committing-changes-to-your-project/changing-a-commit-message">官方文档</a></p>
+</blockquote>
+
+<ol>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">git commit --amend</code>修改<strong>最近</strong>的一次commit message</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">git rebase -i HEAD~n</code>修改最近的<strong>n次</strong>commit message(<a href="https://docs.github.com/cn/github/committing-changes-to-your-project/creating-and-editing-commits/changing-a-commit-message#amending-older-or-multiple-commit-messages">doc</a>)</p>
+  </li>
+</ol>
+
+<h2 id="修改文件内容">修改文件内容</h2>
+
+<pre><code class="language-git">git rebase -i HEAD~n
+# -i, --interactive  交互模式
+</code></pre>
+
+<ol>
+  <li>执行命令后会自动打开一个文本编辑器，每行代表一个commit</li>
+  <li>行的顺序可看作栈，最近n个提交<strong>由近及远</strong>依次入栈，第一行（栈顶）为最远的提交</li>
+  <li>在要修改的commit行首，把<code class="language-plaintext highlighter-rouge">pick</code>改为<code class="language-plaintext highlighter-rouge">edit</code>
+</li>
+  <li>保存退出</li>
+  <li>这时<strong>HEAD</strong>会指向第一个edit行对应的commit，即<strong>工作区</strong>的内容会切换到相应的commit</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">git status</code>可查看当前rebase的进度，如下：</li>
+</ol>
+
+<pre><code class="language-git">➜ U_Net git:(cb97492) git status
+interactive rebase in progress; onto 3422ca4
+Last command done (1 command done):
+   edit cb97492 Experiment: myLSTM/25
+Next commands to do (2 remaining commands):
+   pick 09036e8 Experiment: myLSTM/26
+   pick f27ebaf Experiment: myLSTM/27
+</code></pre>
+
+<ol>
+  <li>修改文件</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">git add</code>添加到暂存区</li>
+  <li>(可以跳过，直接第10步)<code class="language-plaintext highlighter-rouge">git commit --amend [-m 'message']</code>重新提交，形成一次新的commit，Hash值与原来不同（可多次执行，每次都会生成新的Hash值，但不会<strong>再</strong>增加commit）</li>
+  <li>
+<code class="language-plaintext highlighter-rouge">git rebase --continue</code>执行下一个rebase操作，即<strong>第5步</strong>
+</li>
+  <li>全部完成后，HEAD恢复到master</li>
+</ol>
+
+<h1 id="切换版本">切换版本</h1>
+
+<p>术语常用的中英对照：</p>
+
+<ul>
+  <li>
+    <p>工作区：working tree，working directory</p>
+  </li>
+  <li>
+    <p>暂存区：stage，index</p>
+    <ol>
+      <li>reset</li>
+    </ol>
+
+    <p>同时更改<strong>HEAD</strong>和<strong>其指向的分支</strong>，但不改动<em>工作区</em>（能看到的所有文件和目录），<del>仅撤销commit。</del>撤销commit。</p>
+
+    <p><code class="language-plaintext highlighter-rouge">--mixed</code><strong>默认操作</strong>；不删除工作区；所有改动放入<strong>工作区</strong>，如果冲突，则按照以下优先级：工作区&gt;暂存区&gt;commit的内容，如果高优先级的区域没有内容，则把低优先级的东西放进去。<del>commit和当前index内容放入<strong>工作区</strong>；撤销add(index)，即不保留reset前（还未提交）的<em>暂存区</em></del></p>
+
+    <p><code class="language-plaintext highlighter-rouge">--soft</code>不删除工作区；暂存区以上的改动全部保留到<strong>暂存区</strong>，优先级同上。<del>保留index的内容。commit内容放入<strong>暂存区</strong>；保留当前的index内容不撤销add，即保留reset前（还未提交）的<em>暂存区</em></del></p>
+
+    <p><code class="language-plaintext highlighter-rouge">--hard</code>删除工作区，删除暂存区。<del>直接<strong>舍弃</strong>commit内容</del></p>
+  </li>
+</ul>
+
+<ol>
+  <li>
+    <p>checkout</p>
+
+    <p>仅移动<strong>HEAD</strong>（不变动分支）</p>
+
+    <p><code class="language-plaintext highlighter-rouge">git checkout [&lt;branch&gt;]</code>将<strong>HEAD</strong>指向<code class="language-plaintext highlighter-rouge">[&lt;branch&gt;]</code>所指向的节点</p>
+
+    <p><code class="language-plaintext highlighter-rouge">git checkout [&lt;sha1&gt;]</code></p>
+
+    <p>恢复某一个版本的某一个文件：<code class="language-plaintext highlighter-rouge">git checkout [版本] [文件]</code>将指定版本中的指定<strong>文件</strong>复制到工作区，并<strong>添加到暂存区</strong>，分支和HEAD都不会发生变化</p>
+  </li>
+  <li>
+    <p>版本快捷写法</p>
+
+    <p><code class="language-plaintext highlighter-rouge">^</code>代表上一个版本，<code class="language-plaintext highlighter-rouge">^^</code>依次类推：</p>
+
+    <ol>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">HEAD^</code>HEAD上一个版本</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">HEAD^^</code>HEAD^的上一个版本</p>
+      </li>
+      <li>
+        <p><code class="language-plaintext highlighter-rouge">HEAD^^^</code>以此类推……</p>
+      </li>
+    </ol>
+
+    <p><code class="language-plaintext highlighter-rouge">^</code>太多时，可以写为<code class="language-plaintext highlighter-rouge">~n</code>，等价于<code class="language-plaintext highlighter-rouge">n个^</code>：<code class="language-plaintext highlighter-rouge">~3</code>等价于<code class="language-plaintext highlighter-rouge">^^^</code>。</p>
+
+    <p><code class="language-plaintext highlighter-rouge">HEAD~3</code>HEAD往前数3个版本，不算HEAD（HEAD就是当前版本，不需要切换）</p>
+  </li>
+</ol>
+
+<p><strong>小结</strong>：如果只是想运行某个版本的代码，就用checkout，这样方便返回最新版本</p>
+
+<h1 id="远程仓库">远程仓库</h1>
+
+<h2 id="remote">remote</h2>
+
+<p>查看远程仓库信息：<code class="language-plaintext highlighter-rouge">git remote -v</code></p>
+
+<p>更新远程仓库信息：<code class="language-plaintext highlighter-rouge">git remote update [-p|--prune]</code>，prune表示移除已经不存在于远端的分支；好像和<code class="language-plaintext highlighter-rouge">git fetch</code>效果一样？</p>
+
+<p>关联远程库<code class="language-plaintext highlighter-rouge">git remote add &lt;origin&gt; &lt;git@server-name:path/repo-name.git&gt;</code></p>
+
+<p>删除已关联的远程库<code class="language-plaintext highlighter-rouge">git remote rm &lt;origin&gt;</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">&lt;origin&gt;</code>为远程仓库的名字，通常为<code class="language-plaintext highlighter-rouge">origin</code></p>
+
+<h2 id="upstream">upstream</h2>
+
+<p>查看本地和远端的所有分支：<code class="language-plaintext highlighter-rouge">git branch -a|--all</code></p>
+
+<p>查看分支的远端上游(<strong>upstream</strong>)：<code class="language-plaintext highlighter-rouge">git branch -vv</code></p>
+
+<p>设置分支的远端上游(<strong>upstream</strong>)：<code class="language-plaintext highlighter-rouge">git branch -u &lt;origin&gt;</code>，其中<code class="language-plaintext highlighter-rouge">&lt;origin&gt;</code>用于指定远端仓库（常用<code class="language-plaintext highlighter-rouge">origin</code>），具体的远端仓库分支名与本地分支名一致</p>
+
+<p>各分支推送到远端的行为是<strong>独立</strong>的，即，执行<code class="language-plaintext highlighter-rouge">git push</code>只会推送当前分支到指定的<strong>upstream</strong>，不影响其他分支</p>
+
+<h2 id="git-pull">git pull</h2>
+
+<blockquote>
+  <p>Incorporates changes from a remote repository into the current branch. In its default mode, <code class="language-plaintext highlighter-rouge">git pull</code> is shorthand for <code class="language-plaintext highlighter-rouge">git fetch</code> followed by <code class="language-plaintext highlighter-rouge">git merge FETCH_HEAD</code>.</p>
+
+  <p>– Git documentation for <a href="http://git-scm.com/docs/git-pull"><code class="language-plaintext highlighter-rouge">git pull</code></a></p>
+</blockquote>
+
+<p>即，<code class="language-plaintext highlighter-rouge">git pull</code>等于执行了下面两条命令：</p>
+
+<pre><code class="language-git">git fetch
+git merge
+</code></pre>
+
+<h1 id="行尾">行尾</h1>
+
+<p>在Windows下打开git项目，行尾可能出现<code class="language-plaintext highlighter-rouge">^M</code>，这是由于不同平台对行尾的处理不一致</p>
+
+<p><code class="language-plaintext highlighter-rouge">git config --global core.autocrlf true</code>：</p>
+
+<ul>
+  <li>检查代码时：自动转换为<code class="language-plaintext highlighter-rouge">crlf</code>
+</li>
+  <li>提交时：自动转换<code class="language-plaintext highlighter-rouge">crlf</code>为<code class="language-plaintext highlighter-rouge">lf</code>
+</li>
+</ul>
+
+<p>拒绝提交包含混合换行符的文件：<code class="language-plaintext highlighter-rouge">git config --global core.safecrlf true</code></p>
+
+<p><code class="language-plaintext highlighter-rouge">git add --renormalize .</code>：将<em>已记录的</em>(tracked)文件，按照<code class="language-plaintext highlighter-rouge">core.autocrlf</code>进行修正</p>
+
+<p><a href="https://git-scm.com/docs/gitattributes#_end_of_line_conversion">End-of-line conversion</a></p>
+
+<p><a href="https://docs.github.com/en/get-started/getting-started-with-git/configuring-git-to-handle-line-endings">Configuring Git to handle line endings</a></p>
+
+<p><a href="https://stackoverflow.com/questions/1889559/git-diff-to-ignore-m">git-diff to ignore ^M</a></p>
+
+<h1 id="gitignore">.gitignore</h1>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">.gitignore</code> will prevent untracked files from being added (without an <code class="language-plaintext highlighter-rouge">add -f</code>) to the set of files tracked by Git, however Git will continue to track any files that are already being tracked.</p>
+
+  <p>– <a href="https://stackoverflow.com/questions/1274057/how-can-i-make-git-forget-about-a-file-that-was-tracked-but-is-now-in-gitign">How can I make Git “forget” about a file that was tracked, but is now in .gitignore?</a></p>
+</blockquote>
+
+<p><code class="language-plaintext highlighter-rouge">.gitignore</code>只对<em>未记录的</em>(tracked)文件有效</p>
+
+<p>如果要将已记录的文件加入<code class="language-plaintext highlighter-rouge">.gitignore</code>（停止记录某些文件，在下个版本中，这些文件会被删除），可以使用以下命令：</p>
+
+<pre><code class="language-git">git rm --cached &lt;file&gt;
+git rm -r --cached &lt;folder&gt;
+</code></pre>
+
+<blockquote>
+  <p><code class="language-plaintext highlighter-rouge">--cached</code>: Use this option to unstage and remove paths only from the index. Working tree files, whether modified or not, will be left alone.</p>
+
+  <p><a href="https://git-scm.com/docs/git-rm#Documentation/git-rm.txt---cached">git-rm</a></p>
+</blockquote>
+
+<p>将文件从<em>index</em>删除，不会删除磁盘上的文件，只是使仓库停止对该文件的记录，提交后（下个版本）生效</p>
+
+<h1 id="中文显示">中文显示</h1>
+
+<p><code class="language-plaintext highlighter-rouge">git config --global core.quotepath false</code>：不转义汉字等字符，直接显示汉字</p>
+
+<blockquote>
+  <p>Commands that output paths (e.g. <em>ls-files</em>, <em>diff</em>), will quote “unusual” characters in the pathname by enclosing the pathname in double-quotes and escaping those characters with backslashes in the same way C escapes control characters (e.g. <code class="language-plaintext highlighter-rouge">\t</code> for TAB, <code class="language-plaintext highlighter-rouge">\n</code> for LF, <code class="language-plaintext highlighter-rouge">\\</code> for backslash) or bytes with values larger than 0x80 (e.g. octal <code class="language-plaintext highlighter-rouge">\302\265</code> for “micro” in UTF-8).</p>
+
+  <p>– <a href="https://git-scm.com/docs/git-config#Documentation/git-config.txt-corequotePath">core.quotePath</a></p>
+</blockquote>
+
+<h1 id="查看文件的历史版本">查看文件的历史版本</h1>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git show <span class="o">[</span>commit:]&lt;file&gt;
+</code></pre></div></div>
+
+<p>没有指定<code class="language-plaintext highlighter-rouge">commit</code>就会显示最后一次改动</p>
+
+</div>
+    </div>
+    <script>
+      const ct = document.querySelector('.post_content');  //".post-content"指向文章内容所在的div，需根据实际情况修改
+      scrollnav.init(ct, {
+          debug: false,
+          easingStyle: 'linear',
+          //section为一级目录，subsection为二级目录
+          sections: ($('.post_content > h1').length>0) ? 'h1' : 'h2',
+          subSections: ($('.post_content > h1').length>0) ? 'h2' : 'h3',
+      });
+    </script>
+    <script type="text/javascript">
+      $('pre').addClass("line-numbers").css("white-space", "pre-wrap");
+    </script>
+  </body>
+</html>
