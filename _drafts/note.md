@@ -233,8 +233,9 @@ OK！网络图标重新出现在任务栏，可以正常联网！参考：[WiFi 
 参考：[Screen turns off after 10 minutes and I can't find out why](https://unix.stackexchange.com/a/329906)
 
 ```bash
-xset -dpms # Disables Energy Star features
-xset s off # Disables screen saver
+xset -dpms  # Disables Energy Star features
+xset s off  # Disables screen saver
+xset s off -dpms  #  Single-line writing
 ```
 
 ## 音乐软件
